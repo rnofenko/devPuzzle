@@ -10,6 +10,7 @@ namespace DevPuzzle
     {
         static void Main(string[] args)
         {
+            //comment
         }
     }
 }
