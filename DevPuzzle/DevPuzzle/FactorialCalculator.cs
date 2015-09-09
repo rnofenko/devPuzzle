@@ -2,9 +2,15 @@
 {
     public class FactorialCalculator
     {
-        public void Calc(int factorial)
+        public int Calc(int factorial)
         {
-            throw new System.NotImplementedException();
+            var result = 1;
+            while (factorial > 0)
+            {
+                result *= factorial;
+                factorial--;
+            }
+            return result;
         }
     }
 }
