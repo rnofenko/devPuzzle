@@ -9,7 +9,7 @@ namespace DevPuzzle.Tests
         [Test]
         public void Absent_elements_should_be_in_result()
         {
-            var source = new[] {1, 3, 4, 5, 6, 10};
+            var source = new[] {6, 10, 4, 5, 1, 3};
 
             Ass.Equal(new[] {"2", "7-9"}, new[] {""});
         }
