@@ -1,3 +1,4 @@
+using DevPuzzle.Tests.Tools;
 using NUnit.Framework;
 
 namespace DevPuzzle.Tests
@@ -6,9 +7,11 @@ namespace DevPuzzle.Tests
     public class EnumerationHoleTests
     {
         [Test]
-        public void t()
+        public void Absent_elements_should_be_in_result()
         {
-            var source = new[] {1, 3, 4, 5, 6, 9, 10};
+            var source = new[] {1, 3, 4, 5, 6, 10};
+
+            Ass.Equal(new[] {"2", "7-9"}, new[] {""});
         }
     }
 }

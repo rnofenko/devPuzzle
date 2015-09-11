@@ -45,8 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnumerationHoleTests.cs" />
+    <Compile Include="BubbleSortTests.cs" />
     <Compile Include="FactorialTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\Ass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
