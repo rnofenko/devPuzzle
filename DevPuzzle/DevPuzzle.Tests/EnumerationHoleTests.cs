@@ -1,3 +1,4 @@
+using System.Linq;
 using DevPuzzle.Tests.Tools;
 using NUnit.Framework;
 
@@ -6,12 +7,25 @@ namespace DevPuzzle.Tests
     [TestFixture]
     public class EnumerationHoleTests
     {
+        private BubbleSort _sort;
+        private EnumerationHoleFiller _filler;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _sort = new BubbleSort();
+            _filler = new EnumerationHoleFiller();
+        }
+
         [Test]
         public void Absent_elements_should_be_in_result()
         {
-            var source = new[] {6, 10, 4, 5, 1, 3};
+            var source = new[] {6, 10, 5, 1 };
 
-            Ass.Equal(new[] {"2", "7-9"}, new[] {""});
+            var sortedSource = _sort.Sort(source.ToList()).ToArray();
+            var filledSource = _filler.Fill(sortedSource);
+
+            Ass.Equal(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, filledSource);
         }
     }
 }
