@@ -25,7 +25,7 @@ namespace DevPuzzle.Tests
             var sortedSource = _sort.Sort(source.ToList()).ToArray();
             var filledSource = _filler.Fill(sortedSource);
 
-            Ass.Equal(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, filledSource);
+            Ass.Equal(new[] { "2-4", "7-9" }, filledSource);
         }
     }
 }
