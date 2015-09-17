@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="BubbleSort.cs" />
     <Compile Include="EnumerationHoleFiller.cs" />
+    <Compile Include="EnumerationHoleFinder.cs" />
     <Compile Include="FactorialCalculator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
