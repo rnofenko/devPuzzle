@@ -1,5 +1,4 @@
-﻿using System;
-using DevPuzzle.Tiles;
+﻿using DevPuzzle.Horses;
 
 namespace DevPuzzle
 {
@@ -7,8 +6,7 @@ namespace DevPuzzle
     {
         static void Main(string[] args)
         {
-            var res = new TileOptimizer().Find();
-            Console.WriteLine(res);
+            new BruteForceHorseCracker().Crack();
         }
     }
 }

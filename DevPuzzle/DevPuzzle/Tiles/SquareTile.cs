@@ -2,7 +2,7 @@ namespace DevPuzzle.Tiles
 {
     public struct SquareTile
     {
-        public byte Size;
+        public int Size;
 
         public override string ToString()
         {

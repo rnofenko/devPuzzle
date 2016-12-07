@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using DevPuzzle.Core;
 
 namespace DevPuzzle.Tiles
 {
@@ -11,6 +12,7 @@ namespace DevPuzzle.Tiles
         private SquareTile _one = new SquareTile {Size = 1};
         private SquareTile _two = new SquareTile { Size = 2 };
         private readonly SquareTile _three = new SquareTile { Size = 3 };
+        private readonly List<string> _allSolutions = new List<string>();
 
         public int[,] Find()
         {
@@ -18,22 +20,36 @@ namespace DevPuzzle.Tiles
             var sequence = new List<SquareTile> {_one};
             while (true)
             {
-                var room = find(sequence, 1, w);
-                print(room);
-                if (sequence.Count(x => x.Size == 1) > 0)
+                try
                 {
+                    find(sequence, 1, w);
+                    saveSolution(sequence);
                     changeTile(sequence, sequence.Count - 1);
                 }
-                else
+                catch (NotFiniteNumberException)
                 {
-                    return room;
+                    foreach (var allSolution in _allSolutions)
+                    {
+                        var solution = allSolution.Split(',').Select(int.Parse).Select(x => new SquareTile {Size = x}).ToList();
+                        var res = build(solution);
+                        print(res.Room);
+                    }
                 }
+            }
+        }
+
+        private void saveSolution(List<SquareTile> sequence)
+        {
+            var solution = string.Join(",", sequence.Select(x => x.Size));
+            if (!_allSolutions.Contains(solution))
+            {
+                _allSolutions.Add(solution);
             }
         }
 
         private void print(int[,] room)
         {
-            var colors = new Dictionary<int, ConsoleColor> { {1,ConsoleColor.Red}, { 2, ConsoleColor.Yellow }, { 3, ConsoleColor.White } };
+            var colors = new Dictionary<int, ConsoleColor> { {1,ConsoleColor.Red}, { 2, ConsoleColor.Yellow }, { 3, ConsoleColor.DarkCyan } };
             Console.WriteLine();
             Console.WriteLine();
             for (var y = 0; y < ROOM_SIZE; y++)
@@ -77,6 +93,11 @@ namespace DevPuzzle.Tiles
 
         private void changeTile(List<SquareTile> sequence, int index)
         {
+            if (index < 0)
+            {
+                throw new NotFiniteNumberException("This is final solution");
+            }
+
             if (sequence[index].Size == _one.Size)
             {
                 sequence[index] = _two;
@@ -98,7 +119,7 @@ namespace DevPuzzle.Tiles
         private BuildResult build(List<SquareTile> sequence)
         {
             var room = new int[ROOM_SIZE, ROOM_SIZE];
-            var coord = new Coord();
+            var coord = new Coordinate();
             for (var i = 0; i < sequence.Count; i++)
             {
                 var tile = sequence[i];
@@ -128,7 +149,7 @@ namespace DevPuzzle.Tiles
             return new BuildResult { IsEmpty = true };
         }
 
-        private PutResult putTile(SquareTile tile, int[,] room, Coord coord)
+        private PutResult putTile(SquareTile tile, int[,] room, Coordinate coord)
         {
             if (room[coord.X, coord.Y] > 0)
             {
