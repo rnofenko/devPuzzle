@@ -1,14 +1,10 @@
 namespace DevPuzzle.Core
 {
-    public struct Size
-    {
-        public int Width;
-
-        public int Height;
-    }
-
     public struct Coordinate
     {
+        public int X;
+        public int Y;
+
         public bool Equals(Coordinate other)
         {
             return X == other.X && Y == other.Y;
@@ -37,10 +33,7 @@ namespace DevPuzzle.Core
         {
             return !lhs.Equals(rhs);
         }
-
-        public int X;
-        public int Y;
-
+        
         public Coordinate(int x, int y)
         {
             X = x;
@@ -60,6 +53,11 @@ namespace DevPuzzle.Core
         public int CoordinateAsOneNumber(int width)
         {
             return Y*width + X;
+        }
+
+        public override string ToString()
+        {
+            return $"{X}x{Y}";
         }
     }
 }

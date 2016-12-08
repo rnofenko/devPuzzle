@@ -1,4 +1,4 @@
-﻿using DevPuzzle.Horses;
+﻿using DevPuzzle.CricleInSquare;
 
 namespace DevPuzzle
 {
@@ -6,7 +6,7 @@ namespace DevPuzzle
     {
         static void Main(string[] args)
         {
-            new BruteForceHorseCracker().Crack();
+            new SquareCountsCalculator().CalculateAll();
         }
     }
 }
