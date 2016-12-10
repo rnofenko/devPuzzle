@@ -53,7 +53,7 @@
     <Compile Include="EnumerationHoleFinder.cs" />
     <Compile Include="FactorialCalculator.cs" />
     <Compile Include="Horses\BruteForceHorseCracker.cs" />
-    <Compile Include="Horses\BruteForceState.cs" />
+    <Compile Include="Horses\HorseBoardState.cs" />
     <Compile Include="Horses\Horse.cs" />
     <Compile Include="Horses\HorseBoard.cs" />
     <Compile Include="Horses\HorseColor.cs" />
@@ -64,6 +64,9 @@
     <Compile Include="Tiles\PutResult.cs" />
     <Compile Include="Tiles\SquareTile.cs" />
     <Compile Include="Tiles\TileOptimizer.cs" />
+    <Compile Include="TriangleTees\BruteForceTeeCracker.cs" />
+    <Compile Include="TriangleTees\TeeBoardState.cs" />
+    <Compile Include="TriangleTees\TeeMove.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

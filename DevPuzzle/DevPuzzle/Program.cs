@@ -1,4 +1,5 @@
 ﻿using DevPuzzle.CricleInSquare;
+using DevPuzzle.TriangleTees;
 
 namespace DevPuzzle
 {
@@ -6,7 +7,7 @@ namespace DevPuzzle
     {
         static void Main(string[] args)
         {
-            new SquareCountsCalculator().CalculateAll();
+            new BruteForceTeeCracker().Crack();
         }
     }
 }

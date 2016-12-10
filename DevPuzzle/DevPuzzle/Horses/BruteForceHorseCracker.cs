@@ -12,12 +12,12 @@ namespace DevPuzzle.Horses
         public void Crack()
         {
             var board = HorseBoard.CreateStartPostion();
-            var state = new BruteForceState(board);
+            var state = new HorseBoardState(board);
             var result = doIteration(new[] {state});
             print(result);
         }
 
-        private void print(BruteForceState state)
+        private void print(HorseBoardState state)
         {
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine();
@@ -59,15 +59,15 @@ namespace DevPuzzle.Horses
             Console.WriteLine();
         }
 
-        private BruteForceState doIteration(IEnumerable<BruteForceState> oldStates)
+        private HorseBoardState doIteration(IEnumerable<HorseBoardState> oldStates)
         {
-            var newStates = new List<BruteForceState>();
+            var newStates = new List<HorseBoardState>();
             foreach (var state in oldStates)
             {
                 var newBoards = findAllPossibleMoves(state.Board);
                 foreach (var board in newBoards.Where(addToUniqueStorage))
                 {
-                    var newState = new BruteForceState(board, state);
+                    var newState = new HorseBoardState(board, state);
 
                     if (board.IsFinalState())
                     {
