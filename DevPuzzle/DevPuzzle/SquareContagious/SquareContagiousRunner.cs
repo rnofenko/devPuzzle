@@ -36,6 +36,7 @@ namespace DevPuzzle.SquareContagious
 
         private List<Pos> nextPositions(IList<Pos> points, int size)
         {
+            return null;
             //var res = new List<>();
         }
     }

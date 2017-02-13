@@ -1,6 +1,4 @@
-﻿using DevPuzzle.CricleInSquare;
-using DevPuzzle.NumbersInString;
-using DevPuzzle.SquareContagious;
+﻿using DevPuzzle.SquareContagious;
 
 namespace DevPuzzle
 {
