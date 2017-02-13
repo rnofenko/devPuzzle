@@ -8,28 +8,28 @@ namespace DevPuzzle.Horses
     {
         public HorseColor Color { get; set; }
 
-        public Coordinate Coord { get; set; }
+        public Pos Coord { get; set; }
 
-        public IEnumerable<Coordinate> GetAllPossibleMoves(Size size)
+        public IEnumerable<Pos> GetAllPossibleMoves(Size size)
         {
             return getAllPossibleMoves(Coord).Where(x => x.X > -1 && x.Y > -1 && x.X < size.Width && x.Y < size.Height);
         }
 
-        private List<Coordinate> getAllPossibleMoves(Coordinate coord)
+        private List<Pos> getAllPossibleMoves(Pos coord)
         {
-            var boards = new List<Coordinate>
+            var boards = new List<Pos>
             {
-                new Coordinate(coord.X + 2, coord.Y + 1),
-                new Coordinate(coord.X + 2, coord.Y - 1),
+                new Pos(coord.X + 2, coord.Y + 1),
+                new Pos(coord.X + 2, coord.Y - 1),
 
-                new Coordinate(coord.X - 2, coord.Y + 1),
-                new Coordinate(coord.X - 2, coord.Y - 1),
+                new Pos(coord.X - 2, coord.Y + 1),
+                new Pos(coord.X - 2, coord.Y - 1),
 
-                new Coordinate(coord.X + 1, coord.Y + 2),
-                new Coordinate(coord.X + 1, coord.Y - 2),
+                new Pos(coord.X + 1, coord.Y + 2),
+                new Pos(coord.X + 1, coord.Y - 2),
 
-                new Coordinate(coord.X - 1, coord.Y + 2),
-                new Coordinate(coord.X - 1, coord.Y - 2)
+                new Pos(coord.X - 1, coord.Y + 2),
+                new Pos(coord.X - 1, coord.Y - 2)
             };
 
             return boards;

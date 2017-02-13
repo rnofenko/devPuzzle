@@ -119,7 +119,7 @@ namespace DevPuzzle.Tiles
         private BuildResult build(List<SquareTile> sequence)
         {
             var room = new int[ROOM_SIZE, ROOM_SIZE];
-            var coord = new Coordinate();
+            var coord = new Pos();
             for (var i = 0; i < sequence.Count; i++)
             {
                 var tile = sequence[i];
@@ -149,7 +149,7 @@ namespace DevPuzzle.Tiles
             return new BuildResult { IsEmpty = true };
         }
 
-        private PutResult putTile(SquareTile tile, int[,] room, Coordinate coord)
+        private PutResult putTile(SquareTile tile, int[,] room, Pos coord)
         {
             if (room[coord.X, coord.Y] > 0)
             {

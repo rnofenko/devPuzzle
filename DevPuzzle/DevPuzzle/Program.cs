@@ -1,4 +1,6 @@
 ﻿using DevPuzzle.CricleInSquare;
+using DevPuzzle.NumbersInString;
+using DevPuzzle.SquareContagious;
 
 namespace DevPuzzle
 {
@@ -6,7 +8,7 @@ namespace DevPuzzle
     {
         static void Main(string[] args)
         {
-            new SquareCountsCalculator().CalculateAll();
+            new SquareContagiousRunner().Run();
         }
     }
 }

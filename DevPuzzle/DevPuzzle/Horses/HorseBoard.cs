@@ -15,7 +15,7 @@ namespace DevPuzzle.Horses
             return new HorseBoard {Horses = Horses.ToArray()};
         }
         
-        public bool MoveHorse(int index, Coordinate coord)
+        public bool MoveHorse(int index, Pos coord)
         {
             if (Horses.Any(x => x.Coord == coord))
             {
@@ -79,10 +79,10 @@ namespace DevPuzzle.Horses
             {
                 Horses = new[]
                 {
-                    new Horse {Coord = new Coordinate(0, 0), Color = HorseColor.White},
-                    new Horse {Coord = new Coordinate(SIDE_SIZE - 1, 0), Color = HorseColor.White},
-                    new Horse {Coord = new Coordinate(0, 2), Color = HorseColor.Black},
-                    new Horse {Coord = new Coordinate(SIDE_SIZE - 1, SIDE_SIZE - 1), Color = HorseColor.Black}
+                    new Horse {Coord = new Pos(0, 0), Color = HorseColor.White},
+                    new Horse {Coord = new Pos(SIDE_SIZE - 1, 0), Color = HorseColor.White},
+                    new Horse {Coord = new Pos(0, 2), Color = HorseColor.Black},
+                    new Horse {Coord = new Pos(SIDE_SIZE - 1, SIDE_SIZE - 1), Color = HorseColor.Black}
                 }
             };
         }

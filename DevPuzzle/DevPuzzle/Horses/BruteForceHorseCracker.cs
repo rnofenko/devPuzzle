@@ -34,7 +34,7 @@ namespace DevPuzzle.Horses
 
         private void print(HorseBoard board)
         {
-            var coord = new Coordinate();
+            var coord = new Pos();
             for (coord.Y = 0; coord.Y < board.Size.Height; coord.Y++)
             {
                 for (coord.X = 0; coord.X < board.Size.Width; coord.X++)

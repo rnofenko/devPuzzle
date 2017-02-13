@@ -1,11 +1,11 @@
 namespace DevPuzzle.Core
 {
-    public struct Coordinate
+    public struct Pos
     {
         public int X;
         public int Y;
 
-        public bool Equals(Coordinate other)
+        public bool Equals(Pos other)
         {
             return X == other.X && Y == other.Y;
         }
@@ -13,7 +13,7 @@ namespace DevPuzzle.Core
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is Coordinate && Equals((Coordinate) obj);
+            return obj is Pos && Equals((Pos) obj);
         }
 
         public override int GetHashCode()
@@ -24,17 +24,17 @@ namespace DevPuzzle.Core
             }
         }
 
-        public static bool operator ==(Coordinate lhs, Coordinate rhs)
+        public static bool operator ==(Pos lhs, Pos rhs)
         {
             return lhs.Equals(rhs);
         }
 
-        public static bool operator !=(Coordinate lhs, Coordinate rhs)
+        public static bool operator !=(Pos lhs, Pos rhs)
         {
             return !lhs.Equals(rhs);
         }
         
-        public Coordinate(int x, int y)
+        public Pos(int x, int y)
         {
             X = x;
             Y = y;

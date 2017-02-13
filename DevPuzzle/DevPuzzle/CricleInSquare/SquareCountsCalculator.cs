@@ -50,7 +50,7 @@ namespace DevPuzzle.CricleInSquare
         private Dictionary<SquareStatus, int> calculate(int width)
         {
             var res = new Dictionary<SquareStatus, int> {{SquareStatus.In, 0}, {SquareStatus.Out, 0}, {SquareStatus.Strikethrough, 0}};
-            var coord = new Coordinate();
+            var coord = new Pos();
             for (coord.Y = 0; coord.Y < width; coord.Y++)
             {
                 for (coord.X = 0; coord.X < width; coord.X++)
@@ -61,10 +61,10 @@ namespace DevPuzzle.CricleInSquare
             return res;
         }
 
-        private SquareStatus calcSquareStatus(Coordinate coord, int width)
+        private SquareStatus calcSquareStatus(Pos coord, int width)
         {
             var circleRadius = calcCircleRadius(width);
-            var corners = new [] {coord, new Coordinate(coord.X + 1, coord.Y), new Coordinate(coord.X + 1, coord.Y + 1), new Coordinate(coord.X, coord.Y + 1)};
+            var corners = new [] {coord, new Pos(coord.X + 1, coord.Y), new Pos(coord.X + 1, coord.Y + 1), new Pos(coord.X, coord.Y + 1)};
             var distances = corners.Select(x => calcDistanceToCenter(x, width)).ToList();
             if (distances.All(x => x > circleRadius))
             {
@@ -77,7 +77,7 @@ namespace DevPuzzle.CricleInSquare
             return SquareStatus.Strikethrough;
         }
 
-        private double calcDistanceToCenter(Coordinate coord, int width)
+        private double calcDistanceToCenter(Pos coord, int width)
         {
             var center = calcCenter(width);
             var k1 = Math.Abs(coord.X - center);
