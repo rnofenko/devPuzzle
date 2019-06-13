@@ -18,7 +18,7 @@ class ConnectedCellsInGridTests {
         Assert.assertEquals(8, res)
     }
 
-    fun connectedCell(matrix: Array<Array<Int>>): Int {
+    private fun connectedCell(matrix: Array<Array<Int>>): Int {
         val width = matrix[0].size
         val height = matrix.size
         var max = 0
