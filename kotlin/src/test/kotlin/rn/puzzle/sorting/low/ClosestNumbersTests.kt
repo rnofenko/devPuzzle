@@ -10,7 +10,7 @@ class ClosestNumbersTests {
         Assert.assertEquals(-20, res[0])
     }
 
-    fun closestNumbers(arr: Array<Int>): List<Int> {
+    private fun closestNumbers(arr: Array<Int>): List<Int> {
         arr.sort()
         var diff = Int.MAX_VALUE
         val list = ArrayList<Int>()
