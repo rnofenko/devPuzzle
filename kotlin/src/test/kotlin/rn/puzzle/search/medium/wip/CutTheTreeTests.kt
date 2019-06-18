@@ -29,21 +29,19 @@ class CutTheTreeTests {
         for (edge in edges) {
             val v0 = edge[0]
             val v1 = edge[1]
-            val n0 = nodes.getOrPut(v0) { Node() }
-            val n1 = nodes.getOrPut(v1) { Node() }
+            val n0 = nodes.getOrPut(v0) { Node(data[v0 - 1]) }
+            val n1 = nodes.getOrPut(v1) { Node(data[v1 - 1]) }
             n0.kids.add(n1)
+            n1.kids.add(n0)
         }
 
-        for (i in 1..data.size) {
-            nodes[i]!!.value = data[i - 1]
-        }
-
-        return nodes[1]!!
+        val root = nodes[1]!!
+        root.sanitize()
+        return root
     }
 
-    class Node {
+    class Node(val value: Int) {
         val kids = ArrayList<Node>()
-        var value: Int = 0
         var sum: Int = 0
 
         fun calcSum(): Int {
@@ -61,8 +59,17 @@ class CutTheTreeTests {
         }
 
         private fun getMinDiff(total: Int): Int {
-            val min = kids.map { it.getMinDiff(sum) }.min() ?: Int.MAX_VALUE
+            val min = kids.map { it.getMinDiff(total) }.min() ?: Int.MAX_VALUE
             return Math.min(min, Math.abs(total - sum * 2))
+        }
+
+        fun sanitize() {
+            for (kid in kids) {
+                kid.kids.remove(this)
+            }
+            for (kid in kids) {
+                kid.sanitize()
+            }
         }
     }
 }
