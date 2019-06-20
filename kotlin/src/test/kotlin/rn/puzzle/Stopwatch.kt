@@ -3,6 +3,10 @@ package rn.puzzle
 class Stopwatch {
     private var startTime = 0L
 
+    init {
+        start()
+    }
+
     fun start() {
         startTime = System.nanoTime()
     }
