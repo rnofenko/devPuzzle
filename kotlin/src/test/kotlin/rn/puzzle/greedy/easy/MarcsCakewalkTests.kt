@@ -1,4 +1,4 @@
-package rn.puzzle.greedy.low
+package rn.puzzle.greedy.easy
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

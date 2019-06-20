@@ -1,4 +1,4 @@
-package rn.puzzle.search.low
+package rn.puzzle.search.easy
 
 class IceCreamParlorSolver {
     fun iceCreamParlor(m: Int, arr: Array<Int>): Array<Int> {

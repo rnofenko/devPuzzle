@@ -1,4 +1,4 @@
-package rn.puzzle.search.low
+package rn.puzzle.search.easy
 
 import org.junit.Assert
 import org.junit.Test

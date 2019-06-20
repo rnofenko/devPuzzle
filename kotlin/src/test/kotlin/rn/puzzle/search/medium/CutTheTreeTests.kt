@@ -1,4 +1,4 @@
-package rn.puzzle.search.medium.wip
+package rn.puzzle.search.medium
 
 import org.junit.Assert
 import org.junit.Test
