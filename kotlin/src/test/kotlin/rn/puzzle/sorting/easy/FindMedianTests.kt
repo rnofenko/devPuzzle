@@ -1,4 +1,4 @@
-package rn.puzzle.sorting.low
+package rn.puzzle.sorting.easy
 
 import org.junit.Assert
 import org.junit.Test

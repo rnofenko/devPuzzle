@@ -1,7 +1,8 @@
-package rn.puzzle.sorting.low
+package rn.puzzle.sorting.easy
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import rn.puzzle.sorting.low.RunningTimeAlgorithmsSolver
 
 class RunningTimeAlgorithmsTests {
     private val solver = RunningTimeAlgorithmsSolver()
