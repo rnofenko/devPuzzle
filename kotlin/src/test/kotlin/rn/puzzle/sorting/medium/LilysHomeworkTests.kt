@@ -1,4 +1,4 @@
-package rn.puzzle.sorting.medium.wip
+package rn.puzzle.sorting.medium
 
 import org.junit.Assert
 import org.junit.Test
