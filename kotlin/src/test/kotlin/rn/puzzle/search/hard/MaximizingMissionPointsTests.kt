@@ -1,10 +1,9 @@
-package rn.puzzle.search.hard.wip
+package rn.puzzle.search.hard
 
 import org.junit.Assert
 import org.junit.Test
 import rn.puzzle.FileHelper
 import rn.puzzle.Stopwatch
-import rn.puzzle.search.hard.MaximizingMissionPointsSolver
 
 class MaximizingMissionPointsTests {
     @Test
@@ -38,6 +37,22 @@ class MaximizingMissionPointsTests {
         val res = fileRunner("/Users/tkma0vh/Downloads/input04.txt")
         Assert.assertEquals(49999, res)
         w.show("Sample4")//16s - 1.04 - 0.44
+    }
+
+    @Test
+    fun fileSample6() {
+        val w = Stopwatch()
+        val res = fileRunner("/Users/tkma0vh/Downloads/input06.txt")
+        Assert.assertEquals(359638, res)
+        w.show("Sample6")//
+    }
+
+    @Test
+    fun fileSample7() {
+        val w = Stopwatch()
+        val res = fileRunner("/Users/tkma0vh/Downloads/input07.txt")
+        Assert.assertEquals(1254375, res)
+        w.show("Sample7")//
     }
 
     @Test
