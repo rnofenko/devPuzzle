@@ -13,7 +13,7 @@ class TheFullCountingSortTests {
                 arrayOf("1", "f"), arrayOf("2", "a"), arrayOf("1", "e"), arrayOf("1", "b"), arrayOf("1", "c"))
         val res = createAnswer(data)
         assertEquals("- - f e b c - a - -", res)
-        System.out.println(res)
+        println(res)
     }
 
     @Test
@@ -35,7 +35,7 @@ class TheFullCountingSortTests {
         val typedData = data.toTypedArray()
 
         val time = measureTimeMillis { createAnswer(typedData) }
-        System.out.println("TIME $time")
+        println("TIME $time")
     }
 
     private fun createAnswer(data: Array<Array<String>>): String {
