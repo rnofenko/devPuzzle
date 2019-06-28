@@ -12,7 +12,7 @@ class PrimSpecialSubtreeTests {
         assertEquals(15, res)
     }
 
-    fun prims(n: Int, initialEdges: Array<Array<Int>>, start: Int): Int {
+    private fun prims(n: Int, initialEdges: Array<Array<Int>>, start: Int): Int {
         var edges = initialEdges.toList()
         var nextVertex = start
         val tree = Tree(nextVertex)
@@ -36,12 +36,12 @@ class PrimSpecialSubtreeTests {
         return tree.sum
     }
 
-    class Tree {
+    class Tree(vertex: Int) {
         private val tempEdges = TreeMap<Int, ArrayList<Array<Int>>>()
         private val vertices = HashSet<Int>()
         var sum: Int = 0
 
-        constructor(vertex: Int) {
+        init {
             vertices.add(vertex)
         }
 
