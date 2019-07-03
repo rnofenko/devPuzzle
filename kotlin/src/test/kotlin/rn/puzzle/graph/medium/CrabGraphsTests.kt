@@ -3,8 +3,8 @@ package rn.puzzle.graph.medium
 import org.junit.Assert
 import org.junit.Test
 import rn.puzzle.FileHelper
-import rn.puzzle.StringToArrayHelpers.stringTo2dArray
-import rn.puzzle.StringToArrayHelpers.stringToIntArray
+import rn.puzzle.tool.StringToArrayConverter.stringTo2dArray
+import rn.puzzle.tool.StringToArrayConverter.stringToIntArray
 
 class CrabGraphsTests {
     @Test

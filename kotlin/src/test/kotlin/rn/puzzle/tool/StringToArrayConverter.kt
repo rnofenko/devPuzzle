@@ -1,8 +1,8 @@
-package rn.puzzle
+package rn.puzzle.tool
 
 import java.lang.StringBuilder
 
-object StringToArrayHelpers {
+object StringToArrayConverter {
     fun stringToArray(line: String): Array<Int> {
         return stringToIntArray(line)
     }
@@ -25,6 +25,18 @@ object StringToArrayHelpers {
                         .split(" ")
                         .map { s -> s.toInt() }
                         .toTypedArray()
+                }
+                .toTypedArray()
+    }
+
+    fun stringTo2dIntArray(line: String): Array<IntArray> {
+        val cleaned = line.replace("(  +)".toRegex(), " ").trim()
+        val stringPairs = cleaned.split(",")
+        return stringPairs
+                .map { it
+                        .split(" ")
+                        .map { s -> s.toInt() }
+                        .toIntArray()
                 }
                 .toTypedArray()
     }

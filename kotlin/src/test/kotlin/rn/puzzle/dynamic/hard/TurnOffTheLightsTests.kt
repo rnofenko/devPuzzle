@@ -3,7 +3,7 @@ package rn.puzzle.dynamic.hard
 import org.junit.Assert
 import org.junit.Test
 import rn.puzzle.FileHelper
-import rn.puzzle.StringToArrayHelpers.stringToIntArray
+import rn.puzzle.tool.StringToArrayConverter.stringToIntArray
 
 class TurnOffTheLightsTests {
     @Test

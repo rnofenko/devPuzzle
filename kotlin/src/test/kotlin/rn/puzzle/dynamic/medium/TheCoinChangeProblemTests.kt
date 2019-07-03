@@ -1,8 +1,8 @@
-package rn.puzzle.dynamic.medium.wip
+package rn.puzzle.dynamic.medium
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.StringToArrayHelpers.stringToLongArray
+import rn.puzzle.tool.StringToArrayConverter.stringToLongArray
 
 class TheCoinChangeProblemTests {
     @Test
