@@ -1,4 +1,4 @@
-package rn.puzzle.string.wip
+package rn.puzzle.wip.string.hard
 
 import org.junit.Assert
 import org.junit.Test
