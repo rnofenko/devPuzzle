@@ -47,17 +47,17 @@ class MaximumPalindromesTests {
 
     @Test
     fun fileSample2() {
-        fileRunner("input02.txt", "output02.txt")
+        fileRunner(2)
     }
 
     @Test
     fun fileSample22() {
-        fileRunner("input22.txt", "output22.txt")
+        fileRunner(22)
     }
 
     @Test
     fun fileSample23() {
-        fileRunner("input23.txt", "output23.txt")
+        fileRunner(23)
     }
 
     private fun solve(s: String): Int {
@@ -69,11 +69,10 @@ class MaximumPalindromesTests {
         return solver.answerQuery(l,r)
     }
 
-    private fun fileRunner(path: String, outputPath: String) {
-        val prefix = "/Users/tkma0vh/Downloads/"
-        val lines = FileHelper.load(prefix + path)
+    private fun fileRunner(no: Int) {
+        val lines = FileHelper.loadByInputNo(no)
         val k = lines[1].trim().toInt()
-        val outLines = FileHelper.load(prefix + outputPath)
+        val outLines = FileHelper.loadByOutputNo(no)
 
         solver.initialize(lines[0])
 

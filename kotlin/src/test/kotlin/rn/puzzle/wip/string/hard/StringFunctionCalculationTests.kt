@@ -2,31 +2,78 @@ package rn.puzzle.wip.string.hard
 
 import org.junit.Assert
 import org.junit.Test
+import rn.puzzle.FileHelper
+import rn.puzzle.string.hard.StringFunctionCalculationSolver
 
 class StringFunctionCalculationTests {
     @Test
     fun sample1() {
-        Assert.assertEquals(12, maxValue("aaaaaa"))
+        Assert.assertEquals(12, solve("aaaaaa"))
     }
 
     @Test
     fun sample2() {
-        Assert.assertEquals(9, maxValue("abcabcddd"))
+        Assert.assertEquals(9, solve("abcabcddd"))
     }
 
     @Test
     fun sample3() {
-        Assert.assertEquals(10, maxValue("aa aaa aaa".replace(' ', 'x')))
+        Assert.assertEquals(12, solve("aabaaabaaa"))
+    }
+
+    @Test
+    fun sample31() {
+        Assert.assertEquals(7, solve("aabaaab"))
     }
 
     @Test
     fun sample4() {
-        Assert.assertEquals(6, maxValue("ababa"))
+        Assert.assertEquals(6, solve("ababa"))
     }
 
     @Test
     fun sample5() {
-        Assert.assertEquals(8, maxValue("ababab"))
+        Assert.assertEquals(8, solve("ababab"))
+    }
+
+    @Test
+    fun sample6() {
+        Assert.assertEquals(5, solve("aabaa"))
+    }
+
+    @Test
+    fun input05() {
+        Assert.assertEquals(6965250, fileRunner(5))
+        //8.5s
+    }
+
+    @Test
+    fun input06() {
+        Assert.assertEquals(37928804, fileRunner(6))
+        //34.9s
+    }
+
+    @Test
+    fun input07() {
+        Assert.assertEquals(449445, fileRunner(7))
+        //9.5s
+    }
+
+    @Test
+    fun input10() {
+        Assert.assertEquals(90000, fileRunner(10))
+        //4s
+    }
+
+    private fun fileRunner(no: Int): Int {
+        val lines = FileHelper.loadByInputNo(no)
+        val line = lines[0]
+        return solve(line)
+    }
+
+    private fun solve(s: String): Int {
+        val solver = StringFunctionCalculationSolver()
+        return solver.solve(s)
     }
 
     private fun maxValue(t: String): Int {

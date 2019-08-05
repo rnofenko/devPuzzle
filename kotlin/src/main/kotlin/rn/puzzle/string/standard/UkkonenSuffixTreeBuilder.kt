@@ -2,12 +2,12 @@ package rn.puzzle.string.standard
 
 class UkkonenSuffixTreeBuilder {
     fun build(s: String) {
-        buildImpl(s)
+        buildUkkonen(s)
     }
 
-    private fun buildImpl(s: String): Node {
+    private fun buildUkkonen(s: String): Node {
         val root = Node()
-        val activePoint = ActivePoint(root, 'a',0, s, root)
+        val activePoint = ActivePoint(root, 'a',0, s)
 
         for(i in s.indices) {
             val c = s[i]
@@ -33,28 +33,26 @@ class UkkonenSuffixTreeBuilder {
                     activePoint.node = link
                 }
             }
-            if(activePoint.length == 0) {
-                activePoint.setKid(c, i)
-            } else {
-                activePoint.incLength()
-            }
+            activePoint.next(c, i)
         }
 
         return root
     }
 
     private fun split(active: ActivePoint, index: Int) {
-        val text = active.text
+        val parent = active.node
         val edge = active.getEdge()
-        edge.endIndex = edge.startIndex + active.length - 1
+        val newEdge = Node(edge.startIndex, edge.startIndex + active.length - 1, active.text)
+        parent.setKid(newEdge, active.text)
 
-        val restKid = Node(edge.endIndex + 1, text, active.root)
-        val oneCharKid = Node(index, text, active.root)
-        edge.kids[restKid.startChar] = restKid
-        edge.kids[oneCharKid.startChar] = oneCharKid
+        edge.startIndex = newEdge.endIndex + 1
+        val kidNewChar = Node(index, active.text)
+
+        newEdge.setKid(edge, active.text)
+        newEdge.setKid(kidNewChar, active.text)
     }
 
-    class ActivePoint(var node: Node, var edge: Char, var length: Int, val text: String, val root: Node, var remainder: Int = 1) {
+    class ActivePoint(var node: Node, var edge: Char, var length: Int, val text: String) {
         fun needToSplit(index: Int): Boolean {
             if(length == 0) {
                 return false
@@ -69,43 +67,48 @@ class UkkonenSuffixTreeBuilder {
             return node.kids[edge] ?: throw UnknownError()
         }
 
-        fun incLength() {
+        fun next(c: Char, i: Int) {
+            if(length == 0) {
+                setKid(c, i)
+            } else {
+                incLength()
+            }
+        }
+
+        private fun setKid(c: Char, i: Int) {
+            if(node.kids.containsKey(c)) {
+                edge = c
+                length = 0
+                incLength()
+            } else {
+                node.setKid(Node(i, text), text)
+            }
+        }
+
+        private fun incLength() {
             length++
             val edge = getEdge()
-            if(edge.endIndex == -1) {
-                return
-            }
-            if(edge.endIndex - edge.startIndex + 1 == length) {
+            if(edge.endIndex > -1 && edge.endIndex - edge.startIndex + 1 == length) {
                 node = edge
                 length = 0
             }
         }
 
-        fun setKid(c: Char, i: Int) {
-            if(node.kids.containsKey(c)) {
-                edge = c
-                length = 1
-                remainder++
-            } else {
-                val kid = Node(i, text, root)
-                node.kids[c] = kid
-                remainder++
-            }
-        }
-
         override fun toString(): String {
-            return "p=$node edge=$edge len=$length remainde=$remainder"
+            return "p=$node edge=$edge len=$length"
         }
     }
 
-    class Node(val startIndex: Int, private val text: String, var link: Node?) {
-        constructor() : this(0, "", null)
+    class Node(var startIndex: Int, var endIndex: Int, private val text: String) {
+        constructor() : this(0, -1, "")
+        constructor(startIndex: Int, text: String) : this(startIndex, -1, text)
 
         val kids = HashMap<Char, Node>()
-        var endIndex: Int = -1
+        var link: Node? = null
 
-        val startChar: Char
-            get() = text[startIndex]
+        fun setKid(kid: Node, text: String) {
+            kids[text[kid.startIndex]] = kid
+        }
 
         override fun toString(): String {
             if(text.isEmpty()) {
