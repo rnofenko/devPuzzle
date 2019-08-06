@@ -54,6 +54,12 @@ class StringFunctionCalculationTests {
     }
 
     @Test
+    fun input61() {
+        Assert.assertEquals(51212, fileRunner(61))
+        //34.9s
+    }
+
+    @Test
     fun input07() {
         Assert.assertEquals(449445, fileRunner(7))
         //9.5s
