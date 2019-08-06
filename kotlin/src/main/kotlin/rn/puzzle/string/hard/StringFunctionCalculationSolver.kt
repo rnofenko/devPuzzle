@@ -24,7 +24,6 @@ class StringFunctionCalculationSolver {
     private fun handleCharacter(cursor: Cursor, i: Int) {
         val c = cursor.text[i]
         cursor.remainder++
-        var prevInsertedNode = cursor.root
         while (true) {
             if(cursor.length == 0) {
                 if(cursor.node.kids.containsKey(c)) {
@@ -43,15 +42,8 @@ class StringFunctionCalculationSolver {
                 }
             } else {
                 if(cursor.needToSplit(c)) {
-                    val insertedNode = split(cursor, i)
-                    if(!prevInsertedNode.isRoot) {
-                        prevInsertedNode.link = insertedNode
-                        prevInsertedNode.isSuffixLink = true
-                    }
-                    prevInsertedNode = insertedNode
-
+                    split(cursor, i)
                     cursor.remainder--
-
                     cursor.navigateFromRoot(i)
                 } else {
                     cursor.length++
@@ -62,21 +54,18 @@ class StringFunctionCalculationSolver {
         }
     }
 
-    private fun split(cursor: Cursor, index: Int): Node {
+    private fun split(cursor: Cursor, index: Int) {
         val parent = cursor.node
         val updatedEdge = cursor.getEdge()
         val insertedEdge = Node(updatedEdge.startIndex, updatedEdge.startIndex + cursor.length - 1, cursor.text)
         updatedEdge.startIndex = insertedEdge.endIndex + 1
 
-        insertedEdge.link = cursor.node
         parent.setKid(insertedEdge, cursor.text)
 
         val kidNewChar = Node(index, cursor.text)
 
         insertedEdge.setKid(updatedEdge, cursor.text)
         insertedEdge.setKid(kidNewChar, cursor.text)
-
-        return insertedEdge
     }
 
     class Cursor(var node: Node, val text: String, val root: Node) {
@@ -106,12 +95,24 @@ class StringFunctionCalculationSolver {
         fun navigateFromRoot(currentPos: Int) {
             node = root
             length = 0
-            for(i in (currentPos - remainder + 1) until currentPos) {
+            var r = remainder - 1
+            while(r > 0) {
                 if(length == 0) {
-                    char = text[i]
+                    char = text[currentPos - r]
                     length = 1
+                    r--
                 } else {
-                    length++
+                    val edge = getEdge()
+                    if(edge.endIndex == -1) {
+                        length += r
+                        return
+                    } else {
+                        val edgeLen = edge.endIndex - edge.startIndex - length + 1
+                        val changeLen = Math.min(edgeLen, r)
+
+                        length += changeLen
+                        r -= changeLen
+                    }
                 }
                 selectNextNodeIfEdgeIsShort()
             }
@@ -136,12 +137,10 @@ class StringFunctionCalculationSolver {
         constructor(startIndex: Int, text: String) : this(startIndex, -1, text)
 
         val kids = HashMap<Char, Node>()
-        var link: Node? = null
-        var isSuffixLink = false
         private var leafsCount: Int = 0
         private var points: Int = 0
 
-        val isRoot: Boolean
+        private val isRoot: Boolean
             get() = text.isEmpty()
 
         fun setKid(kid: Node, text: String) {
@@ -189,9 +188,6 @@ class StringFunctionCalculationSolver {
             }
             var s = text.substring(startIndex, if(endIndex == -1) text.length else endIndex + 1)
             s += " idx=$startIndex kids=${kids.size}"
-            if(link != null) {
-                s += " [$link]"
-            }
             return s
         }
     }

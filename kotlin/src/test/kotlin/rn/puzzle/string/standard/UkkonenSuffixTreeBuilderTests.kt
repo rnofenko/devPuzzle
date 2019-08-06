@@ -152,5 +152,5 @@ class UkkonenSuffixTreeBuilderTests {
         }
     }
 
-    private val builder = SuffixTreeNaiveBuilder()
+    private val builder = SuffixTreeMyBuilder()
 }
