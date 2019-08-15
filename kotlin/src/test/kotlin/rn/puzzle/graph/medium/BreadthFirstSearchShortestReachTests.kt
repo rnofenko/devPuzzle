@@ -3,7 +3,7 @@ package rn.puzzle.graph.medium
 import org.junit.Assert.assertArrayEquals
 import org.junit.Test
 import rn.puzzle.FileHelper
-import rn.puzzle.Stopwatch
+import rn.tool.Stopwatch
 
 class BreadthFirstSearchShortestReachTests {
     @Test

@@ -4,7 +4,7 @@ import org.junit.Assert
 import org.junit.Test
 import rn.puzzle.FileHelper
 import rn.puzzle.tool.StringToArrayConverter.stringTo2dArray
-import rn.puzzle.tool.StringToArrayConverter.stringToIntArray
+import rn.puzzle.tool.StringToArrayConverter.stringToArray
 
 class CrabGraphsTests {
     @Test
@@ -225,35 +225,35 @@ class CrabGraphsTests {
     @Test
     fun fileSample1() {
         val res = fileRunner("/Users/tkma0vh/Downloads/input01.txt")
-        val expected = stringToIntArray("7 50 50 4 50 10 50 50 2 48")
+        val expected = stringToArray("7 50 50 4 50 10 50 50 2 48")
         Assert.assertArrayEquals(expected, res)
     }
 
     @Test
     fun fileSample3() {
         val res = fileRunner("/Users/tkma0vh/Downloads/input03.txt")
-        val expected = stringToIntArray("11 50 49 19 29 32 49 44 50 10")
+        val expected = stringToArray("11 50 49 19 29 32 49 44 50 10")
         Assert.assertArrayEquals(expected, res)
     }
 
     @Test
     fun fileSample7() {
         val res = fileRunner("/Users/tkma0vh/Downloads/input07.txt")
-        val expected = stringToIntArray("71 40 52 35 19 41 24 14 21 77")
+        val expected = stringToArray("71 40 52 35 19 41 24 14 21 77")
         Assert.assertArrayEquals(expected, res)
     }
 
     @Test
     fun fileSample8() {
         val res = fileRunner("/Users/tkma0vh/Downloads/input08.txt")
-        val expected = stringToIntArray("4 93 7 79 44 37 84 89 57 50")
+        val expected = stringToArray("4 93 7 79 44 37 84 89 57 50")
         Assert.assertArrayEquals(expected, res)
     }
 
     @Test
     fun fileSample10() {
         val res = fileRunner("/Users/tkma0vh/Downloads/input10.txt")
-        val expected = stringToIntArray("20 44 77 100 100 55 99 72 59 83")
+        val expected = stringToArray("20 44 77 100 100 55 99 72 59 83")
         Assert.assertArrayEquals(expected, res)
     }
 

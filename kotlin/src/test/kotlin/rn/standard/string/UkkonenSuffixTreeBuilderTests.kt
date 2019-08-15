@@ -1,9 +1,10 @@
 @file:Suppress("SpellCheckingInspection")
 
-package rn.puzzle.string.standard
+package rn.standard.string
 
 import org.junit.Assert
 import org.junit.Test
+import rn.standard.string.suffix.tree.SuffixTreeMyBuilder
 
 class UkkonenSuffixTreeBuilderTests {
 

@@ -2,7 +2,7 @@ package rn.puzzle.search.medium
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.Stopwatch
+import rn.tool.Stopwatch
 
 class KnightLOnChessboardTests {
     @Test

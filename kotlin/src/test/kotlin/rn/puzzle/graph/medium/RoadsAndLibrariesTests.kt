@@ -3,7 +3,7 @@ package rn.puzzle.graph.medium
 import org.junit.Assert
 import org.junit.Test
 import rn.puzzle.FileHelper
-import rn.puzzle.Stopwatch
+import rn.tool.Stopwatch
 import rn.puzzle.game.medium.roadaandlibraries.RoadsAndLibrariesDependencySolver
 import rn.puzzle.tool.StringToArrayConverter.stringTo2dIntArray
 import rn.puzzle.tool.StringToArrayConverter.stringToLongArray

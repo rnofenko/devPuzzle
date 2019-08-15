@@ -4,12 +4,12 @@ import java.lang.StringBuilder
 
 object StringToArrayConverter {
     fun stringToArray(line: String): Array<Int> {
-        return stringToIntArray(line)
-    }
-
-    fun stringToIntArray(line: String): Array<Int> {
         val cleaned = line.replace("(  +)".toRegex(), " ").trim()
         return cleaned.split(" ").map { it.toInt() }.toTypedArray()
+    }
+
+    fun stringToIntArray(line: String): IntArray {
+        return stringToArray(line).toIntArray()
     }
 
     fun stringToLongArray(line: String): Array<Long> {

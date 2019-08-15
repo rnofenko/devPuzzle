@@ -1,8 +1,8 @@
-package rn.puzzle.string.standard
+package rn.standard.string.suffix.array
 
-class SuffixArrayNaiveBuilder {
-    fun build(s: String): IntArray {
-        val startIndexes = generateSequence(0, { it + 1 }).take(s.length).toList()
+class SuffixArrayNaiveBuilder : ISuffixArrayBuilder {
+    override fun build(s: String): IntArray {
+        val startIndexes = generateSequence(0, { it + 1 }).take(s.length + 1).toList()
         return startIndexes.sortedWith(SubStringComparator(s)).toIntArray()
     }
 
@@ -13,6 +13,4 @@ class SuffixArrayNaiveBuilder {
             return s1.compareTo(s2)
         }
     }
-
-    //DC-3 algorithm
 }

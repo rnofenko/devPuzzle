@@ -17,17 +17,16 @@ class PrimSpecialSubtreeTests {
         var nextVertex = start
         val tree = Tree(nextVertex)
         while (nextVertex != -1 && edges.isNotEmpty()) {
-            val updatedListOfEdges = ArrayList<Array<Int>>()
+            val notConnectedEdges = ArrayList<Array<Int>>()
             for (edge in edges) {
                 if(edge[0] == nextVertex || edge[1] == nextVertex) {
                     tree.add(edge)
                 } else {
-                    updatedListOfEdges.add(edge)
+                    notConnectedEdges.add(edge)
                 }
             }
 
-            edges = updatedListOfEdges
-
+            edges = notConnectedEdges
             nextVertex = tree.selectEdge()
         }
 

@@ -3,18 +3,18 @@ package rn.puzzle.dynamic.medium
 import org.junit.Assert
 import org.junit.Test
 import rn.puzzle.FileHelper
-import rn.puzzle.Stopwatch
-import rn.puzzle.tool.StringToArrayConverter.stringToIntArray
+import rn.tool.Stopwatch
+import rn.puzzle.tool.StringToArrayConverter.stringToArray
 
 class MandragoraForestTests {
     @Test
     fun sample1() {
-        Assert.assertEquals(10, mandragora(stringToIntArray("3 2 2")))
+        Assert.assertEquals(10, mandragora(stringToArray("3 2 2")))
     }
 
     @Test
     fun sample2() {
-        Assert.assertEquals(16, mandragora(stringToIntArray("3 2 5")))
+        Assert.assertEquals(16, mandragora(stringToArray("3 2 5")))
     }
 
     @Test

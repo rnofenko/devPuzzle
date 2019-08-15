@@ -1,6 +1,6 @@
-package rn.puzzle.string.standard
+package rn.standard.string.suffix.tree
 
-class UkkonenSuffixTreeBuilder {
+class SuffixTreeMyBuilder {
     private fun buildUkkonen(text: String): Node {
         val root = Node()
         val cursor = Cursor(root, text, root)
@@ -13,7 +13,6 @@ class UkkonenSuffixTreeBuilder {
     private fun handleCharacter(cursor: Cursor, i: Int) {
         val c = cursor.text[i]
         cursor.remainder++
-        var prevInsertedNode = cursor.root
         while (true) {
             if(cursor.length == 0) {
                 if(cursor.node.kids.containsKey(c)) {
@@ -31,13 +30,7 @@ class UkkonenSuffixTreeBuilder {
                 }
             } else {
                 if(cursor.needToSplit(c)) {
-                    val insertedNode = split(cursor, i)
-                    if(!prevInsertedNode.isRoot) {
-                        prevInsertedNode.link = insertedNode
-                        prevInsertedNode.isSuffixLink = true
-                    }
-                    prevInsertedNode = insertedNode
-
+                    split(cursor, i)
                     cursor.remainder--
                     cursor.navigateFromRoot(i)
                 } else {
@@ -49,24 +42,21 @@ class UkkonenSuffixTreeBuilder {
         }
     }
 
-    private fun split(cursor: Cursor, index: Int): Node {
+    private fun split(cursor: Cursor, index: Int) {
         val parent = cursor.node
         val updatedEdge = cursor.getEdge()
         val insertedEdge = Node(updatedEdge.startIndex, updatedEdge.startIndex + cursor.length - 1, cursor.text)
         updatedEdge.startIndex = insertedEdge.endIndex + 1
 
-        insertedEdge.link = cursor.node
         parent.setKid(insertedEdge, cursor.text)
 
         val kidNewChar = Node(index, cursor.text)
 
         insertedEdge.setKid(updatedEdge, cursor.text)
         insertedEdge.setKid(kidNewChar, cursor.text)
-
-        return insertedEdge
     }
 
-    class Cursor(var node: Node, val text: String, val root: Node) {
+    class Cursor(var node: Node, val text: String, private val root: Node) {
         var char: Char = '-'
         var length: Int = 0
         var remainder: Int = 0
@@ -137,8 +127,6 @@ class UkkonenSuffixTreeBuilder {
         constructor(startIndex: Int, text: String) : this(startIndex, -1, text)
 
         val kids = HashMap<Char, Node>()
-        var link: Node? = null
-        var isSuffixLink = false
 
         val isRoot: Boolean
             get() = text.isEmpty()
@@ -153,9 +141,6 @@ class UkkonenSuffixTreeBuilder {
             }
             var s = text.substring(startIndex, if(endIndex == -1) text.length else endIndex + 1)
             s += " idx=$startIndex kids=${kids.size}"
-            if(link != null) {
-                s += " [$link]"
-            }
             return s
         }
     }

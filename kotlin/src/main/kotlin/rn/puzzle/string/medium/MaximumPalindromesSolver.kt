@@ -1,6 +1,6 @@
 package rn.puzzle.string.medium
 
-import rn.puzzle.Stopwatch
+import rn.tool.Stopwatch
 import java.math.BigInteger
 
 class MaximumPalindromesSolver {

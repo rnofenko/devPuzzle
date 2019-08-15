@@ -1,9 +1,8 @@
-package rn.puzzle.wip.string.hard
+package rn.puzzle.string.hard
 
 import org.junit.Assert
 import org.junit.Test
 import rn.puzzle.FileHelper
-import rn.puzzle.string.hard.StringFunctionCalculationSolver
 
 class StringFunctionCalculationTests {
     @Test
@@ -44,13 +43,11 @@ class StringFunctionCalculationTests {
     @Test
     fun input05() {
         Assert.assertEquals(6965250, fileRunner(5))
-        //8.5s
     }
 
     @Test
     fun input06() {
         Assert.assertEquals(37928804, fileRunner(6))
-        //34.9s
     }
 
     @Test
@@ -61,13 +58,11 @@ class StringFunctionCalculationTests {
     @Test
     fun input07() {
         Assert.assertEquals(449445, fileRunner(7))
-        //9.5s
     }
 
     @Test
     fun input10() {
         Assert.assertEquals(90000, fileRunner(10))
-        //4s
     }
 
     private fun fileRunner(no: Int): Int {
