@@ -8,7 +8,7 @@ class AhoCorasickTests {
     @Test
     fun trie1() {
         val root = finder.buildTrie(listOf("a", "ab", "bab", "bc", "bca", "c", "caa"))
-        Assert.assertEquals(3, root.direct.size)
+        Assert.assertEquals(3, root.kids.size)
     }
 
     @Test
