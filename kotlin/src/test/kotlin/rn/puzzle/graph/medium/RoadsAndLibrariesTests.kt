@@ -2,11 +2,11 @@ package rn.puzzle.graph.medium
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.FileHelper
+import rn.tool.FileHelper
 import rn.tool.Stopwatch
 import rn.puzzle.game.medium.roadaandlibraries.RoadsAndLibrariesDependencySolver
-import rn.puzzle.tool.StringToArrayConverter.stringTo2dIntArray
-import rn.puzzle.tool.StringToArrayConverter.stringToLongArray
+import rn.tool.StringToArrayConverter.stringTo2dIntArray
+import rn.tool.StringToArrayConverter.stringToLongArray
 
 class RoadsAndLibrariesTests {
     private val solver = RoadsAndLibrariesDependencySolver()

@@ -4,7 +4,7 @@ package rn.standard.string
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.tool.StringToArrayConverter.stringToIntArray
+import rn.tool.StringToArrayConverter.stringToIntArray
 import rn.standard.string.suffix.array.SaIsSuffixArrayBuilder
 import rn.standard.string.suffix.array.SuffixArrayNaiveBuilder
 import rn.tool.Stopwatch

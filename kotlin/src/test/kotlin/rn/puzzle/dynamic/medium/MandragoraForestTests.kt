@@ -2,9 +2,9 @@ package rn.puzzle.dynamic.medium
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.FileHelper
+import rn.tool.FileHelper
 import rn.tool.Stopwatch
-import rn.puzzle.tool.StringToArrayConverter.stringToArray
+import rn.tool.StringToArrayConverter.stringToArray
 
 class MandragoraForestTests {
     @Test

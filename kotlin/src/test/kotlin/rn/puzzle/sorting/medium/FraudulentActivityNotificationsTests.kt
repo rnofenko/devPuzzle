@@ -2,9 +2,9 @@ package rn.puzzle.sorting.medium
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.FileHelper
-import rn.puzzle.tool.ArrayPrinter
-import rn.puzzle.tool.StringToArrayConverter.stringToArray
+import rn.tool.FileHelper
+import rn.tool.ArrayPrinter
+import rn.tool.StringToArrayConverter.stringToArray
 import java.util.*
 
 class FraudulentActivityNotificationsTests {

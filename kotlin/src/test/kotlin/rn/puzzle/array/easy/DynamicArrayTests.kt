@@ -2,7 +2,7 @@ package rn.puzzle.array.easy
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.tool.StringToArrayConverter.stringTo2dArray
+import rn.tool.StringToArrayConverter.stringTo2dArray
 
 class DynamicArrayTests {
     private fun dynamicArray(n: Int, queries: Array<Array<Int>>): Array<Int> {

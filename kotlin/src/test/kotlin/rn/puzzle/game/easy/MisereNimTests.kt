@@ -2,7 +2,7 @@ package rn.puzzle.game.easy
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.tool.StringToArrayConverter
+import rn.tool.StringToArrayConverter
 
 class MisereNimTests {
     @Test

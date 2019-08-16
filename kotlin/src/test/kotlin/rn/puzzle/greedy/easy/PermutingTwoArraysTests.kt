@@ -2,7 +2,7 @@ package rn.puzzle.greedy.easy
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.tool.StringToArrayConverter.stringToArray
+import rn.tool.StringToArrayConverter.stringToArray
 
 class PermutingTwoArraysTests {
 

@@ -2,8 +2,8 @@ package rn.puzzle.wip.game.medium
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.FileHelper
-import rn.puzzle.tool.StringToArrayConverter.stringToArray
+import rn.tool.FileHelper
+import rn.tool.StringToArrayConverter.stringToArray
 import rn.puzzle.game.medium.PermutationGameMaxMinSolver
 
 //https://www.hackerrank.com/challenges/permutation-game/problem

@@ -2,8 +2,8 @@ package rn.puzzle.greedy.easy
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.FileHelper
-import rn.puzzle.tool.StringToArrayConverter.stringToArray
+import rn.tool.FileHelper
+import rn.tool.StringToArrayConverter.stringToArray
 
 class LargestPermutationTests {
     @Test

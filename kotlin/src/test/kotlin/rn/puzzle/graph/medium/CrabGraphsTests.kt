@@ -2,9 +2,9 @@ package rn.puzzle.graph.medium
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.FileHelper
-import rn.puzzle.tool.StringToArrayConverter.stringTo2dArray
-import rn.puzzle.tool.StringToArrayConverter.stringToArray
+import rn.tool.FileHelper
+import rn.tool.StringToArrayConverter.stringTo2dArray
+import rn.tool.StringToArrayConverter.stringToArray
 
 class CrabGraphsTests {
     @Test

@@ -2,7 +2,7 @@ package rn.puzzle.string.medium
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.FileHelper
+import rn.tool.FileHelper
 import kotlin.math.pow
 
 class MaximumPalindromesTests {

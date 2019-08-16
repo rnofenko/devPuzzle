@@ -1,4 +1,4 @@
-package rn.puzzle.tool
+package rn.tool
 
 import java.lang.StringBuilder
 

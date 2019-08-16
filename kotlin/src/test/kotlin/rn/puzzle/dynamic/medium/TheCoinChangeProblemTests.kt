@@ -2,7 +2,7 @@ package rn.puzzle.dynamic.medium
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.tool.StringToArrayConverter.stringToLongArray
+import rn.tool.StringToArrayConverter.stringToLongArray
 
 class TheCoinChangeProblemTests {
     @Test

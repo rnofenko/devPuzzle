@@ -2,7 +2,7 @@ package rn.puzzle.search.hard
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.FileHelper
+import rn.tool.FileHelper
 import rn.tool.Stopwatch
 
 class MaximizingMissionPointsTests {

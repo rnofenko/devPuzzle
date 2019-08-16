@@ -1,4 +1,4 @@
-package rn.puzzle.tool
+package rn.tool
 
 object ArrayPrinter {
     fun print(a: Array<Int>) {

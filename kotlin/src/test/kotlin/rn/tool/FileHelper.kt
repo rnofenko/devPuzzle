@@ -1,4 +1,4 @@
-package rn.puzzle
+package rn.tool
 
 import java.io.File
 
