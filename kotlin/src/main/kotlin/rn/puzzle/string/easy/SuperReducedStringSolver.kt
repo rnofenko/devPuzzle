@@ -1,4 +1,4 @@
-package rn.puzzle.string.low
+package rn.puzzle.string.easy
 
 class SuperReducedStringSolver {
     private val empty: String = "Empty String"

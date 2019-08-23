@@ -1,7 +1,6 @@
-package rn.puzzle.string.low
+package rn.puzzle.string.easy
 
 import org.junit.Test
-import rn.puzzle.string.low.StrongPasswordSolver
 
 class StrongPasswordSolverTests {
 

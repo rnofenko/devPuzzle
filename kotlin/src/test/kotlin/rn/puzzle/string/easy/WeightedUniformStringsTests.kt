@@ -1,4 +1,4 @@
-package rn.puzzle.string.low
+package rn.puzzle.string.easy
 
 import junit.framework.Assert.assertEquals
 import org.junit.Test

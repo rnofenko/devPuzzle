@@ -1,4 +1,4 @@
-package rn.puzzle.string.low
+package rn.puzzle.string.easy
 
 class WeightedUniformStringsSolver {
     fun weightedUniformStrings(s: String, queries: Array<Int>): Array<String> {
