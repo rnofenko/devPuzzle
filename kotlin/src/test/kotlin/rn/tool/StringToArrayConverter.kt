@@ -30,6 +30,25 @@ object StringToArrayConverter {
     }
 
     fun stringTo2dIntArray(line: String): Array<IntArray> {
+        if(line.startsWith("[")) {
+            return bracketsStringTo2dIntArray(line)
+        }
+        return spaceCommaStringTo2dIntArray(line)
+    }
+
+    private fun bracketsStringTo2dIntArray(line: String): Array<IntArray> {
+        val cleaned = line.trim().substring(2, line.length - 2)
+        val stringPairs = cleaned.split("],[")
+        return stringPairs
+                .map { it
+                        .split(",")
+                        .map { s -> s.toInt() }
+                        .toIntArray()
+                }
+                .toTypedArray()
+    }
+
+    private fun spaceCommaStringTo2dIntArray(line: String): Array<IntArray> {
         val cleaned = line.replace("(  +)".toRegex(), " ").trim()
         val stringPairs = cleaned.split(",")
         return stringPairs

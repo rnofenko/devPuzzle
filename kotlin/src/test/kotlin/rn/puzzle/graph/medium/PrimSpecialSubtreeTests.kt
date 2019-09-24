@@ -12,6 +12,12 @@ class PrimSpecialSubtreeTests {
         assertEquals(15, res)
     }
 
+    @Test
+    fun sample2() {
+        val res = prims(5, arrayOf(arrayOf(1,2,3),arrayOf(2,3,4),arrayOf(2,5,2),arrayOf(3,4,3),arrayOf(5,4,33)),1)
+        assertEquals(12, res)
+    }
+
     private fun prims(n: Int, initialEdges: Array<Array<Int>>, start: Int): Int {
         var edges = initialEdges.toList()
         var nextVertex = start
