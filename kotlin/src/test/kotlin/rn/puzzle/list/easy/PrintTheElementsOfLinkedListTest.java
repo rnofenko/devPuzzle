@@ -1,4 +1,4 @@
-package rn.puzzle.linkedlist.easy;
+package rn.puzzle.list.easy;
 
 import org.junit.Test;
 
