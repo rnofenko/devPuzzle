@@ -6,6 +6,7 @@
 
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
     private final double mean;
@@ -14,31 +15,35 @@ public class PercolationStats {
     private final double percentile95p;
 
     public PercolationStats(int size, int trialsCount) {
+        if (size < 1 || trialsCount < 1) {
+            throw new IllegalArgumentException();
+        }
+
         double[] rates = new double[trialsCount];
-        double sum = 0;
         for (int i = 0; i < trialsCount; i++) {
             rates[i] = getPercolationRate(size);
-            sum += rates[i];
         }
-        mean = sum / trialsCount;
+        mean = StdStats.mean(rates);
+        stddev = StdStats.stddev(rates);
+        double percentile5 = 1.96 * stddev / Math.sqrt(trialsCount);
+        percentile95n = mean - percentile5;
+        percentile95p = mean + percentile5;
+    }
 
-        if (trialsCount > 1) {
-            sum = 0;
-            for (int i = 0; i < trialsCount; i++) {
-                double meanDiff = rates[i] - mean;
-                sum += meanDiff * meanDiff;
-            }
-            stddev = sum / (trialsCount - 1);
+    public double mean() {
+        return mean;
+    }
 
-            double expectedValue = Math.sqrt(stddev);
-            double percentile5 = 1.96 * expectedValue / Math.sqrt(trialsCount);
-            percentile95n = mean - percentile5;
-            percentile95p = mean + percentile5;
-        } else {
-            stddev = 0;
-            percentile95n = 0;
-            percentile95p = 0;
-        }
+    public double stddev() {
+        return stddev;
+    }
+
+    public double confidenceLo() {
+        return percentile95n;
+    }
+
+    public double confidenceHi() {
+        return percentile95p;
     }
 
     public static void main(String[] args) {
@@ -62,7 +67,7 @@ public class PercolationStats {
     }
 
     private static void print(String name, String value) {
-        StdOut.println(String.format("%-" + 25 + "s", name) + " = " + value);
+        StdOut.println(String.format("%-25s", name) + " = " + value);
     }
 
     private static double getPercolationRate(int size) {
