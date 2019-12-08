@@ -6,6 +6,8 @@ tmp/
 packages/
 _ReSharper*/
 _NCrunch*/
+.idea/
+.mvn/
 *.suo
 *.ncrunchsolution
 *.DotSettings.user
