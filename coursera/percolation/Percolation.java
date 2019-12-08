@@ -7,11 +7,12 @@
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    private final boolean[][] openCells;
-    private final boolean[][] fullCells;
-    private int[] fullTreeIds;
-    private int fullTreeIdsSize = 0;
-    private final WeightedQuickUnionUF graph;
+    private final boolean[] openCells;
+    private final int topCoord;
+    private final int bootomCoord;
+    private final WeightedQuickUnionUF fullGraph;
+    private final WeightedQuickUnionUF percGraph;
+    private int fullTreeId;
     private final int size;
     private boolean isPercolated;
     private int openSitesCount = 0;
@@ -22,10 +23,11 @@ public class Percolation {
         }
 
         size = n;
-        openCells = new boolean[n][n];
-        fullCells = new boolean[n][n];
-        fullTreeIds = new int[size];
-        graph = createGraph();
+        openCells = new boolean[size * size];
+        topCoord = size * size;
+        bootomCoord = topCoord + 1;
+        fullGraph = createGraph(1);
+        percGraph = createGraph(2);
     }
 
     public boolean isOpen(int row, int col) {
@@ -33,7 +35,7 @@ public class Percolation {
             throw new IllegalArgumentException();
         }
 
-        return openCells[row - 1][col - 1];
+        return openCells[row * size - size + col - 1];
     }
 
     public void open(int row, int col) {
@@ -46,23 +48,36 @@ public class Percolation {
         int r = row - 1;
         int c = col -1;
 
-        openCells[r][c] = true;
+        int coord = r * size + c;
+        openCells[coord] = true;
 
-        int center = r * size + c;
-        if (r < size - 1 && openCells[r + 1][c]) {
-            graph.union(center, center + size);
+        if (r == 0) {
+            fullGraph.union(coord, topCoord);
+            percGraph.union(coord, topCoord);
         }
-        if (r > 0 && openCells[r - 1][c]) {
-            graph.union(center, center - size);
-        }
-        if (c < size - 1 && openCells[r][c + 1]) {
-            graph.union(center, center + 1);
-        }
-        if (c > 0 && openCells[r][c - 1]) {
-            graph.union(center, center - 1);
+        if (row == size) {
+            percGraph.union(coord, bootomCoord);
         }
 
-        updateCache();
+        if (r < size - 1 && openCells[coord + size]) {
+            fullGraph.union(coord, coord + size);
+            percGraph.union(coord, coord + size);
+        }
+        if (r > 0 && openCells[coord - size]) {
+            fullGraph.union(coord, coord - size);
+            percGraph.union(coord, coord - size);
+        }
+        if (c < size - 1 && openCells[coord + 1]) {
+            fullGraph.union(coord, coord + 1);
+            percGraph.union(coord, coord + 1);
+        }
+        if (c > 0 && openCells[coord - 1]) {
+            fullGraph.union(coord, coord - 1);
+            percGraph.union(coord, coord - 1);
+        }
+
+        fullTreeId = fullGraph.find(topCoord);
+        isPercolated = percGraph.find(topCoord) == percGraph.find(bootomCoord);
     }
 
     public boolean percolates() {
@@ -70,61 +85,23 @@ public class Percolation {
     }
 
     public boolean isFull(int row, int col) {
-        int r = row - 1;
-        int c = col - 1;
         if (!isOpen(row, col)) {
             return false;
         }
-        if (fullCells[r][c]) {
-            return true;
-        }
 
-        int id = graph.find(r * size + c);
+        int r = row - 1;
+        int c = col - 1;
+        int coord = r * size + c;
 
-        for (int i = 0; i < fullTreeIdsSize; i++) {
-            if (fullTreeIds[i] == id) {
-                fullCells[r][c] = true;
-                return true;
-            }
-        }
-
-        return false;
+        return fullGraph.find(coord) == fullTreeId;
     }
 
     public int numberOfOpenSites() {
         return openSitesCount;
     }
 
-    private WeightedQuickUnionUF createGraph() {
-        return new WeightedQuickUnionUF(size * size);
-    }
-
-    private void updateCache() {
-        fullTreeIdsSize = 0;
-        int prevId = -1;
-        boolean[] firstRow = openCells[0];
-        for (int c = 0; c < size; c++) {
-            if (!firstRow[c]) {
-                continue;
-            }
-            int id = graph.find(c);
-            if (prevId != id) {
-                prevId = id;
-                fullTreeIds[fullTreeIdsSize] = id;
-                fullTreeIdsSize++;
-            }
-        }
-
-        isPercolated = false;
-        boolean[] lastRow = openCells[size - 1];
-        for (int c = 0; c < size; c++) {
-            if (lastRow[c]) {
-                if (isFull(size, c + 1)) {
-                    isPercolated = true;
-                    break;
-                }
-            }
-        }
+    private WeightedQuickUnionUF createGraph(int extra) {
+        return new WeightedQuickUnionUF(size * size + extra);
     }
 
 }

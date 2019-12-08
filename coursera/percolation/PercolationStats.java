@@ -7,6 +7,7 @@
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
+import edu.princeton.cs.algs4.Stopwatch;
 
 public class PercolationStats {
     private final double mean;
@@ -59,11 +60,13 @@ public class PercolationStats {
             throw new IllegalArgumentException("T cannot be less than 1");
         }
 
+        Stopwatch w = new Stopwatch();
         PercolationStats stats = new PercolationStats(size, trialsCount);
 
         print("mean", Double.toString(stats.mean));
         print("stddev", Double.toString(stats.stddev));
         print("95% confidence interval", "[" + stats.percentile95n + ", " + stats.percentile95p + "]");
+        print("time", Double.toString(w.elapsedTime()));
     }
 
     private static void print(String name, String value) {
