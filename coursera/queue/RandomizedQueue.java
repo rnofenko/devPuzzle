@@ -22,7 +22,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     public void enqueue(Item item) {
-        if(item == null) {
+        if (item == null) {
             throw new IllegalArgumentException();
         }
 
@@ -34,7 +34,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private void checkSize() {
         int oldSize = size();
 
-        if (oldSize == 0) {
+        if (data.length == 0) {
             resize(2, 0);
         } else if (oldSize == data.length) {
             resize(oldSize * 2, oldSize);
@@ -43,7 +43,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private void resize(int newSize, int oldSize) {
         Item[] newData = (Item[]) new Object[newSize];
-        if(oldSize > 0) {
+        if (oldSize > 0) {
             System.arraycopy(data, 0, newData, 0, oldSize);
         }
 
@@ -51,7 +51,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     public Item dequeue() {
-        if(tailPos == -1) {
+        if (tailPos == -1) {
             throw new NoSuchElementException();
         }
 
@@ -66,7 +66,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
 
     public Item sample() {
-        if(tailPos == -1) {
+        if (tailPos == -1) {
             throw new NoSuchElementException();
         }
 
@@ -89,8 +89,6 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private class RandomizedQueueIterator implements Iterator<Item> {
 
         private final RandomizedQueue<Item> queue;
-        private int index;
-        private Object next;
 
         public RandomizedQueueIterator(RandomizedQueue<Item> queue) {
             this.queue = queue;

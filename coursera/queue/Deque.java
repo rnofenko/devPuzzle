@@ -4,13 +4,14 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class Deque<Item> implements Iterable<Item> {
+    private static final int MULTIPLIER = 3;
     private Item[] data;
     private int headPos = 0;
     private int tailPos = 0;
 
     // construct an empty deque
     public Deque() {
-        Item[] newData = (Item[]) new Object[0];
+        data = (Item[]) new Object[0];
     }
 
     // is the deque empty?
@@ -25,13 +26,13 @@ public class Deque<Item> implements Iterable<Item> {
 
     // add the item to the front
     public void addFirst(Item item) {
-        if(item == null) {
+        if (item == null) {
             throw new IllegalArgumentException();
         }
 
         checkSize();
 
-        if(headPos == tailPos) {
+        if (headPos == tailPos) {
             tailPos++;
         }
         data[headPos--] = item;
@@ -39,13 +40,13 @@ public class Deque<Item> implements Iterable<Item> {
 
     // add the item to the back
     public void addLast(Item item) {
-        if(item == null) {
+        if (item == null) {
             throw new IllegalArgumentException();
         }
 
         checkSize();
 
-        if(headPos == tailPos) {
+        if (headPos == tailPos) {
             headPos--;
         }
         data[tailPos++] = item;
@@ -54,23 +55,25 @@ public class Deque<Item> implements Iterable<Item> {
     private void checkSize() {
         int oldSize = size();
 
-        if (headPos == tailPos) {
-            resize(3, 0);
+        if (data.length == 0) {
+            resize(MULTIPLIER, 0);
         } else if (headPos == -1 || tailPos == data.length) {
-            resize(oldSize * 3, oldSize);
-        } else if (oldSize > data.length) {
-            resize(oldSize * 3, oldSize);
+            if (oldSize == 0) {
+                int shift = data.length / MULTIPLIER;
+                headPos = shift;
+                tailPos = shift;
+            } else {
+                resize(data.length * MULTIPLIER, oldSize);
+            }
         }
     }
 
     private void resize(int newSize, int oldSize) {
-        Object[] newData = new Object[newSize];
-        int shift = newSize / 3;
+        Item[] newData = (Item[]) new Object[newSize];
+        int shift = newSize / MULTIPLIER;
 
-        if(oldSize > 0) {
-            for (int i = 0; i < oldSize; i++) {
-                newData[shift + i] = data[headPos + i + 1];
-            }
+        if (oldSize > 0) {
+            System.arraycopy(data, headPos + 1, newData, shift, oldSize);
             headPos = shift - 1;
             tailPos = shift + oldSize;
         } else {
@@ -83,28 +86,28 @@ public class Deque<Item> implements Iterable<Item> {
 
     // remove and return the item from the front
     public Item removeFirst() {
-        if(headPos == tailPos) {
+        if (isEmpty()) {
             throw new NoSuchElementException();
         }
 
         headPos++;
-        Object item = data[headPos];
+        Item item = data[headPos];
         data[headPos] = null;
 
-        return (Item)item;
+        return item;
     }
 
     // remove and return the item from the back
     public Item removeLast() {
-        if(headPos == tailPos) {
+        if (isEmpty()) {
             throw new NoSuchElementException();
         }
 
         tailPos--;
-        Object item = data[tailPos];
+        Item item = data[tailPos];
         data[tailPos] = null;
 
-        return (Item)item;
+        return item;
     }
 
     // return an iterator over items in order from front to back
@@ -115,7 +118,6 @@ public class Deque<Item> implements Iterable<Item> {
     private class DequeIterator implements Iterator<Item> {
 
         private int index;
-        private Object next;
 
         DequeIterator() {
             index = headPos;
@@ -123,17 +125,16 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public boolean hasNext() {
-            return index + 1 < tailPos;
+            return index + 1 < tailPos && index + 1 < data.length;
         }
 
         @Override
         public Item next() {
-            index++;
-            if (index >= data.length || data[index] == null) {
+            if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            next = data[index];
-            return (Item)next;
+            index++;
+            return data[index];
         }
     }
 

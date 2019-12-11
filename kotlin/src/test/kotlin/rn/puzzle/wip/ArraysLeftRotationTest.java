@@ -27,7 +27,7 @@ public class ArraysLeftRotationTest {
         for (int i = 0; i < len; i++) {
             a[i] = a[(i + d) % len];
         }
-        a[len - 1] = last;
+//        a[len - 1] = last;
         return a;
     }
 
