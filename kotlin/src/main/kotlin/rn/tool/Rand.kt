@@ -22,6 +22,14 @@ object Rand {
         return createNewArray(size, maxSize, false)
     }
 
+    fun positiveInt(max: Int): Int {
+        return abs(r.nextInt()) % max
+    }
+
+    fun zeroOrOne(max: Int): Int {
+        return r.nextInt() % max
+    }
+
     private fun createNewArray(size: Int, maxSize: Int, negative: Boolean): IntArray {
         val a = createNewArray(size, maxSize)
         if(!negative) {
