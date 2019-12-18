@@ -27,14 +27,20 @@ public class BruteCollinearPoints {
                         double slopeL = pi.slopeTo(points[l]);
                         if (Double.compare(slopeJ, slopeL) == 0) {
 
-                            Point[] linePoints = new Point[4];
-                            linePoints[0] = pi;
-                            linePoints[1] = points[j];
-                            linePoints[2] = points[k];
-                            linePoints[3] = points[l];
-                            Arrays.sort(linePoints, Point::compareTo);
+                            Point[] segmentPoints = new Point[4];
+                            segmentPoints[0] = pi;
+                            segmentPoints[1] = points[j];
+                            segmentPoints[2] = points[k];
+                            segmentPoints[3] = points[l];
+                            Arrays.sort(segmentPoints, Point::compareTo);
 
-                            LineSegment segment = new LineSegment(linePoints[0], linePoints[3]);
+                            for (int f = 0; f < segmentPoints.length - 1; f++) {
+                                if (segmentPoints[f].equals(segmentPoints[f + 1])) {
+                                    throw new IllegalArgumentException();
+                                }
+                            }
+
+                            LineSegment segment = new LineSegment(segmentPoints[0], segmentPoints[3]);
                             segments.add(segment);
                         }
                     }
@@ -49,8 +55,8 @@ public class BruteCollinearPoints {
         if (points == null) {
             throw new IllegalArgumentException();
         }
-        for (int i = 0; i < points.length - 1; i++) {
-            if (points[i] == null || points[i + 1] == null || points[i].equals(points[i + 1])) {
+        for (Point point : points) {
+            if (point == null) {
                 throw new IllegalArgumentException();
             }
         }
