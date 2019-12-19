@@ -3,52 +3,50 @@ import java.util.Arrays;
 
 public class BruteCollinearPoints {
 
-    private LineSegment[] segments;
+    private final LineSegment[] segments;
 
     public BruteCollinearPoints(Point[] points) {
         validate(points);
-        segments = veryBrute(points);
+        segments = veryBrute(points.clone());
     }
 
     private LineSegment[] veryBrute(Point[] points) {
-        ArrayList<LineSegment> segments = new ArrayList<>();
+        ArrayList<LineSegment> list = new ArrayList<>();
 
         for (int i = 0; i < points.length; i++) {
+
             Point pi = points[i];
             for (int j = i + 1; j < points.length; j++) {
+
                 double slopeJ = pi.slopeTo(points[j]);
                 for (int k = j + 1; k < points.length; k++) {
+
                     double slopeK = pi.slopeTo(points[k]);
                     if (Double.compare(slopeJ, slopeK) != 0) {
                         continue;
                     }
 
-                    for (int l = k + 1; l < points.length; l++) {
-                        double slopeL = pi.slopeTo(points[l]);
+                    for (int lastIndex = k + 1; lastIndex < points.length; lastIndex++) {
+
+                        double slopeL = pi.slopeTo(points[lastIndex]);
                         if (Double.compare(slopeJ, slopeL) == 0) {
 
                             Point[] segmentPoints = new Point[4];
                             segmentPoints[0] = pi;
                             segmentPoints[1] = points[j];
                             segmentPoints[2] = points[k];
-                            segmentPoints[3] = points[l];
+                            segmentPoints[3] = points[lastIndex];
                             Arrays.sort(segmentPoints, Point::compareTo);
 
-                            for (int f = 0; f < segmentPoints.length - 1; f++) {
-                                if (segmentPoints[f].equals(segmentPoints[f + 1])) {
-                                    throw new IllegalArgumentException();
-                                }
-                            }
-
                             LineSegment segment = new LineSegment(segmentPoints[0], segmentPoints[3]);
-                            segments.add(segment);
+                            list.add(segment);
                         }
                     }
                 }
             }
         }
 
-        return segments.toArray(new LineSegment[segments.size()]);
+        return list.toArray(new LineSegment[list.size()]);
     }
 
     private void validate(Point[] points) {
@@ -60,6 +58,15 @@ public class BruteCollinearPoints {
                 throw new IllegalArgumentException();
             }
         }
+
+        for (int i = 0; i < points.length; i++) {
+            Point pi = points[i];
+            for (int j = i + 1; j < points.length; j++) {
+                if (pi.compareTo(points[j]) == 0) {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
     }
 
     public int numberOfSegments() {
@@ -67,6 +74,6 @@ public class BruteCollinearPoints {
     }
 
     public LineSegment[] segments() {
-        return segments;
+        return segments.clone();
     }
 }

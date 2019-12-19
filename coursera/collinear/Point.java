@@ -89,6 +89,9 @@ public class Point implements Comparable<Point> {
         if (y != that.y) {
             return y < that.y ? -1 : 1;
         }
+        if (x == that.x) {
+            return 0;
+        }
         return x < that.x ? -1 : 1;
     }
 
