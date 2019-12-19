@@ -9,8 +9,14 @@ public class FastCollinearPoints {
     private final LineSegment[] segments;
 
     public FastCollinearPoints(Point[] points) {
-        validate(points);
-        List<Point[]> listOfPoints = findSegments(points.clone());
+        if (points == null) {
+            throw new IllegalArgumentException();
+        }
+
+        Point[] pointsForWork = points.clone();
+
+        validate(pointsForWork);
+        List<Point[]> listOfPoints = findSegments(pointsForWork);
         List<LineSegment> listOfSegments = dedupe(listOfPoints);
         segments = listOfSegments.toArray(new LineSegment[listOfSegments.size()]);
     }
@@ -127,10 +133,6 @@ public class FastCollinearPoints {
     }
 
     private void validate(Point[] points) {
-        if (points == null) {
-            throw new IllegalArgumentException();
-        }
-
         for (Point point : points) {
             if (point == null) {
                 throw new IllegalArgumentException();

@@ -3,6 +3,7 @@ Deploy/
 bin/
 obj/
 tmp/
+out/
 packages/
 _ReSharper*/
 _NCrunch*/

@@ -6,8 +6,14 @@ public class BruteCollinearPoints {
     private final LineSegment[] segments;
 
     public BruteCollinearPoints(Point[] points) {
-        validate(points);
-        segments = veryBrute(points.clone());
+        if (points == null) {
+            throw new IllegalArgumentException();
+        }
+
+        Point[] pointsForWork = points.clone();
+
+        validate(pointsForWork);
+        segments = veryBrute(pointsForWork);
     }
 
     private LineSegment[] veryBrute(Point[] points) {
@@ -50,9 +56,6 @@ public class BruteCollinearPoints {
     }
 
     private void validate(Point[] points) {
-        if (points == null) {
-            throw new IllegalArgumentException();
-        }
         for (Point point : points) {
             if (point == null) {
                 throw new IllegalArgumentException();
