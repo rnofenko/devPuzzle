@@ -1,19 +1,19 @@
 package rn.standard.sorting;
 
-public class QuicksortSorter {
+public class QuicksortThreeWay {
     private InsertionSorter insertionSorter = new InsertionSorter();
     private final static int OPTIMAL_COUNT_WHEN_TO_USER_INSERTION = 14;
     private int countWhenUseInsertion;
 
-    public QuicksortSorter() {
+    public QuicksortThreeWay() {
         this(true);
     }
 
-    public QuicksortSorter(boolean enableInsertionSort) {
+    public QuicksortThreeWay(boolean enableInsertionSort) {
         this(enableInsertionSort, OPTIMAL_COUNT_WHEN_TO_USER_INSERTION);
     }
 
-    public QuicksortSorter(boolean enableInsertionSort, int countWhenUseInsertion) {
+    public QuicksortThreeWay(boolean enableInsertionSort, int countWhenUseInsertion) {
         this.countWhenUseInsertion = enableInsertionSort ? countWhenUseInsertion : 0;
     }
 
@@ -34,7 +34,7 @@ public class QuicksortSorter {
         int sortIndex = startIndex;
         int lo = sortIndex + 1;
         int hi = endIndex;
-//        selectOptimalPartition(values, startIndex, endIndex);
+        selectOptimalPartition(values, startIndex, endIndex);
         int partition = values[sortIndex];
 
         while (lo <= hi) {

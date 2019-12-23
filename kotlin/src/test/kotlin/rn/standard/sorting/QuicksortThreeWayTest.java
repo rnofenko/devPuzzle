@@ -2,13 +2,14 @@ package rn.standard.sorting;
 
 import org.junit.Assert;
 import org.junit.Test;
+import rn.tool.ArrayPrinter;
 import rn.tool.Rand;
 import rn.tool.Stopwatch;
 
 import java.util.Arrays;
 
-public class QuicksortSorterTest {
-    private QuicksortSorter sorter = new QuicksortSorter(false);
+public class QuicksortThreeWayTest {
+    private QuicksortThreeWay sorter = new QuicksortThreeWay(false);
 
     @Test
     public void test1() {
@@ -41,21 +42,32 @@ public class QuicksortSorterTest {
     }
 
     @Test
+    public void test6() {
+        int[] values = new int[] { 1,2,3,4,5,6,7,8 };
+        test(values);
+    }
+
+    @Test
     public void performance1() {
         int count = 1000 * 1000 * 10;
         performanceTest(count, 1);
         performanceTest(count, 2);
         performanceTest(count, 10);
         performanceTest(count, 100);
-        performanceTest(count, 1000);
         performanceTest(count, 10000);
         performanceTest(count, 1000000);
+
+        int[] values = Rand.INSTANCE.newArray(count / 10, 1000000);
+        Arrays.sort(values);
+
+        performanceTest(values, "SORTED");
     }
 
     @Test
     public void performance2() {
         for (int i = 0; i < 100; i++) {
             int[] values = Rand.INSTANCE.newArray(10, 100);
+//            ArrayPrinter.INSTANCE.print(values);
             test(values);
         }
     }
@@ -84,7 +96,7 @@ public class QuicksortSorterTest {
         Arrays.sort(cloned);
         w.show("STANDARD");
 
-        QuicksortSorter sorter = new QuicksortSorter(true);
+        QuicksortThreeWay sorter = new QuicksortThreeWay(true);
         w.start();
         sorter.sort(values);
         w.show("QUICKSORT");
