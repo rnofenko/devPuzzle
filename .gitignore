@@ -4,6 +4,7 @@ bin/
 obj/
 tmp/
 out/
+target/
 packages/
 _ReSharper*/
 _NCrunch*/
