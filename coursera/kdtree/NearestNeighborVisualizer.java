@@ -13,12 +13,12 @@
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Point2D;
+import edu.princeton.cs.algs4.RectHV;
 import edu.princeton.cs.algs4.StdDraw;
 
 public class NearestNeighborVisualizer {
 
     public static void main(String[] args) {
-        // initialize the two data structures with point from file
         String filename = "circle10.txt";
         In in = new In(filename);
         PointSET brute = new PointSET();
@@ -35,7 +35,6 @@ public class NearestNeighborVisualizer {
         StdDraw.enableDoubleBuffering();
         while (true) {
 
-            // the location (x, y) of the mouse
             double x = StdDraw.mouseX();
             double y = StdDraw.mouseY();
             Point2D query = new Point2D(x, y);
