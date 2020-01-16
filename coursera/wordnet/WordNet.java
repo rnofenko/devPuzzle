@@ -27,6 +27,48 @@ public class WordNet {
         this.nounsMap = convertSynsetListToMapOfNouns(synsetsList);
     }
 
+    public Iterable<String> nouns() {
+        return nounsMap.keySet();
+    }
+
+    public boolean isNoun(String word) {
+        if (word == null) {
+            throw new IllegalArgumentException();
+        }
+        return nounsMap.containsKey(word);
+    }
+
+    public int distance(String nounA, String nounB) {
+        List<Integer> i1 = getIndexesForNoun(nounA);
+        List<Integer> i2 = getIndexesForNoun(nounB);
+
+        SAP sap = new SAP(hypernyms);
+        return sap.length(i1, i2);
+    }
+
+    public String sap(String nounA, String nounB) {
+        List<Integer> i1 = getIndexesForNoun(nounA);
+        List<Integer> i2 = getIndexesForNoun(nounB);
+
+        SAP sap = new SAP(hypernyms);
+        int resIndex = sap.ancestor(i1, i2);
+        if (resIndex < 0) {
+            return null;
+        }
+        return synsetsList.get(resIndex);
+    }
+
+    private List<Integer> getIndexesForNoun(String noun) {
+        if (noun == null) {
+            throw new IllegalArgumentException();
+        }
+        List<Integer> list = nounsMap.get(noun);
+        if (list == null) {
+            throw new IllegalArgumentException();
+        }
+        return list;
+    }
+
     private Map<String, List<Integer>> convertSynsetListToMapOfNouns(List<String> synsets) {
         HashMap<String, List<Integer>> map = new HashMap<>();
 
@@ -63,41 +105,5 @@ public class WordNet {
             digraph.addEdge(v, w);
         }
         return digraph;
-    }
-
-    public Iterable<String> nouns() {
-        return nounsMap.keySet();
-    }
-
-    public boolean isNoun(String word) {
-        return nounsMap.containsKey(word);
-    }
-
-    public int distance(String nounA, String nounB) {
-        List<Integer> i1 = getIndexesForNoun(nounA);
-        List<Integer> i2 = getIndexesForNoun(nounB);
-
-        SAP sap = new SAP(hypernyms);
-        return sap.length(i1, i2);
-    }
-
-    public String sap(String nounA, String nounB) {
-        List<Integer> i1 = getIndexesForNoun(nounA);
-        List<Integer> i2 = getIndexesForNoun(nounB);
-
-        SAP sap = new SAP(hypernyms);
-        int resIndex = sap.ancestor(i1, i2);
-        if (resIndex < 0) {
-            return null;
-        }
-        return synsetsList.get(resIndex);
-    }
-
-    private List<Integer> getIndexesForNoun(String noun) {
-        if (noun == null) {
-            throw new IllegalArgumentException();
-        }
-        List<Integer> list = nounsMap.get(noun);
-        return list == null ? new ArrayList<>() : list;
     }
 }

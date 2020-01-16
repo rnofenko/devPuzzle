@@ -3,6 +3,8 @@ import edu.princeton.cs.algs4.In;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class SapTest {
 
     @Test
@@ -16,8 +18,11 @@ public class SapTest {
     public void digraph3_length() {
         SAP sap = createSap("data/digraph3.txt");
 
-//        Assert.assertEquals(3, sap.length(10, 7));
+        Assert.assertEquals(3, sap.length(10, 7));
         Assert.assertEquals(5, sap.length(8, 13));
+        Assert.assertEquals(4, sap.length(Arrays.asList(8, 9), Arrays.asList(13, 14)));
+        Assert.assertEquals(0, sap.length(Arrays.asList(8, 9), Arrays.asList(13, 9, 14)));
+        Assert.assertEquals(0, sap.length(Arrays.asList(8, 13, 9), Arrays.asList(13, 14)));
     }
 
     @Test

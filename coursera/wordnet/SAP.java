@@ -8,8 +8,6 @@ public class SAP {
 
     private static final int EMPTY = 0;
     private static final int NEGATIVE = -1;
-    private static final byte V = 1;
-    private static final byte W = 2;
     private final Digraph digraph;
 
     public SAP(Digraph G) {
@@ -33,73 +31,70 @@ public class SAP {
     }
 
     private BfsState findAncestor(Iterable<Integer> v, Iterable<Integer> w) {
-        BfsState state = initializeBfsState(v, w);
+        BfsState state = new BfsState();
+        Flow vFlow = createFlow(state, v, null);
+        Flow wFlow = createFlow(state, w, vFlow.steps);
+
         if (state.ancestor != NEGATIVE) {
             return state;
         }
 
         int roundNo = 0;
-        while (!state.queue.isEmpty() && roundNo < state.bestLen) {
-            doIterationToFindAncestor(state);
+        while ((!vFlow.queue.isEmpty() || !wFlow.queue.isEmpty()) && roundNo < state.length) {
+            doIterationToFindAncestor(vFlow, state, wFlow.steps);
+            doIterationToFindAncestor(wFlow, state, vFlow.steps);
             roundNo++;
         }
 
         return state;
     }
 
-    private void doIterationToFindAncestor(BfsState state) {
+    private void doIterationToFindAncestor(Flow flow, BfsState state, int[] others) {
         Queue<Integer> nextVertexes = new Queue<>();
-        byte[] who = state.who;
-        int[] steps = state.steps;
+        int[] steps = flow.steps;
 
-        for (int vertex : state.queue) {
-            byte owner = who[vertex];
+        for (int vertex : flow.queue) {
             for (int parent : digraph.adj(vertex)) {
-                if (who[parent] == EMPTY) {
-                    who[parent] = owner;
-                    steps[parent] = steps[vertex] + 1;
-                    nextVertexes.enqueue(parent);
-                } else if (who[parent] != owner) {
-                    int length = steps[parent] + steps[vertex] + 1;
-                    if (length < state.bestLen) {
-                        state.bestLen = length;
+                if (steps[parent] != EMPTY) {
+                    continue;
+                }
+                steps[parent] = steps[vertex] + 1;
+                nextVertexes.enqueue(parent);
+
+                if (others[parent] != EMPTY) {
+                    int length = steps[parent] + others[parent] - 2;
+                    if (length < state.length) {
+                        state.length = length;
                         state.ancestor = parent;
                     }
                 }
             }
         }
 
-        state.queue = nextVertexes;
+        flow.queue = nextVertexes;
     }
 
-    private BfsState initializeBfsState(Iterable<Integer> v, Iterable<Integer> w) {
-        BfsState state = new BfsState(digraph.V());
-        copyElements(state, v, V);
-        copyElements(state, w, W);
-        if (state.ancestor != NEGATIVE) {
-            return state;
+    private Flow createFlow(BfsState state, Iterable<Integer> v, int[] others) {
+        if (v == null) {
+            throw new IllegalArgumentException();
         }
 
-        return state;
-    }
-
-    private void copyElements(BfsState state, Iterable<Integer> v, byte owner) {
-        byte[] who = state.who;
-        Queue<Integer> queue = state.queue;
+        int size = digraph.V();
+        Flow f = new Flow(size);
 
         for (Integer vertex : v) {
-            if (vertex == null) {
+            if (vertex == null || vertex < 0 || vertex >= size) {
                 throw new IllegalArgumentException();
             }
-            if (who[vertex] == EMPTY) {
-                who[vertex] = owner;
-                queue.enqueue(vertex);
-            } else if (who[vertex] != owner) {
+            f.queue.enqueue(vertex);
+            f.steps[vertex] = 1;
+            if (others != null && others[vertex] != EMPTY) {
                 state.ancestor = vertex;
-                state.bestLen = 0;
-                return;
+                state.length = 0;
             }
         }
+
+        return f;
     }
 
     private List<Integer> toList(int v) {
@@ -109,19 +104,25 @@ public class SAP {
     }
 
     private static class BfsState {
-        public final int[] steps;
-        public final byte[] who;
         public int ancestor = NEGATIVE;
-        public Queue<Integer> queue = new Queue<>();
-        public int bestLen = Integer.MAX_VALUE;
-
-        public BfsState(int size) {
-            steps = new int[size];
-            who = new byte[size];
-        }
+        public int length = Integer.MAX_VALUE;
 
         public int getFinalLength() {
-            return ancestor == NEGATIVE ? NEGATIVE : bestLen;
+            return ancestor == NEGATIVE ? NEGATIVE : length;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("ancestor=%s, length=%s", ancestor, length);
+        }
+    }
+
+    private static class Flow {
+        public final int[] steps;
+        public Queue<Integer> queue = new Queue<>();
+
+        public Flow(int size) {
+            steps = new int[size];
         }
     }
 }
