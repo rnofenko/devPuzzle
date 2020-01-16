@@ -31,6 +31,8 @@ public class Outcast {
                 maxSum = sum;
                 out = noun;
             }
+
+//            StdOut.println(String.format("%s %s", noun, sum));
         }
 
         return out;

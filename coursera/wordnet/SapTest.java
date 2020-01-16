@@ -6,10 +6,18 @@ import org.junit.Test;
 public class SapTest {
 
     @Test
+    public void digraph4_length() {
+        SAP sap = createSap("data/digraph4.txt");
+
+        Assert.assertEquals(3, sap.length(1, 4));
+    }
+
+    @Test
     public void digraph3_length() {
         SAP sap = createSap("data/digraph3.txt");
 
-        Assert.assertEquals(3, sap.length(10, 7));
+//        Assert.assertEquals(3, sap.length(10, 7));
+        Assert.assertEquals(5, sap.length(8, 13));
     }
 
     @Test

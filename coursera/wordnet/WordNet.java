@@ -7,20 +7,38 @@ import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.In;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WordNet {
 
-    private final List<String> synsets;
+    private final List<String> synsetsList;
     private final Digraph hypernyms;
+    private final Map<String, List<Integer>> nounsMap;
 
     public WordNet(String synsetsFilename, String hypernymsFile) {
         if (synsetsFilename == null || hypernymsFile == null) {
             throw new IllegalArgumentException();
         }
 
-        this.synsets = parseSynsetFile(synsetsFilename);
-        this.hypernyms = parseHypernymFile(hypernymsFile, synsets.size());
+        this.synsetsList = parseSynsetFile(synsetsFilename);
+        this.hypernyms = parseHypernymFile(hypernymsFile, synsetsList.size());
+        this.nounsMap = convertSynsetListToMapOfNouns(synsetsList);
+    }
+
+    private Map<String, List<Integer>> convertSynsetListToMapOfNouns(List<String> synsets) {
+        HashMap<String, List<Integer>> map = new HashMap<>();
+
+        for (int i = 0; i < synsets.size(); i++) {
+            String[] nouns = synsets.get(i).split(" ");
+            for (String noun : nouns) {
+                List<Integer> indexes = map.computeIfAbsent(noun, k -> new ArrayList<>());
+                indexes.add(i);
+            }
+        }
+
+        return map;
     }
 
     private List<String> parseSynsetFile(String filename) {
@@ -48,11 +66,11 @@ public class WordNet {
     }
 
     public Iterable<String> nouns() {
-        return new ArrayList<>(synsets);
+        return nounsMap.keySet();
     }
 
     public boolean isNoun(String word) {
-        return synsets.contains(word);
+        return nounsMap.containsKey(word);
     }
 
     public int distance(String nounA, String nounB) {
@@ -72,20 +90,14 @@ public class WordNet {
         if (resIndex < 0) {
             return null;
         }
-        return synsets.get(resIndex);
+        return synsetsList.get(resIndex);
     }
 
     private List<Integer> getIndexesForNoun(String noun) {
-        ArrayList<Integer> indexes = new ArrayList<>();
         if (noun == null) {
             throw new IllegalArgumentException();
         }
-
-        for (int i = 0; i < synsets.size(); i++) {
-            if (noun.equals(synsets.get(i))) {
-                indexes.add(i);
-            }
-        }
-        return indexes;
+        List<Integer> list = nounsMap.get(noun);
+        return list == null ? new ArrayList<>() : list;
     }
 }
