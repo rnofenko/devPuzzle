@@ -14,8 +14,8 @@ import java.util.Map;
 public class WordNet {
 
     private final List<String> synsetsList;
-    private final Digraph hypernyms;
     private final Map<String, List<Integer>> nounsMap;
+    private final SAP sap;
 
     public WordNet(String synsetsFilename, String hypernymsFile) {
         if (synsetsFilename == null || hypernymsFile == null) {
@@ -23,8 +23,8 @@ public class WordNet {
         }
 
         this.synsetsList = parseSynsetFile(synsetsFilename);
-        this.hypernyms = parseHypernymFile(hypernymsFile, synsetsList.size());
         this.nounsMap = convertSynsetListToMapOfNouns(synsetsList);
+        this.sap = parseHypernymFileToSap(hypernymsFile, synsetsList.size());
     }
 
     public Iterable<String> nouns() {
@@ -42,7 +42,6 @@ public class WordNet {
         List<Integer> i1 = getIndexesForNoun(nounA);
         List<Integer> i2 = getIndexesForNoun(nounB);
 
-        SAP sap = new SAP(hypernyms);
         return sap.length(i1, i2);
     }
 
@@ -50,7 +49,6 @@ public class WordNet {
         List<Integer> i1 = getIndexesForNoun(nounA);
         List<Integer> i2 = getIndexesForNoun(nounB);
 
-        SAP sap = new SAP(hypernyms);
         int resIndex = sap.ancestor(i1, i2);
         if (resIndex < 0) {
             return null;
@@ -93,17 +91,34 @@ public class WordNet {
         return parsed;
     }
 
-    private Digraph parseHypernymFile(String filename, int size) {
+    private SAP parseHypernymFileToSap(String filename, int size) {
         Digraph digraph = new Digraph(size);
         In file = new In(filename);
         while (!file.isEmpty()) {
             String[] parts = file.readLine().split(",");
-            if (parts.length < 2) continue;
-
             int v = Integer.parseInt(parts[0]);
-            int w = Integer.parseInt(parts[1]);
-            digraph.addEdge(v, w);
+
+            for (int i = 1; i < parts.length; i++) {
+                int w = Integer.parseInt(parts[i]);
+                digraph.addEdge(v, w);
+            }
         }
-        return digraph;
+
+        int rootsCount = countRootsCount(digraph);
+        if (rootsCount != 1) {
+            throw new IllegalArgumentException();
+        }
+
+        return new SAP(digraph);
+    }
+
+    private int countRootsCount(Digraph d) {
+        int rootsCount = 0;
+        for (int i = 0; i < d.V(); i++) {
+            if (!d.adj(i).iterator().hasNext()) {
+                rootsCount++;
+            }
+        }
+        return rootsCount;
     }
 }

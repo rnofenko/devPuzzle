@@ -1,6 +1,6 @@
 import edu.princeton.cs.algs4.In;
+import org.junit.Assert;
 import org.junit.Test;
-import sun.jvm.hotspot.utilities.Assert;
 
 public class OutcastTest {
 
@@ -23,7 +23,7 @@ public class OutcastTest {
         String[] nouns = getNouns(fileNo);
         Outcast outcast = createOutcast();
         String actual = outcast.outcast(nouns);
-        Assert.that(expected.equals(actual), "Expected |" + expected + "|, but actual is |" + actual + "|");
+        Assert.assertEquals("Expected |" + expected + "|, but actual is |" + actual + "|", expected, actual);
     }
 
     private String[] getNouns(int fileNo) {
