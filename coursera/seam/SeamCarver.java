@@ -4,7 +4,8 @@ public class SeamCarver {
     private static final int MIN_SIZE = 1;
     private static final int MAX_SQUARED_ENERGY = 1_000_000;
     private static final int OVER_SIZED_ENERGY = MAX_SQUARED_ENERGY + 1;
-    private final Picture picture;
+    private Picture cachedPicture;
+    private int[] grid;
     private int width;
     private int height;
     private int[] energyTable;
@@ -13,14 +14,17 @@ public class SeamCarver {
         if (picture == null) {
             throw new IllegalArgumentException();
         }
-        this.picture = clonePicture(picture);
         this.width = picture.width();
         this.height = picture.height();
-        this.energyTable = createEnergyTable(picture);
+        this.grid = copyPictureToArray(picture);
+        this.energyTable = createEnergyTable();
     }
 
     public Picture picture() {
-        return picture;
+        if (cachedPicture == null) {
+            cachedPicture = createPicture();
+        }
+        return cachedPicture;
     }
 
     public int width() {
@@ -40,17 +44,18 @@ public class SeamCarver {
         return Math.sqrt(square);
     }
 
-    private int calcEnergySquare(int x, int y, Picture pic) {
+    private int calcEnergySquare(int x, int y) {
         if (x == 0 || y == 0 || x == width - 1 || y == height - 1) {
             return MAX_SQUARED_ENERGY;
         }
 
-        int leftRgb = pic.getRGB(x - 1, y);
-        int rightRgb = pic.getRGB(x + 1, y);
+        int shift = y * width + x;
+        int leftRgb = grid[shift - 1];
+        int rightRgb = grid[shift + 1];
         int rowEnergy = calcEnergyPart(leftRgb, rightRgb);
 
-        int topRgb = pic.getRGB(x, y - 1);
-        int bottomRgb = pic.getRGB(x, y + 1);
+        int topRgb = grid[shift - width];
+        int bottomRgb = grid[shift + width];
         int colEnergy = calcEnergyPart(topRgb, bottomRgb);
 
         return rowEnergy + colEnergy;
@@ -150,30 +155,80 @@ public class SeamCarver {
         if (seam == null || height <= MIN_SIZE || width != seam.length) {
             throw new IllegalArgumentException();
         }
+
+        int[] seamCoords = new int[seam.length];
+        for (int i = 0; i < seam.length; i++) {
+            seamCoords[i] = seam[i] * width + i;
+        }
+        grid = deleteSeam(seamCoords);
+        height--;
+
+        energyTable = createEnergyTable();
+        cachedPicture = null;
     }
 
     public void removeVerticalSeam(int[] seam) {
         if (seam == null || width <= MIN_SIZE || height != seam.length) {
             throw new IllegalArgumentException();
         }
+
+        int[] seamCoords = new int[seam.length];
+        for (int i = 0; i < seam.length; i++) {
+            seamCoords[i] = i * width + seam[i];
+        }
+        grid = deleteSeam(seamCoords);
+        width--;
+
+        energyTable = createEnergyTable();
+        cachedPicture = null;
     }
 
-    private Picture clonePicture(Picture pic) {
-        Picture result = new Picture(pic.width(), pic.height());
-        for (int y = 0; y < pic.height(); y++) {
-            for (int x = 0; x < pic.width(); x++) {
-                result.setRGB(x, y, pic.getRGB(x, y));
+    private int[] deleteSeam(int[] seam) {
+        int[] newGrid = new int[grid.length - seam.length];
+        int targetInd = 0;
+        int startInd = 0;
+        for (int i: seam) {
+            int endInd = i - 1;
+            int size = endInd - startInd + 1;
+            if (size > 0) {
+                System.arraycopy(grid, startInd, newGrid, targetInd, size);
+                targetInd += size;
+            }
+            startInd = i + 1;
+        }
+
+        return newGrid;
+    }
+
+    private Picture createPicture() {
+        Picture result = new Picture(width, height);
+        for (int y = 0; y < height; y++) {
+            int shift = y * width;
+            for (int x = 0; x < width; x++) {
+                result.setRGB(x, y, grid[shift + x]);
             }
         }
 
         return result;
     }
 
-    private int[] createEnergyTable(Picture pic) {
+    private int[] copyPictureToArray(Picture pic) {
+        int[] result = new int[pic.width() * pic.height()];
+        for (int y = 0; y < pic.height(); y++) {
+            int shift = y * pic.width();
+            for (int x = 0; x < pic.width(); x++) {
+                result[shift + x] = pic.getRGB(x, y);
+            }
+        }
+
+        return result;
+    }
+
+    private int[] createEnergyTable() {
         int[] res = new int[width * height];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                res[x + width * y] = calcEnergySquare(x, y, pic);
+                res[x + width * y] = calcEnergySquare(x, y);
             }
         }
         return res;

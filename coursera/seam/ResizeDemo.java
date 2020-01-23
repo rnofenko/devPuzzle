@@ -16,6 +16,8 @@ import edu.princeton.cs.algs4.Stopwatch;
 
 public class ResizeDemo {
     public static void main(String[] args) {
+        args = new String[] { "data/6x5.png", "1", "1" };
+
         if (args.length != 3) {
             StdOut.println("Usage:\njava ResizeDemo [image filename] [num cols to remove] [num rows to remove]");
             return;

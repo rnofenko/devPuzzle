@@ -25,6 +25,16 @@ public class SeamCarverTester {
     }
 
     @Test
+    public void findVerticalAndRemove_6x5() {
+        removeVerticalAndHorizontal("data/6x5.png");
+    }
+
+    @Test
+    public void findVerticalAndRemove_3x4() {
+        removeVerticalAndHorizontal("data/3x4.png");
+    }
+
+    @Test
     public void findHorizontal_3x4() {
         printHorizontal("data/3x4.png");
     }
@@ -34,6 +44,21 @@ public class SeamCarverTester {
         printHorizontal("data/6x5.png");
     }
 
+    public void removeVerticalAndHorizontal(String filename) {
+        SeamCarver carver = createCarver(filename);
+
+        int[] seam = carver.findVerticalSeam();
+        printSeam(carver, seam, false);
+        carver.removeVerticalSeam(seam);
+        printEnergy(carver);
+
+        seam = carver.findHorizontalSeam();
+        printSeam(carver, seam, true);
+        carver.removeHorizontalSeam(seam);
+
+        printEnergy(carver);
+    }
+
     private void print(String filename) {
         Picture picture = new Picture(filename);
         StdOut.printf("image is %d pixels wide by %d pixels high.\n", picture.width(), picture.height());
@@ -41,7 +66,10 @@ public class SeamCarverTester {
         SeamCarver sc = new SeamCarver(picture);
 
         StdOut.printf("Printing energy calculated for each pixel.\n");
+        printEnergy(sc);
+    }
 
+    private void printEnergy(SeamCarver sc) {
         for (int row = 0; row < sc.height(); row++) {
             for (int col = 0; col < sc.width(); col++)
                 StdOut.printf("%9.0f ", sc.energy(col, row));
@@ -70,8 +98,7 @@ public class SeamCarverTester {
     }
 
     public static void printVertical(String filename) {
-        Picture picture = new Picture(filename);
-        SeamCarver carver = new SeamCarver(picture);
+        SeamCarver carver = createCarver(filename);
 
         StdOut.printf("Vertical seam: { ");
         int[] verticalSeam = carver.findVerticalSeam();
@@ -91,6 +118,11 @@ public class SeamCarverTester {
             StdOut.print(y + " ");
         StdOut.println("}");
         SeamCarverTester.printSeam(carver, horizontalSeam, HORIZONTAL);
+    }
+
+    private static SeamCarver createCarver(String filename) {
+        Picture picture = new Picture(filename);
+        return new SeamCarver(picture);
     }
 
     private static final boolean HORIZONTAL   = true;
