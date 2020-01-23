@@ -2,6 +2,8 @@ import edu.princeton.cs.algs4.Picture;
 import edu.princeton.cs.algs4.StdOut;
 import org.junit.Test;
 
+import java.awt.*;
+
 public class SeamCarverTester {
 
     @Test
@@ -11,42 +13,47 @@ public class SeamCarverTester {
 
     @Test
     public void print_3x4() {
-        print("data/3x4.png");
+        print(DataFile.f3x4);
     }
 
     @Test
     public void findVertical_chameleon() {
-        printVertical("data/chameleon.png");
+        printVertical(DataFile.chameleon);
     }
 
     @Test
     public void findVertical_3x4() {
-        printVertical("data/3x4.png");
+        printVertical(DataFile.f3x4);
     }
 
     @Test
     public void findVertical_6x5() {
-        printVertical("data/6x5.png");
+        printVertical(DataFile.f6x5);
     }
 
     @Test
     public void findVerticalAndRemove_6x5() {
-        removeVerticalAndHorizontal("data/6x5.png");
+        removeVerticalAndHorizontal(DataFile.f6x5);
+    }
+
+    @Test
+    public void removeHorizontal_6x5() {
+        removeHorizontal(DataFile.f6x5);
     }
 
     @Test
     public void findVerticalAndRemove_3x4() {
-        removeVerticalAndHorizontal("data/3x4.png");
+        removeVerticalAndHorizontal(DataFile.f3x4);
     }
 
     @Test
     public void findHorizontal_3x4() {
-        printHorizontal("data/3x4.png");
+        printHorizontal(DataFile.f3x4);
     }
 
     @Test
     public void findHorizontal_6x5() {
-        printHorizontal("data/6x5.png");
+        printHorizontal(DataFile.f6x5);
     }
 
     public void removeVerticalAndHorizontal(String filename) {
@@ -62,6 +69,19 @@ public class SeamCarverTester {
         carver.removeHorizontalSeam(seam);
 
         printEnergy(carver);
+    }
+
+    public void removeHorizontal(String filename) {
+        SeamCarver carver = createCarver(filename);
+
+        int[] seam = carver.findHorizontalSeam();
+        printSeam(carver, seam, true);
+
+        printColors(carver);
+
+        carver.removeHorizontalSeam(seam);
+
+        printColors(carver);
     }
 
     private void print(String filename) {
@@ -80,6 +100,18 @@ public class SeamCarverTester {
                 StdOut.printf("%9.0f ", sc.energy(col, row));
             StdOut.println();
         }
+    }
+
+    private void printColors(SeamCarver sc) {
+        for (int row = 0; row < sc.height(); row++) {
+            for (int col = 0; col < sc.width(); col++) {
+                Color color = sc.picture().get(col, row);
+                String hex = String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+                StdOut.printf("%s ", hex);
+            }
+            StdOut.println();
+        }
+        StdOut.println();
     }
 
     public static void printSeam(SeamCarver carver, int[] seam, boolean direction) {

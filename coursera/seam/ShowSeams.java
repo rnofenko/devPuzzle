@@ -10,9 +10,17 @@
  ******************************************************************************/
 
 import edu.princeton.cs.algs4.Picture;
+import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import org.junit.Test;
 
 public class ShowSeams {
+
+    @Test
+    public void chameleon() {
+        show(DataFile.chameleon);
+        StdIn.readString();
+    }
 
     private static void showHorizontalSeam(SeamCarver sc) {
         Picture picture = SCUtility.toEnergyPicture(sc);
@@ -29,8 +37,8 @@ public class ShowSeams {
         overlay.show();
     }
 
-    public static void main(String[] args) {
-        Picture picture = new Picture(args[0]);
+    private static void show(String filename) {
+        Picture picture = new Picture(filename);
         StdOut.printf("image is %d columns by %d rows\n", picture.width(), picture.height());
         picture.show();        
         SeamCarver sc = new SeamCarver(picture);

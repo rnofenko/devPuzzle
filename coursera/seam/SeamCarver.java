@@ -1,14 +1,15 @@
 import edu.princeton.cs.algs4.Picture;
 
+import java.util.Arrays;
+
 public class SeamCarver {
     private static final int MIN_SIZE = 1;
-    private static final int MAX_SQUARED_ENERGY = 1_000_000;
-    private static final int OVER_SIZED_ENERGY = MAX_SQUARED_ENERGY + 1;
+    private static final double MAX_ENERGY = 1000;
     private Picture cachedPicture;
     private int[] grid;
     private int width;
     private int height;
-    private int[] energyTable;
+    private double[] energyTable;
 
     public SeamCarver(Picture picture) {
         if (picture == null) {
@@ -40,13 +41,12 @@ public class SeamCarver {
             throw new IllegalArgumentException();
         }
 
-        int square = energyTable[x + width * y];
-        return Math.sqrt(square);
+        return energyTable[x + width * y];
     }
 
-    private int calcEnergySquare(int x, int y) {
+    private double calcEnergy(int x, int y) {
         if (x == 0 || y == 0 || x == width - 1 || y == height - 1) {
-            return MAX_SQUARED_ENERGY;
+            return MAX_ENERGY;
         }
 
         int shift = y * width + x;
@@ -58,7 +58,7 @@ public class SeamCarver {
         int bottomRgb = grid[shift + width];
         int colEnergy = calcEnergyPart(topRgb, bottomRgb);
 
-        return rowEnergy + colEnergy;
+        return Math.sqrt(rowEnergy + colEnergy);
     }
 
     private int calcEnergyPart(int rgb1, int rgb2) {
@@ -71,16 +71,16 @@ public class SeamCarver {
     public int[] findHorizontalSeam() {
         int verticesCount = width * height;
         int[] edgeTo = new int[verticesCount];
-        int[] distTo = new int[verticesCount];
+        double[] distTo = new double[verticesCount];
 
         for (int x = 1; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 int prevIndex = y * width + x - 1;
-                int v1 = y == 0 ? OVER_SIZED_ENERGY : energyTable[prevIndex - width];
-                int v2 = energyTable[prevIndex];
-                int v3 = y == height - 1 ? OVER_SIZED_ENERGY : energyTable[prevIndex + width];
+                double v1 = y == 0 ? Double.POSITIVE_INFINITY : energyTable[prevIndex - width] + distTo[prevIndex - width];
+                double v2 = energyTable[prevIndex] + distTo[prevIndex];
+                double v3 = y == height - 1 ? Double.POSITIVE_INFINITY : energyTable[prevIndex + width] + distTo[prevIndex + width];
 
-                int minV = Math.min(v1, Math.min(v2, v3));
+                double minV = Math.min(v1, Math.min(v2, v3));
                 int index = prevIndex + 1;
                 if (minV == v1) {
                     edgeTo[index] = prevIndex - width;
@@ -89,7 +89,7 @@ public class SeamCarver {
                 } else {
                     edgeTo[index] = prevIndex + width;
                 }
-                distTo[index] = minV + distTo[edgeTo[index]];
+                distTo[index] = minV + energyTable[index];
             }
         }
 
@@ -112,17 +112,17 @@ public class SeamCarver {
     public int[] findVerticalSeam() {
         int verticesCount = width * height;
         int[] edgeTo = new int[verticesCount];
-        int[] distTo = new int[verticesCount];
+        double[] distTo = new double[verticesCount];
 
         for (int y = 1; y < height; y++) {
             int prevRow = width * y - width;
             for (int x = 0; x < width; x++) {
                 int prevIndex = prevRow + x;
-                int v1 = x == 0 ? Integer.MAX_VALUE : energyTable[prevIndex - 1] + distTo[prevIndex - 1];
-                int v2 = energyTable[prevIndex] + distTo[prevIndex];
-                int v3 = x == width - 1 ? Integer.MAX_VALUE : energyTable[prevIndex + 1] + distTo[prevIndex + 1];
+                double v1 = x == 0 ? Double.POSITIVE_INFINITY : energyTable[prevIndex - 1] + distTo[prevIndex - 1];
+                double v2 = energyTable[prevIndex] + distTo[prevIndex];
+                double v3 = x == width - 1 ? Double.POSITIVE_INFINITY : energyTable[prevIndex + 1] + distTo[prevIndex + 1];
 
-                int minV = Math.min(v1, Math.min(v2, v3));
+                double minV = Math.min(v1, Math.min(v2, v3));
                 int index = width * y + x;
                 if (minV == v1) {
                     edgeTo[index] = prevIndex - 1;
@@ -160,6 +160,7 @@ public class SeamCarver {
         for (int i = 0; i < seam.length; i++) {
             seamCoords[i] = seam[i] * width + i;
         }
+        Arrays.sort(seamCoords);
         grid = deleteSeam(seamCoords);
         height--;
 
@@ -197,6 +198,11 @@ public class SeamCarver {
             startInd = i + 1;
         }
 
+        int size = grid.length - startInd;
+        if (size > 0) {
+            System.arraycopy(grid, startInd, newGrid, targetInd, size);
+        }
+
         return newGrid;
     }
 
@@ -224,11 +230,11 @@ public class SeamCarver {
         return result;
     }
 
-    private int[] createEnergyTable() {
-        int[] res = new int[width * height];
+    private double[] createEnergyTable() {
+        double[] res = new double[width * height];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                res[x + width * y] = calcEnergySquare(x, y);
+                res[x + width * y] = calcEnergy(x, y);
             }
         }
         return res;
