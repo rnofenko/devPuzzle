@@ -118,9 +118,9 @@ public class SeamCarver {
             int prevRow = width * y - width;
             for (int x = 0; x < width; x++) {
                 int prevIndex = prevRow + x;
-                int v1 = x == 0 ? OVER_SIZED_ENERGY : energyTable[prevIndex - 1];
-                int v2 = energyTable[prevIndex];
-                int v3 = x == width - 1 ? OVER_SIZED_ENERGY : energyTable[prevIndex + 1];
+                int v1 = x == 0 ? Integer.MAX_VALUE : energyTable[prevIndex - 1] + distTo[prevIndex - 1];
+                int v2 = energyTable[prevIndex] + distTo[prevIndex];
+                int v3 = x == width - 1 ? Integer.MAX_VALUE : energyTable[prevIndex + 1] + distTo[prevIndex + 1];
 
                 int minV = Math.min(v1, Math.min(v2, v3));
                 int index = width * y + x;
@@ -131,7 +131,7 @@ public class SeamCarver {
                 } else {
                     edgeTo[index] = prevIndex + 1;
                 }
-                distTo[index] = minV + distTo[edgeTo[index]];
+                distTo[index] = minV + energyTable[index];
             }
         }
 

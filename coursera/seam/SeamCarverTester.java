@@ -15,6 +15,11 @@ public class SeamCarverTester {
     }
 
     @Test
+    public void findVertical_chameleon() {
+        printVertical("data/chameleon.png");
+    }
+
+    @Test
     public void findVertical_3x4() {
         printVertical("data/3x4.png");
     }
