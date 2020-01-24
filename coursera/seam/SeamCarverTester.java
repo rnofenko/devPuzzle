@@ -32,8 +32,8 @@ public class SeamCarverTester {
     }
 
     @Test
-    public void findVerticalAndRemove_6x5() {
-        removeVerticalAndHorizontal(DataFile.f6x5);
+    public void removeVertical_6x5() {
+        removeVertical(DataFile.f6x5);
     }
 
     @Test
@@ -80,6 +80,19 @@ public class SeamCarverTester {
         printColors(carver);
 
         carver.removeHorizontalSeam(seam);
+
+        printColors(carver);
+    }
+
+    public void removeVertical(String filename) {
+        SeamCarver carver = createCarver(filename);
+
+        int[] seam = carver.findVerticalSeam();
+        printSeam(carver, seam, false);
+
+        printColors(carver);
+
+        carver.removeVerticalSeam(seam);
 
         printColors(carver);
     }

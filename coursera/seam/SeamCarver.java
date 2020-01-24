@@ -1,15 +1,12 @@
 import edu.princeton.cs.algs4.Picture;
 
-import java.util.Arrays;
-
 public class SeamCarver {
     private static final int MIN_SIZE = 1;
     private static final double MAX_ENERGY = 1000;
-    private Picture cachedPicture;
-    private int[] grid;
+    private int[][] grid;
     private int width;
     private int height;
-    private double[] energyTable;
+    private double[][] energyTable;
 
     public SeamCarver(Picture picture) {
         if (picture == null) {
@@ -22,10 +19,7 @@ public class SeamCarver {
     }
 
     public Picture picture() {
-        if (cachedPicture == null) {
-            cachedPicture = createPicture();
-        }
-        return cachedPicture;
+        return createPicture();
     }
 
     public int width() {
@@ -41,7 +35,11 @@ public class SeamCarver {
             throw new IllegalArgumentException();
         }
 
-        return energyTable[x + width * y];
+        if (energyTable == null) {
+            energyTable = createEnergyTable();
+        }
+
+        return energyTable[y][x];
     }
 
     private double calcEnergy(int x, int y) {
@@ -49,13 +47,12 @@ public class SeamCarver {
             return MAX_ENERGY;
         }
 
-        int shift = y * width + x;
-        int leftRgb = grid[shift - 1];
-        int rightRgb = grid[shift + 1];
+        int leftRgb = grid[y][x - 1];
+        int rightRgb = grid[y][x + 1];
         int rowEnergy = calcEnergyPart(leftRgb, rightRgb);
 
-        int topRgb = grid[shift - width];
-        int bottomRgb = grid[shift + width];
+        int topRgb = grid[y - 1][x];
+        int bottomRgb = grid[y + 1][x];
         int colEnergy = calcEnergyPart(topRgb, bottomRgb);
 
         return Math.sqrt(rowEnergy + colEnergy);
@@ -69,86 +66,96 @@ public class SeamCarver {
     }
 
     public int[] findHorizontalSeam() {
-        int verticesCount = width * height;
-        int[] edgeTo = new int[verticesCount];
-        double[] distTo = new double[verticesCount];
+        int[][] edgeTo = createIntMatrix();
+        double[][] distTo = createDoubleMatrix();
+
+        if (energyTable == null) {
+            energyTable = createEnergyTable();
+        }
 
         for (int x = 1; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                int prevIndex = y * width + x - 1;
-                double v1 = y == 0 ? Double.POSITIVE_INFINITY : energyTable[prevIndex - width] + distTo[prevIndex - width];
-                double v2 = energyTable[prevIndex] + distTo[prevIndex];
-                double v3 = y == height - 1 ? Double.POSITIVE_INFINITY : energyTable[prevIndex + width] + distTo[prevIndex + width];
+                double v1 = y == 0 ? Double.POSITIVE_INFINITY : energyTable[y - 1][x - 1] + distTo[y - 1][x - 1];
+                double v2 = energyTable[y][x - 1] + distTo[y][x - 1];
+                double v3 = y == height - 1 ? Double.POSITIVE_INFINITY : energyTable[y + 1][x - 1] + distTo[y + 1][x - 1];
 
                 double minV = Math.min(v1, Math.min(v2, v3));
-                int index = prevIndex + 1;
-                if (minV == v1) {
-                    edgeTo[index] = prevIndex - width;
-                } else if (minV == v2) {
-                    edgeTo[index] = prevIndex;
-                } else {
-                    edgeTo[index] = prevIndex + width;
-                }
-                distTo[index] = minV + energyTable[index];
+                edgeTo[y][x] = minV == v1 ? y - 1 : minV == v2 ? y : y + 1;
+                distTo[y][x] = minV + energyTable[y][x];
             }
         }
 
-        int minIndex = width - 1;
-        for (int i = minIndex + width; i < verticesCount; i += width) {
-            if (distTo[i] < distTo[minIndex]) {
+        int minIndex = 0;
+        int lastWidthIndex = width - 1;
+        for (int i = 1; i < height; i++) {
+            if (distTo[i][lastWidthIndex] < distTo[minIndex][lastWidthIndex]) {
                 minIndex = i;
             }
         }
 
         int[] result = new int[width];
         for (int i = width - 1; i >= 0; i--) {
-            result[i] = minIndex / width;
-            minIndex = edgeTo[minIndex];
+            result[i] = minIndex;
+            minIndex = edgeTo[minIndex][i];
         }
 
         return result;
     }
 
     public int[] findVerticalSeam() {
-        int verticesCount = width * height;
-        int[] edgeTo = new int[verticesCount];
-        double[] distTo = new double[verticesCount];
+        int[][] edgeTo = createIntMatrix();
+        double[][] distTo = createDoubleMatrix();
+
+        if (energyTable == null) {
+            energyTable = createEnergyTable();
+        }
 
         for (int y = 1; y < height; y++) {
-            int prevRow = width * y - width;
+            double[] energyRow = energyTable[y - 1];
+            double[] distRow = distTo[y - 1];
+
             for (int x = 0; x < width; x++) {
-                int prevIndex = prevRow + x;
-                double v1 = x == 0 ? Double.POSITIVE_INFINITY : energyTable[prevIndex - 1] + distTo[prevIndex - 1];
-                double v2 = energyTable[prevIndex] + distTo[prevIndex];
-                double v3 = x == width - 1 ? Double.POSITIVE_INFINITY : energyTable[prevIndex + 1] + distTo[prevIndex + 1];
+                double v1 = x == 0 ? Double.POSITIVE_INFINITY : energyRow[x - 1] + distRow[x - 1];
+                double v2 = energyRow[x] + distRow[x];
+                double v3 = x == width - 1 ? Double.POSITIVE_INFINITY : energyRow[x + 1] + distRow[x + 1];
 
                 double minV = Math.min(v1, Math.min(v2, v3));
-                int index = width * y + x;
-                if (minV == v1) {
-                    edgeTo[index] = prevIndex - 1;
-                } else if (minV == v2) {
-                    edgeTo[index] = prevIndex;
-                } else {
-                    edgeTo[index] = prevIndex + 1;
-                }
-                distTo[index] = minV + energyTable[index];
+                edgeTo[y][x] = minV == v1 ? x - 1 : minV == v2 ? x : x + 1;
+                distTo[y][x] = minV + energyTable[y][x];
             }
         }
 
-        int minIndex = verticesCount - width;
-        for (int i = minIndex + 1; i < verticesCount; i++) {
-            if (distTo[i] < distTo[minIndex]) {
+        int minIndex = 0;
+        double[] lastRow = distTo[height - 1];
+        for (int i = 1; i < width; i++) {
+            if (lastRow[i] < lastRow[minIndex]) {
                 minIndex = i;
             }
         }
 
         int[] result = new int[height];
         for (int i = height - 1; i >= 0; i--) {
-            result[i] = minIndex % width;
-            minIndex = edgeTo[minIndex];
+            result[i] = minIndex;
+            minIndex = edgeTo[i][minIndex];
         }
 
         return result;
+    }
+
+    private int[][] createIntMatrix() {
+        int[][] res = new int[height][];
+        for (int i = 0; i < height; i++) {
+            res[i] = new int[width];
+        }
+        return res;
+    }
+
+    private double[][] createDoubleMatrix() {
+        double[][] res = new double[height][];
+        for (int i = 0; i < height; i++) {
+            res[i] = new double[width];
+        }
+        return res;
     }
 
     public void removeHorizontalSeam(int[] seam) {
@@ -156,16 +163,18 @@ public class SeamCarver {
             throw new IllegalArgumentException();
         }
 
-        int[] seamCoords = new int[seam.length];
-        for (int i = 0; i < seam.length; i++) {
-            seamCoords[i] = seam[i] * width + i;
-        }
-        Arrays.sort(seamCoords);
-        grid = deleteSeam(seamCoords);
         height--;
+        for (int x = 0; x < seam.length; x++) {
+            int yy = seam[x];
+            if (yy < 0 || yy > height || (x > 0 && Math.abs(seam[x - 1] - yy) > 1)) {
+                throw new IllegalArgumentException();
+            }
+            for (int y = yy; y < height; y++) {
+                grid[y][x] = grid[y + 1][x];
+            }
+        }
 
-        energyTable = createEnergyTable();
-        cachedPicture = null;
+        energyTable = null;
     }
 
     public void removeVerticalSeam(int[] seam) {
@@ -173,68 +182,52 @@ public class SeamCarver {
             throw new IllegalArgumentException();
         }
 
-        int[] seamCoords = new int[seam.length];
-        for (int i = 0; i < seam.length; i++) {
-            seamCoords[i] = i * width + seam[i];
-        }
-        grid = deleteSeam(seamCoords);
         width--;
-
-        energyTable = createEnergyTable();
-        cachedPicture = null;
-    }
-
-    private int[] deleteSeam(int[] seam) {
-        int[] newGrid = new int[grid.length - seam.length];
-        int targetInd = 0;
-        int startInd = 0;
-        for (int i: seam) {
-            int endInd = i - 1;
-            int size = endInd - startInd + 1;
-            if (size > 0) {
-                System.arraycopy(grid, startInd, newGrid, targetInd, size);
-                targetInd += size;
+        for (int y = 0; y < seam.length; y++) {
+            int x = seam[y];
+            if (x < 0 || x > width || (y > 0 && Math.abs(seam[y - 1] - x) > 1)) {
+                throw new IllegalArgumentException();
             }
-            startInd = i + 1;
+            if (x < width) {
+                int[] gridRow = grid[y];
+                System.arraycopy(gridRow, x + 1, gridRow, x, width - x);
+            }
         }
 
-        int size = grid.length - startInd;
-        if (size > 0) {
-            System.arraycopy(grid, startInd, newGrid, targetInd, size);
-        }
-
-        return newGrid;
+        energyTable = null;
     }
 
     private Picture createPicture() {
         Picture result = new Picture(width, height);
         for (int y = 0; y < height; y++) {
-            int shift = y * width;
             for (int x = 0; x < width; x++) {
-                result.setRGB(x, y, grid[shift + x]);
+                result.setRGB(x, y, grid[y][x]);
             }
         }
 
         return result;
     }
 
-    private int[] copyPictureToArray(Picture pic) {
-        int[] result = new int[pic.width() * pic.height()];
+    private int[][] copyPictureToArray(Picture pic) {
+        int[][] result = new int[pic.height()][];
         for (int y = 0; y < pic.height(); y++) {
-            int shift = y * pic.width();
+            int[] row = new int[pic.width()];
+            result[y] = row;
             for (int x = 0; x < pic.width(); x++) {
-                result[shift + x] = pic.getRGB(x, y);
+                row[x] = pic.getRGB(x, y);
             }
         }
 
         return result;
     }
 
-    private double[] createEnergyTable() {
-        double[] res = new double[width * height];
+    private double[][] createEnergyTable() {
+        double[][] res = new double[height][];
         for (int y = 0; y < height; y++) {
+            double[] row = new double[width];
+            res[y] = row;
             for (int x = 0; x < width; x++) {
-                res[x + width * y] = calcEnergy(x, y);
+                row[x] = calcEnergy(x, y);
             }
         }
         return res;
