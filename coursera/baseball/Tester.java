@@ -1,16 +1,42 @@
 import edu.princeton.cs.algs4.StdOut;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Tester {
 
     @Test
     public void test1() {
+        Map<String, String> map = new HashMap<>();
+        map.put("a", "1");
 
+        String v1 = map.get("a");
+        String v2 = map.get(null);
     }
 
     @Test
-    public void test2() {
-        BaseballElimination division = new BaseballElimination("data/teams4.txt");
+    public void test4() {
+        test("teams4");
+    }
+
+    @Test
+    public void test5() {
+        test("teams5");
+    }
+
+    @Test
+    public void test12() {
+        test("teams12");
+    }
+
+    @Test
+    public void test12all() {
+        test("teams12-allgames");
+    }
+
+    private void test(String filename) {
+        BaseballElimination division = new BaseballElimination("data/" + filename + ".txt");
         for (String team : division.teams()) {
             if (division.isEliminated(team)) {
                 StdOut.print(team + " is eliminated by the subset R = { ");
