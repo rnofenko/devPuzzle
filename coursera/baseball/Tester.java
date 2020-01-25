@@ -7,15 +7,6 @@ import java.util.Map;
 public class Tester {
 
     @Test
-    public void test1() {
-        Map<String, String> map = new HashMap<>();
-        map.put("a", "1");
-
-        String v1 = map.get("a");
-        String v2 = map.get(null);
-    }
-
-    @Test
     public void test4() {
         test("teams4");
     }
