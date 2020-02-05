@@ -61,7 +61,8 @@ object StringToArrayConverter {
     }
 
     private fun bracketsStringTo2dIntArray(line: String): Array<IntArray> {
-        val cleaned = line.trim().substring(2, line.length - 2)
+        val noSpaces = line.replace("( +)".toRegex(), "")
+        val cleaned = noSpaces.substring(2, noSpaces.length - 2)
         val stringPairs = cleaned.split("],[")
         return stringPairs
                 .map { it
