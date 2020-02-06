@@ -2,17 +2,19 @@ package rn.puzzle.dynamic.hard.cherry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class GraphBuilder {
 
     private static final int WALL = -1;
-    private static final int EMPTY = 0;
     private static final int CHERRY = 1;
 
     private final int width;
     private final int height;
     private final int[][] grid;
     private final int fullLen;
+    private final int[] visited;
     private int[] coordinateToVertex;
     private List<Node> graph = new ArrayList<>();
 
@@ -21,6 +23,7 @@ public class GraphBuilder {
         height = grid.length;
         width = grid[0].length;
         fullLen = width * height;
+        visited = new int[fullLen];
         coordinateToVertex = new int[fullLen];
     }
 
@@ -42,9 +45,11 @@ public class GraphBuilder {
         int y = nextIdx / width;
         int x = nextIdx % width;
 
-        if (grid[y][x] == WALL) {
+        if (grid[y][x] == WALL || (visited[nextIdx] > 0 && visited[nextIdx] == source.vertex)) {
             return;
         }
+        visited[nextIdx] = source.vertex;
+
         if (grid[y][x] == CHERRY || nextIdx == fullLen - 1) {
             int targetVertex = coordinateToVertex[nextIdx];
             if (targetVertex == 0) {
@@ -53,12 +58,12 @@ public class GraphBuilder {
 
                 Node newNode = new Node(targetVertex, x, y);
 
-                source.add(newNode);
+                source.addKid(newNode);
                 graph.add(newNode);
 
                 source = newNode;
             } else {
-                source.add(graph.get(targetVertex));
+                source.addKid(graph.get(targetVertex));
                 return;
             }
         }
@@ -75,7 +80,8 @@ public class GraphBuilder {
         private final int vertex;
         private final int y;
         private final int x;
-        private List<Node> kids = new ArrayList<>();
+        public List<Node> kids = new ArrayList<>();
+        public int level;
 
         public Node(int vertex, int x, int y) {
             this.vertex = vertex;
@@ -83,13 +89,37 @@ public class GraphBuilder {
             this.x = x;
         }
 
-        public void add(Node node) {
-            kids.add(node);
+        public void addKid(Node kid) {
+            kids.add(kid);
         }
 
         @Override
         public String toString() {
-            return String.format("#%s %sx%s kids=%s", vertex, x, y, kids.size());
+            String kidsStr = kids.stream().map(k -> String.valueOf(k.vertex)).collect(Collectors.joining(","));
+            return String.format("#%s %sx%s level=%s kids=%s", vertex, x, y, level, kidsStr);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node node = (Node) o;
+            return vertex == node.vertex;
+        }
+
+        @Override
+        public int hashCode() {
+            return vertex;
+        }
+
+        public void removeLongEdges() {
+            List<Node> newKids = new ArrayList<>();
+            for (Node kid : kids) {
+                if (kid.level <= level + 1) {
+                    newKids.add(kid);
+                }
+            }
+            kids = newKids;
         }
     }
 }

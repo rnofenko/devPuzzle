@@ -28,6 +28,18 @@ public class CherryPickupTest {
         test(gridStr, 6);
     }
 
+    @Test
+    public void test3() {
+        String gridStr =
+                 "[[0, 1, 0, 0]," +
+                 " [0, 1, 1, 0]," +
+                 " [1, 1, 0, 0]," +
+                 " [0, 1, 1, 0]," +
+                 " [1, 1, 0, 0]]";
+
+        test(gridStr, 8);
+    }
+
     private void test(String gridStr, int expected) {
         int[][] grid = StringToArrayConverter.INSTANCE.stringTo2dIntArray(gridStr);
         int res = CherryPickupSolver.cherryPickup(grid);
