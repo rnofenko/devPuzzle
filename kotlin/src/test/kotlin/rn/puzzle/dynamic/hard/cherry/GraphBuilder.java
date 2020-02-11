@@ -2,13 +2,14 @@ package rn.puzzle.dynamic.hard.cherry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GraphBuilder {
 
     private static final int WALL = -1;
     private static final int CHERRY = 1;
+    private static final int EMPTY = 0;
 
     private final int width;
     private final int height;
@@ -25,6 +26,38 @@ public class GraphBuilder {
         fullLen = width * height;
         visited = new int[fullLen];
         coordinateToVertex = new int[fullLen];
+    }
+
+    public void print() {
+        build();
+        printGrid();
+        printConnections(graph);
+    }
+
+    public static void printConnections(List<Node> graph) {
+        System.out.println("\nVertices count = " + graph.size());
+
+        for (int i = 0; i < graph.size(); i++) {
+            String parent = String.format("%3s", i);
+            List<Node> kids = graph.get(i).kids;
+            if (kids.isEmpty()) continue;
+            String kidsStr = kids.stream().map(n -> String.valueOf(n.vertex)).collect(Collectors.joining(","));
+            System.out.println(String.format("%s   %s", parent, kidsStr));
+        }
+    }
+
+    private void printGrid() {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int v = coordinateToVertex[y * width + x];
+                String str = String.format("%3s", v);
+                if (v == EMPTY) {
+                    str = String.format("%3s", "-");
+                }
+                System.out.print(str);
+            }
+            System.out.println("");
+        }
     }
 
     public List<Node> build() {
@@ -45,14 +78,14 @@ public class GraphBuilder {
         int y = nextIdx / width;
         int x = nextIdx % width;
 
-        if (grid[y][x] == WALL || (visited[nextIdx] > 0 && visited[nextIdx] == source.vertex)) {
+        if (grid[y][x] == WALL || (visited[nextIdx] > 0 && visited[nextIdx] == source.vertex + 1)) {
             return;
         }
-        visited[nextIdx] = source.vertex;
+        visited[nextIdx] = source.vertex + 1;
 
         if (grid[y][x] == CHERRY || nextIdx == fullLen - 1) {
             int targetVertex = coordinateToVertex[nextIdx];
-            if (targetVertex == 0) {
+            if (targetVertex == EMPTY) {
                 targetVertex = graph.size();
                 coordinateToVertex[nextIdx] = targetVertex;
 
@@ -77,11 +110,12 @@ public class GraphBuilder {
     }
 
     public static class Node {
-        private final int vertex;
+        public final int vertex;
         private final int y;
         private final int x;
         public List<Node> kids = new ArrayList<>();
         public int level;
+        public int points;
 
         public Node(int vertex, int x, int y) {
             this.vertex = vertex;
@@ -96,7 +130,7 @@ public class GraphBuilder {
         @Override
         public String toString() {
             String kidsStr = kids.stream().map(k -> String.valueOf(k.vertex)).collect(Collectors.joining(","));
-            return String.format("#%s %sx%s level=%s kids=%s", vertex, x, y, level, kidsStr);
+            return String.format("#%s %sx%s kids=%s points=%s", vertex, x, y, kidsStr, points);
         }
 
         @Override
@@ -120,6 +154,29 @@ public class GraphBuilder {
                 }
             }
             kids = newKids;
+        }
+
+        public void removeKids(Set<Integer> forRemove) {
+            if (forRemove.isEmpty()) {
+                return;
+            }
+
+            List<Node> newKids = new ArrayList<>();
+            for (Node kid : kids) {
+                if (!forRemove.contains(kid.vertex)) {
+                    newKids.add(kid);
+                }
+            }
+            kids = newKids;
+        }
+
+        public int calcPoints() {
+            int max = 0;
+            for (Node kid : kids) {
+                max = Math.max(max, kid.calcPoints());
+            }
+            points = max + 1;
+            return points;
         }
     }
 }
