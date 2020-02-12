@@ -4,6 +4,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GraphPrinter {
+
+    private static final int EMPTY = 0;
+
+    public static void printGrid(int[] coordinateToVertex, int width, int height) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int v = coordinateToVertex[y * width + x];
+                String str = String.format("%4s", v);
+                if (v == EMPTY) {
+                    str = String.format("%4s", "-");
+                }
+                System.out.print(str);
+            }
+            System.out.println("");
+        }
+    }
+
     public static void printConnections(List<CherryNode> graph) {
         System.out.println("\nVertices count = " + graph.size());
 

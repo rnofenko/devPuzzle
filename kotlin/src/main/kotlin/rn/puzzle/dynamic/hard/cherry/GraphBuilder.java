@@ -28,22 +28,8 @@ public class GraphBuilder {
 
     public void print() {
         build();
-        printGrid();
+        GraphPrinter.printGrid(coordinateToVertex, width, height);
         GraphPrinter.printConnections(graph);
-    }
-
-    private void printGrid() {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int v = coordinateToVertex[y * width + x];
-                String str = String.format("%3s", v);
-                if (v == EMPTY) {
-                    str = String.format("%3s", "-");
-                }
-                System.out.print(str);
-            }
-            System.out.println("");
-        }
     }
 
     public List<CherryNode> build() {
