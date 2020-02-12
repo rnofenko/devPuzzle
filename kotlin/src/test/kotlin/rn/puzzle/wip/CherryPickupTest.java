@@ -9,7 +9,64 @@ import rn.tool.StringToArrayConverter;
 public class CherryPickupTest {
 
     @Test
-    public void test0() {
+    public void timeOut() {
+        String gridStr =
+        "[[0,0,1,0,0,1,0,1,1,-1,0,0,-1,-1,0,1,1,-1,0,-1],"+
+        "[1,1,1,0,1,0,0,0,0,1,1,1,1,1,1,1,0,0,1,0],"+
+        "[1,0,1,1,0,0,1,0,0,0,1,0,1,1,1,-1,0,1,1,0],"+
+        "[0,1,1,0,0,0,1,0,1,1,0,-1,1,0,0,1,0,0,1,1],"+
+        "[-1,0,-1,1,0,0,1,1,0,0,1,1,0,-1,1,0,0,0,1,1],"+
+        "[0,0,1,0,1,1,0,0,1,0,0,1,0,1,1,1,1,1,1,0],"+
+        "[0,0,0,1,0,1,1,0,0,1,1,-1,1,0,1,1,0,1,1,0],"+
+        "[0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,1,0,1,1],"+
+        "[0,0,0,-1,1,0,0,1,0,0,1,1,1,1,0,0,0,1,1,0],"+
+        "[1,0,1,1,1,0,0,1,1,0,1,0,0,0,-1,0,-1,0,1,0],"+
+        "[0,1,-1,1,1,1,1,0,1,0,0,1,1,0,-1,1,0,0,-1,0],"+
+        "[0,0,0,0,1,0,1,0,0,-1,0,1,0,-1,0,0,1,0,1,1],"+
+        "[1,-1,-1,0,0,1,1,1,0,1,1,1,1,1,1,0,0,0,1,0],"+
+        "[-1,0,1,1,1,1,1,1,0,1,1,1,1,1,0,0,1,0,1,0],"+
+        "[0,1,-1,1,1,1,0,0,1,-1,1,1,0,1,0,1,0,-1,1,0],"+
+        "[1,-1,1,0,1,1,1,0,0,0,1,1,1,1,-1,0,0,1,0,-1],"+
+        "[-1,1,0,0,0,1,1,1,1,1,0,1,1,-1,0,1,0,0,1,0],"+
+        "[0,0,0,-1,0,1,0,0,0,0,0,0,1,0,1,1,0,0,0,1],"+
+        "[0,1,0,0,0,0,0,0,0,1,1,1,1,0,0,1,0,0,0,1],"+
+        "[0,0,0,1,-1,0,-1,1,0,1,0,0,0,0,1,0,0,1,-1,0]]";
+
+        print(gridStr);
+        test(gridStr, 14);
+    }
+
+    @Test
+    public void test5x5() {
+        String gridStr =
+                        "[[ 1,  1, 1,  1,  1]," +
+                        " [ 1,  1, 1,  1,  1]," +
+                        " [-1, -1, 1,  1, -1]," +
+                        " [ 0,  0, 1,  1,  1]," +
+                        " [ 0,  0, 1, -1,  1]]";
+
+        print(gridStr);
+        test(gridStr, 14);
+    }
+
+    @Test
+    public void test_1x1() {
+        String gridStr = "[[0]]";
+        test(gridStr, 0);
+    }
+
+    @Test
+    public void test_0points() {
+        String gridStr =
+                        "[[1,  1, -1]," +
+                        " [1, -1,  1]," +
+                        " [-1, 1,  1]]";
+
+        test(gridStr, 0);
+    }
+
+    @Test
+    public void test2xx2() {
         String gridStr =
                 "[[1, 1]," +
                 " [1, 1]]";
@@ -32,13 +89,24 @@ public class CherryPickupTest {
     }
 
     @Test
-    public void test1() {
+    public void test3x3_1() {
         String gridStr =
                 "[[0, 1, -1]," +
                 " [1, 0, -1]," +
                 " [1, 1,  1]]";
 
         test(gridStr, 5);
+    }
+
+    @Test
+    public void test3x3_2() {
+        String gridStr =
+                "[[1, 1, 1]," +
+                " [1, 1, 1]," +
+                " [1, 1, 1]]";
+
+        print(gridStr);
+        test(gridStr, 8);
     }
 
     @Test
@@ -61,7 +129,7 @@ public class CherryPickupTest {
                 " [0, 1, 1]," +
                 " [0, 1, 0]]";
 
-        test(gridStr, 8);
+        test(gridStr, 6);
     }
 
     @Test
@@ -75,6 +143,19 @@ public class CherryPickupTest {
 
         print(gridStr);
         test(gridStr, 8);
+    }
+
+    @Test
+    public void test5x4_full() {
+        String gridStr =
+                        "[[1, 1, 1, 1]," +
+                        " [1, 1, 1, 1]," +
+                        " [1, 1, 1, 1]," +
+                        " [1, 1, 1, 1]," +
+                        " [1, 1, 1, 1]]";
+
+        print(gridStr);
+        test(gridStr, 14);
     }
 
     @Test
@@ -93,7 +174,7 @@ public class CherryPickupTest {
 
     private void test(String gridStr, int expected) {
         int[][] grid = StringToArrayConverter.INSTANCE.stringTo2dIntArray(gridStr);
-        int res = CherryPickupSolver.cherryPickup(grid);
+        int res = new CherryPickupSolver().cherryPickup(grid);
         Assert.assertEquals(expected, res);
     }
 

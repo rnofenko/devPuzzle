@@ -1,4 +1,4 @@
-package rn.puzzle.wip;
+package rn.standard;
 
 import org.junit.Test;
 
