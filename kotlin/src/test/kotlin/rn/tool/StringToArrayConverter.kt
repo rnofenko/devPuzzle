@@ -33,6 +33,9 @@ object StringToArrayConverter {
     }
 
     fun stringToIntArray(line: String): IntArray {
+        if(line.startsWith("[")) {
+            return bracketsStringToIntArray(line)
+        }
         return stringToArray(line).toIntArray()
     }
 
@@ -71,6 +74,15 @@ object StringToArrayConverter {
                         .toIntArray()
                 }
                 .toTypedArray()
+    }
+
+    private fun bracketsStringToIntArray(line: String): IntArray {
+        val noSpaces = line.replace("( +)".toRegex(), "")
+        val cleaned = noSpaces.substring(1, noSpaces.length - 1)
+        return cleaned
+                    .split(",")
+                    .map { s -> s.toInt() }
+                    .toIntArray();
     }
 
     private fun spaceCommaStringTo2dIntArray(line: String): Array<IntArray> {
