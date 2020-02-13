@@ -1,4 +1,4 @@
-package rn.puzzle.dynamic.hard.cherry;
+package rn.puzzle.dynamic.hard.cherry.node;
 
 import java.util.ArrayList;
 import java.util.HashSet;

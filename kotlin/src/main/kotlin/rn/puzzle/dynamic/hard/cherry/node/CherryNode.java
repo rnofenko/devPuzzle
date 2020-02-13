@@ -1,4 +1,4 @@
-package rn.puzzle.dynamic.hard.cherry;
+package rn.puzzle.dynamic.hard.cherry.node;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,10 @@ import java.util.stream.Collectors;
 
 public class CherryNode {
 
-    private static final int SINK = 1;
+    public static final int SINK = 1;
+    public static final int VISITED = 1;
+    public static final int DEAD = 2;
+    public static final int EMPTY = 0;
 
     public final int id;
     private final int y;
@@ -43,36 +46,5 @@ public class CherryNode {
             }
         }
         kids = newKids;
-    }
-
-    public int calcPoints(int[] visited) {
-        Integer max = calcPointsNullable(visited);
-        return max == null ? 0 : max;
-    }
-
-    private Integer calcPointsNullable(int[] visited) {
-        Integer max = null;
-        for (CherryNode kid : kids) {
-            Integer kidPoints = kid.calcPointsNullable(visited);
-            if (kidPoints == null) continue;
-            if (max == null) {
-                max = kidPoints;
-            } else {
-                max = Math.max(max, kidPoints);
-            }
-        }
-
-        if (max == null) {
-            if (visited[id] != 0) {
-                max = 0;
-            }
-        } else {
-            if (visited[id] == 0) {
-                max++;
-            }
-        }
-
-        points = max;
-        return max;
     }
 }

@@ -1,6 +1,9 @@
 package rn.puzzle.dynamic.hard.cherry;
 
+import rn.puzzle.dynamic.hard.cherry.node.CherryNode;
+
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GraphPrinter {
@@ -29,6 +32,18 @@ public class GraphPrinter {
             List<CherryNode> kids = graph.get(i).kids;
             if (kids.isEmpty()) continue;
             String kidsStr = kids.stream().map(n -> String.valueOf(n.id)).collect(Collectors.joining(","));
+            System.out.println(String.format("%s   %s", parent, kidsStr));
+        }
+    }
+
+    public static void printIndexedConnections(List<List<Integer>> graph) {
+        System.out.println("\nVertices count = " + graph.size());
+
+        for (int i = 0; i < graph.size(); i++) {
+            String parent = String.format("%3s", i);
+            List<Integer> kids = graph.get(i);
+            if (kids.isEmpty()) continue;
+            String kidsStr = kids.stream().map(String::valueOf).collect(Collectors.joining(","));
             System.out.println(String.format("%s   %s", parent, kidsStr));
         }
     }

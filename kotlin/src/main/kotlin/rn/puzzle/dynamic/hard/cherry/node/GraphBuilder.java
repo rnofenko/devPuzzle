@@ -1,4 +1,6 @@
-package rn.puzzle.dynamic.hard.cherry;
+package rn.puzzle.dynamic.hard.cherry.node;
+
+import rn.puzzle.dynamic.hard.cherry.GraphPrinter;
 
 import java.util.ArrayList;
 import java.util.List;

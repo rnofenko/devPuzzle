@@ -2,14 +2,41 @@ package rn.puzzle.wip;
 
 import org.junit.Assert;
 import org.junit.Test;
-import rn.puzzle.dynamic.hard.cherry.CherryPickupSolver;
-import rn.puzzle.dynamic.hard.cherry.GraphBuilder;
+import rn.puzzle.dynamic.hard.cherry.ICherryPickSolver;
+import rn.tool.Stopwatch;
 import rn.tool.StringToArrayConverter;
 
 public class CherryPickupTest {
 
     @Test
-    public void timeOut() {
+    public void timeOut5() {
+        String gridStr = "[" +
+                "[ 1, 1, 1,1,1,1,0,1,1,-1,-1,1,1,-1,0,1,1,-1,0,-1]," +
+                "[ 1, 1, 1,0,1,1,0,1,0,1,1,-1,1,1,1,1,-1,0,1,0]," +
+                "[ 1, 1, 1,1,1,1,1,0,1,1,1,0,1,1,1,1,0,1,1,-1]," +
+                "[ 1, 1, 1,0,0,-1,1,1,1,1,0,1,1,0,1,1,-1,1,1,1]," +
+                "[ 1,-1,-1,1,0,0,1,1,0,1,1,1,1,1,1,0,-1,1,1,1]," +
+                "[ 1,-1, 1,0,1,-1,-1,0,1,-1,1,1,0,1,1,1,1,1,-1,1]," +
+                "[ 0, 0,-1,1,0,1,1,1,0,1,1,1,1,0,1,1,0,1,1,1]," +
+                "[ 1, 0,-1,1,0,1,1,1,0,1,0,0,1,-1,1,1,1,1,-1,1]," +
+                "[ 0,-1, 0,1,1,1,1,1,1,-1,-1,1,1,1,0,1,1,1,1,0]," +
+                "[ 1, 1, 1,1,1,0,0,1,1,1,1,0,1,1,-1,0,-1,0,1,0]," +
+                "[ 0, 1,-1,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,-1,0]," +
+                "[ 0, 0, 1,1,1,1,1,0,0,1,1,1,1,-1,1,1,1,0,1,-1]," +
+                "[ 1, 1, 1,1,1,-1,1,1,0,1,1,1,1,1,1,-1,-1,0,1,0]," +
+                "[-1,-1, 1,1,-1,1,1,1,1,1,1,1,-1,1,0,0,1,0,1,1]," +
+                "[ 0, 1,-1,-1,1,-1,0,1,1,-1,-1,1,1,1,0,1,0,-1,1,-1]," +
+                "[ 1, 1, 1,-1,1,-1,1,1,0,-1,1,1,1,1,1,1,1,1,1,-1]," +
+                "[ 1, 1,-1,1,1,1,1,1,1,1,0,-1,1,-1,1,1,1,1,1,1]," +
+                "[ 1, 1, 1,-1,0,1,0,-1,1,0,1,1,1,0,1,1,1,0,0,1]," +
+                "[ 1, 1, 0,0,-1,1,1,0,-1,1,1,1,1,-1,1,1,0,-1,0,1]," +
+                "[ 0, 0, 0,1,1,1,-1,1,0,1,0,1,1,0,1,0,0,1,1,1]]";
+
+        performance(gridStr);
+    }
+
+    @Test
+    public void timeOut4() {
         String gridStr = "[" +
         "[ 0, 0, 1,0,0,1,0,1,1,-1,0,0,-1,-1,0,1,1,-1,0,-1],"+
         "[ 1, 1, 1,0,1,0,0,0,0,1,1,1,1,1,1,1,0,0,1,0],"+
@@ -32,8 +59,7 @@ public class CherryPickupTest {
         "[ 0, 1, 0,0,0,0,0,0,0,1,1,1,1,0,0,1,0,0,0,1],"+
         "[ 0, 0, 0,1,-1,0,-1,1,0,1,0,0,0,0,1,0,0,1,-1,0]]";
 
-        print(gridStr);
-        test(gridStr, 14);
+        performance(gridStr);
     }
 
     @Test
@@ -49,8 +75,27 @@ public class CherryPickupTest {
                 " [ 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
                 " [ 1, 1, 1, 1, 1, 1, 1, 1, 1]]";
 
-        print(gridStr);
-        test(gridStr, 32);
+        performance(gridStr);
+    }
+
+    @Test
+    public void timeOut3() {
+        String gridStr =
+                        "[[ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
+                        " [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
+                        " [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
+                        " [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
+                        " [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
+                        " [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
+                        " [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
+                        " [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
+                        " [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
+                        " [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
+                        " [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
+                        " [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]," +
+                        " [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]]";
+
+        performance(gridStr);
     }
 
     @Test
@@ -112,6 +157,17 @@ public class CherryPickupTest {
                 " [1, 0, -1]," +
                 " [1, 1,  1]]";
 
+        test(gridStr, 5);
+    }
+
+    @Test
+    public void test3x3_3() {
+        String gridStr =
+                        "[[0, 1,  1]," +
+                        " [1, 0, -1]," +
+                        " [1, 1,  1]]";
+
+        print(gridStr);
         test(gridStr, 5);
     }
 
@@ -190,14 +246,27 @@ public class CherryPickupTest {
     }
 
     private void test(String gridStr, int expected) {
+        Stopwatch w = Stopwatch.Companion.start();
         int[][] grid = StringToArrayConverter.INSTANCE.stringTo2dIntArray(gridStr);
-        int res = new CherryPickupSolver().cherryPickup(grid);
+        int res = getSolver().cherryPickup(grid);
+        w.show("");
         Assert.assertEquals(expected, res);
+    }
+
+    private void performance(String gridStr) {
+        Stopwatch w = Stopwatch.Companion.start();
+        int[][] grid = StringToArrayConverter.INSTANCE.stringTo2dIntArray(gridStr);
+        getSolver().cherryPickup(grid);
+        w.show("total");
     }
 
     private void print(String gridStr) {
         int[][] grid = StringToArrayConverter.INSTANCE.stringTo2dIntArray(gridStr);
-        GraphBuilder builder = new GraphBuilder(grid);
-        builder.print();
+        new rn.puzzle.dynamic.hard.cherry.index.GraphBuilder(grid).print();
     }
+
+    private ICherryPickSolver getSolver() {
+        return new rn.puzzle.dynamic.hard.cherry.index.CherryPickupSolver();
+    }
+
 }
