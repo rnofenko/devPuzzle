@@ -1,0 +1,1 @@
+javac -cp ./algs4.jar MoveToFront.java
