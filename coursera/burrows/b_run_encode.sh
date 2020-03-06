@@ -1,0 +1,1 @@
+java -cp ".:./algs4.jar" BurrowsWheeler - < abra.txt | java -cp ".:./algs4.jar" edu.princeton.cs.algs4.HexDump 16

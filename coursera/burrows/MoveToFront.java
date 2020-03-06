@@ -62,7 +62,7 @@ public class MoveToFront {
             String decoded = decodeStr(encoded);
 
             if (!decoded.isEmpty()) {
-                StdOut.println("No args. User - or +");
+                StdOut.println("No args. Use - or +");
             }
         } else {
             if (args[0].equals("+")) {

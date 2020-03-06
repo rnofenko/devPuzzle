@@ -1,1 +1,1 @@
-javac -cp ./algs4.jar MoveToFront.java
+javac -cp ./algs4.jar *.java
