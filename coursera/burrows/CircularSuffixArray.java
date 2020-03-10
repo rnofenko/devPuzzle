@@ -51,9 +51,9 @@ public class CircularSuffixArray {
             this.len = text.length();
         }
 
-        public int compareTo(Suffix o) {
+        public int compareTo(Suffix obj) {
             for (int i = 0; i < len; i++) {
-                int res = Character.compare(getChar(i), o.getChar(i));
+                int res = Character.compare(getChar(i), obj.getChar(i));
                 if (res != 0) {
                     return res;
                 }

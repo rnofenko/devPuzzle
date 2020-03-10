@@ -10,7 +10,7 @@ public class MoveToFront {
 
         while (!BinaryStdIn.isEmpty()) {
             int c = BinaryStdIn.readChar();
-            char out = (char)replacForward(a, c);
+            char out = (char) replacForward(a, c);
             BinaryStdOut.write(out);
         }
         BinaryStdIn.close();
@@ -46,7 +46,7 @@ public class MoveToFront {
 
         while (!BinaryStdIn.isEmpty()) {
             int c = BinaryStdIn.readChar();
-            BinaryStdOut.write((char)a[c]);
+            BinaryStdOut.write((char) a[c]);
             replacForward(a, a[c]);
         }
 
@@ -79,7 +79,7 @@ public class MoveToFront {
 
         for (int i = 0; i < s.length(); i++) {
             int c = s.charAt(i);
-            b.append((char)a[c]);
+            b.append((char) a[c]);
             replacForward(a, a[c]);
         }
 
@@ -92,7 +92,7 @@ public class MoveToFront {
 
         for (int i = 0; i < s.length(); i++) {
             int c = s.charAt(i);
-            char out = (char)replacForward(a, c);
+            char out = (char) replacForward(a, c);
             b.append(out);
         }
 
