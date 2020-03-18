@@ -31,6 +31,14 @@ public class TeacherCandiesTest {
         test("[1,1,1,1,1]", 5);
     }
 
+    @Test
+    public void test6() {
+        test("[1,2,8,4,2]", 5);
+        //1 2 8 4  2 3  2  1
+        //0 1 2 0 -1 0 -1 -2
+        //           3  2  1
+    }
+
     private long candies(int n, int[] arr) {
         long total = 0;
         int startIndex = 0;
