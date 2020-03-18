@@ -32,15 +32,40 @@ public class TeacherCandiesTest {
     }
 
     private long candies(int n, int[] arr) {
+        long total = 0;
+        int startIndex = 0;
+        int min = 0;
+
         int[] changes = new int[n];
         int prev = arr[0];
         for (int i = 1; i < n; i++) {
             int current = arr[i];
-            if (current > prev) {
-
+            if (current != prev) {
+                changes[i] = changes[i - 1] + (current > prev ? 1 : -1);
+                min = Math.min(min, changes[i]);
+            } else {
+                total += calc(changes, startIndex, i - 1, min);
+                min = 0;
+                startIndex = i;
             }
+
+            prev = current;
         }
-        return 0;
+
+        total += calc(changes, startIndex, n - 1, min);
+
+        return total;
+    }
+
+    private long calc(int[] changes, int startIndex, int endIndex, int min) {
+        long sum = 0;
+
+        for (int i = startIndex; i <= endIndex; i++) {
+            int candies = changes[i] - min + 1;
+            sum += candies;
+        }
+
+        return sum;
     }
 
     private void test(String str, long expected) {
