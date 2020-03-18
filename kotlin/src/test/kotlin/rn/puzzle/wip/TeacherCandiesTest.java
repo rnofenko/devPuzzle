@@ -32,6 +32,14 @@ public class TeacherCandiesTest {
     }
 
     private long candies(int n, int[] arr) {
+        int[] changes = new int[n];
+        int prev = arr[0];
+        for (int i = 1; i < n; i++) {
+            int current = arr[i];
+            if (current > prev) {
+
+            }
+        }
         return 0;
     }
 
