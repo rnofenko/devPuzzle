@@ -97,17 +97,6 @@ public class TeacherCandiesTest {
     private void bruteForce(int[] a, long maxTotal) {
         int max = (int)maxTotal - a.length + 1;
         ICombinator combinator = CombinatorFactory.create(max, a.length);
-
-        while (true) {
-            int[] solution = combinator.next();
-            if (solution == null) {
-                return;
-            }
-
-            for (int i = 0; i < solution.length; i++) {
-                
-            }
-        }
     }
 
     private long candies(int n, int[] a) {
