@@ -2,9 +2,27 @@ package rn.puzzle.list.medium;
 
 import org.junit.Test;
 
+import java.util.Scanner;
 import java.util.Stack;
 
 public class QueuesTaleOfTwoStacksTest {
+
+    public static void consoleRunner() {
+        Scanner scan = new Scanner(System.in);
+        int queriesCount = scan.nextInt();
+
+        MyQueue<Integer> queue = new MyQueue<>();
+        for (int i = 0; i < queriesCount; i++) {
+            int type = scan.nextInt();
+            if (type == 1) {
+                queue.enqueue(scan.nextInt());
+            } else if (type == 2) {
+                queue.dequeue();
+            } else {
+                System.out.println(queue.peek());
+            }
+        }
+    }
 
     @Test
     public void test1() {
@@ -35,8 +53,8 @@ public class QueuesTaleOfTwoStacksTest {
 
     private static class MyQueue<T> {
 
-        private Stack<T> arriveStack = new Stack<>();
-        private Stack<T> orderedStack = new Stack<>();
+        private final Stack<T> arriveStack = new Stack<>();
+        private final Stack<T> orderedStack = new Stack<>();
 
         public void enqueue(T newElement) {
             arriveStack.addElement(newElement);
@@ -60,6 +78,11 @@ public class QueuesTaleOfTwoStacksTest {
             while (!arriveStack.isEmpty()) {
                 orderedStack.addElement(arriveStack.pop());
             }
+        }
+
+        public T peekFirst() {
+            moveFromOneToTwo();
+            return orderedStack.peek();
         }
     }
 }

@@ -1,13 +1,16 @@
-package rn.puzzle.wip;
+package rn.puzzle.array.medium;
 
 import org.junit.Assert;
 import org.junit.Test;
 import rn.tool.FileHelper;
-import rn.tool.StringToArrayConverter;
+import rn.tool.Rand;
+import rn.tool.StrConverter;
 import rn.tool.combination.CombinatorFactory;
-import rn.tool.combination.ICombinator;
+import rn.tool.combination.IPermutation;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class TeacherCandiesTest {
 
@@ -54,19 +57,33 @@ public class TeacherCandiesTest {
     }
 
     @Test
+    public void test8() {
+        test("[3,2,1,2]", 8);
+        test("[2,1,3,2,1,2]", 11);
+        test("[1,3,2,1,2]", 9);
+    }
+
+    @Test
     public void testFile3() {
         testFile("03", 160929);
     }
 
     @Test
     public void compare1() {
-        compare("[4,6,4,5,6,2]");
+        for (int i = 0; i < 100; i++) {
+            int[] data = Rand.INSTANCE.newArray(6, 100);
+            compare(data);
+        }
     }
 
     private void compare(String arrStr) {
-        int[] a = StringToArrayConverter.INSTANCE.stringToIntArray(arrStr);
+        int[] a = StrConverter.INSTANCE.toIntArray(arrStr);
+        compare(a);
+    }
+
+    private void compare(int[] a) {
         long res = candies(a.length, a);
-        bruteForce(a, res);
+        bruteForce(a, (int)res);
     }
 
     private void testFile(String no, long expected) {
@@ -94,9 +111,54 @@ public class TeacherCandiesTest {
         test("[1,2,3,4,1,2,4,3,2,1]", 23);
     }
 
-    private void bruteForce(int[] a, long maxTotal) {
-        int max = (int)maxTotal - a.length + 1;
-        ICombinator combinator = CombinatorFactory.create(max, a.length);
+    private void bruteForce(int[] a, int maxTotal) {
+        int max = maxTotal - a.length + 1;
+        IPermutation permutation = CombinatorFactory.permutation(a.length, 1, max);
+
+        while (true) {
+            int[] solution = permutation.next();
+            if (solution == null) {
+                System.out.println("end");
+                return;
+            }
+
+            if (validate(solution, a, maxTotal)) {
+                int sum = IntStream.of(solution).sum();
+                if (sum == maxTotal) {
+                    System.out.println("same");
+                }
+                if (sum < maxTotal) {
+                    System.out.println(Arrays.toString(a));
+                    System.out.println(Arrays.toString(solution));
+                    System.out.println("" + sum + " " + maxTotal);
+                    System.out.println("found");
+                    return;
+                }
+            }
+        }
+    }
+
+    private boolean validate(int[] s, int[] a, int max) {
+        int sum = 0;
+        for (int i = 0; i < s.length - 1; i++) {
+            sum += s[i];
+            if (sum > max) {
+                return false;
+            }
+
+            if (a[i] == a[i + 1]) {
+                continue;
+            }
+            if (s[i] == s[i + 1]) {
+                return false;
+            }
+
+            boolean isUp = a[i + 1] > a[i];
+            if (isUp != s[i + 1] > s[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private long candies(int n, int[] a) {
@@ -135,14 +197,19 @@ public class TeacherCandiesTest {
             currentLen++;
             total += currentLen;
         }
-        total += Math.max(prevLen, currentLen);
+
+        if (isUp) {
+            total += currentLen;
+        } else {
+            total += Math.max(prevLen, currentLen);
+        }
         total++;
 
         return total;
     }
 
     private void test(String str, long expected) {
-        int[] a = StringToArrayConverter.INSTANCE.stringToIntArray(str);
+        int[] a = StrConverter.INSTANCE.toIntArray(str);
         long res = candies(a.length, a);
         Assert.assertEquals(expected, res);
     }

@@ -2,22 +2,22 @@ package rn.puzzle.greedy.easy
 
 import org.junit.Assert
 import org.junit.Test
-import rn.tool.StringToArrayConverter.stringToArray
+import rn.tool.StrConverter.toIntegerArray
 
 class PermutingTwoArraysTests {
 
     @Test
     fun sample1() {
-        val a = stringToArray("2 1 3")
-        val b = stringToArray("7 8 9")
+        val a = toIntegerArray("2 1 3")
+        val b = toIntegerArray("7 8 9")
         val res = twoArrays(10, a,b)
         Assert.assertEquals("YES", res)
     }
 
     @Test
     fun sample2() {
-        val a = stringToArray("1 2 2 1")
-        val b = stringToArray("3 3 3 4")
+        val a = toIntegerArray("1 2 2 1")
+        val b = toIntegerArray("3 3 3 4")
         val res = twoArrays(5, a,b)
         Assert.assertEquals("NO", res)
     }

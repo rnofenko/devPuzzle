@@ -5,29 +5,29 @@ import org.junit.Test
 import rn.tool.FileHelper
 import rn.tool.Stopwatch
 import rn.puzzle.game.medium.roadaandlibraries.RoadsAndLibrariesDependencySolver
-import rn.tool.StringToArrayConverter.stringTo2dIntArray
-import rn.tool.StringToArrayConverter.stringToLongArray
+import rn.tool.StrConverter.to2dIntArray
+import rn.tool.StrConverter.stringToLongArray
 
 class RoadsAndLibrariesTests {
     private val solver = RoadsAndLibrariesDependencySolver()
 
     @Test
     fun sample1() {
-        val a = stringTo2dIntArray("1 2,3 1,2 3")
+        val a = to2dIntArray("1 2,3 1,2 3")
         val res = solver.roadsAndLibraries(3, 2, 1, a)
         Assert.assertEquals(4, res)
     }
 
     @Test
     fun sample2() {
-        val a = stringTo2dIntArray("1 3,3 4,2 4,1 2,2 3,5 6")
+        val a = to2dIntArray("1 3,3 4,2 4,1 2,2 3,5 6")
         val res = solver.roadsAndLibraries(6, 2, 5, a)
         Assert.assertEquals(12, res)
     }
 
     @Test
     fun sample3() {
-        val a = stringTo2dIntArray("1 2,3 4,5 6,5 7,2 4,2 6")
+        val a = to2dIntArray("1 2,3 4,5 6,5 7,2 4,2 6")
         val res = solver.roadsAndLibraries(7, 2, 1, a)
         Assert.assertEquals(8, res)
     }

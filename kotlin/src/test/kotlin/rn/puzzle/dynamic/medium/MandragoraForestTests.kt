@@ -4,17 +4,17 @@ import org.junit.Assert
 import org.junit.Test
 import rn.tool.FileHelper
 import rn.tool.Stopwatch
-import rn.tool.StringToArrayConverter.stringToArray
+import rn.tool.StrConverter.toIntegerArray
 
 class MandragoraForestTests {
     @Test
     fun sample1() {
-        Assert.assertEquals(10, mandragora(stringToArray("3 2 2")))
+        Assert.assertEquals(10, mandragora(toIntegerArray("3 2 2")))
     }
 
     @Test
     fun sample2() {
-        Assert.assertEquals(16, mandragora(stringToArray("3 2 5")))
+        Assert.assertEquals(16, mandragora(toIntegerArray("3 2 5")))
     }
 
     @Test

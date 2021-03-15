@@ -4,7 +4,7 @@ package rn.standard.string
 
 import org.junit.Assert
 import org.junit.Test
-import rn.tool.StringToArrayConverter.stringToIntArray
+import rn.tool.StrConverter.toIntArray
 import rn.standard.string.suffix.array.SaIsSuffixArrayBuilder
 import rn.standard.string.suffix.array.SuffixArrayNaiveBuilder
 import rn.tool.Stopwatch
@@ -16,31 +16,31 @@ import java.util.Random
 class SuffixArrayTests {
     @Test
     fun cabbage() {
-        val expectedResult = stringToIntArray("7 1 4 3 2 0 6 5")
+        val expectedResult = toIntArray("7 1 4 3 2 0 6 5")
         solveAndPrint("cabbage", expectedResult)
     }
 
     @Test
     fun baabaabac() {
-        val expectedResult = stringToIntArray("9 1 4 2 5 7 0 3 6 8")
+        val expectedResult = toIntArray("9 1 4 2 5 7 0 3 6 8")
         solveAndPrint("baabaabac", expectedResult)
     }
 
     @Test
     fun banana() {
-        val expectedResult = stringToIntArray("6 5 3 1 0 4 2")
+        val expectedResult = toIntArray("6 5 3 1 0 4 2")
         solveAndPrint("banana", expectedResult)
     }
 
     @Test
     fun dbac() {
-        val expectedResult = stringToIntArray("4 2 1 3 0")
+        val expectedResult = toIntArray("4 2 1 3 0")
         solveAndPrint("dbac", expectedResult)
     }
 
     @Test
     fun test1() {
-        val expectedResult = stringToIntArray("0")
+        val expectedResult = toIntArray("0")
         solveAndPrint("abcabxabcd", expectedResult)
     }
 

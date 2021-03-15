@@ -1,9 +1,8 @@
 package rn.tool
 
-import java.lang.StringBuilder
 import kotlin.collections.ArrayList
 
-object StringToArrayConverter {
+object StrConverter {
 
     fun doubleCharArrayToStringArray(input: Array<CharArray>): Array<String> {
         val result = ArrayList<String>();
@@ -27,16 +26,37 @@ object StringToArrayConverter {
         return result.toTypedArray();
     }
 
-    fun stringToArray(line: String): Array<Int> {
+    fun toIntegerArray(line: String): Array<Int> {
         val cleaned = line.replace("(  +)".toRegex(), " ").trim()
         return cleaned.split(" ").map { it.toInt() }.toTypedArray()
     }
 
-    fun stringToIntArray(line: String): IntArray {
+    @JvmStatic
+    fun toIntArray(line: String): IntArray {
         if(line.startsWith("[")) {
             return bracketsStringToIntArray(line)
         }
-        return stringToArray(line).toIntArray()
+        return toIntegerArray(line).toIntArray()
+    }
+
+    @JvmStatic
+    fun toLongArray(line: String): LongArray {
+        if(line.startsWith("[")) {
+            return bracketsStringToLongArray(line)
+        }
+        return stringToLongArray(line).toLongArray()
+    }
+
+    @JvmStatic
+    fun toLongList(line: String): List<Long> {
+        val cleaned = line.replace("(  +)".toRegex(), " ").trim()
+        return cleaned.split(" ").map { it.toLong() }.toList()
+    }
+
+    @JvmStatic
+    fun toFloatArray(line: String): DoubleArray {
+        val cleaned = line.replace("(  +)".toRegex(), " ").trim()
+        return cleaned.split(" ").map { it.toDouble() }.toDoubleArray();
     }
 
     fun stringToLongArray(line: String): Array<Long> {
@@ -44,7 +64,8 @@ object StringToArrayConverter {
         return cleaned.split(" ").map { it.toLong() }.toTypedArray()
     }
 
-    fun stringTo2dArray(line: String): Array<Array<Int>> {
+    @JvmStatic
+    fun to2dIntegerArray(line: String): Array<Array<Int>> {
         val cleaned = line.replace("(  +)".toRegex(), " ").trim()
         val stringPairs = cleaned.split(",")
         return stringPairs
@@ -56,7 +77,10 @@ object StringToArrayConverter {
                 .toTypedArray()
     }
 
-    fun stringTo2dIntArray(line: String): Array<IntArray> {
+    // format 1: "1 2,3 1,2 3"
+    // format 2: "[[1,2],[3,1],[2,3]]"
+    @JvmStatic
+    fun to2dIntArray(line: String): Array<IntArray> {
         if(line.startsWith("[")) {
             return bracketsStringTo2dIntArray(line)
         }
@@ -85,6 +109,15 @@ object StringToArrayConverter {
                     .toIntArray();
     }
 
+    private fun bracketsStringToLongArray(line: String): LongArray {
+        val noSpaces = line.replace("( +)".toRegex(), "")
+        val cleaned = noSpaces.substring(1, noSpaces.length - 1)
+        return cleaned
+            .split(",")
+            .map { s -> s.toLong() }
+            .toLongArray();
+    }
+
     private fun spaceCommaStringTo2dIntArray(line: String): Array<IntArray> {
         val cleaned = line.replace("(  +)".toRegex(), " ").trim()
         val stringPairs = cleaned.split(",")
@@ -95,14 +128,5 @@ object StringToArrayConverter {
                         .toIntArray()
                 }
                 .toTypedArray()
-    }
-
-    fun arrayToString(a: Array<Array<Int>>): String {
-        val builder = StringBuilder()
-        for (row in a) {
-            val s = row.joinToString(" ")
-            builder.append(s).append(",")
-        }
-        return builder.toString().dropLast(1)
     }
 }

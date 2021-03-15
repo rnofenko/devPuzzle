@@ -3,24 +3,24 @@ package rn.puzzle.dynamic.hard
 import org.junit.Assert
 import org.junit.Test
 import rn.tool.FileHelper
-import rn.tool.StringToArrayConverter.stringToArray
+import rn.tool.StrConverter.toIntegerArray
 
 class TurnOffTheLightsTests {
     @Test
     fun sample1() {
-        val a = stringToArray("1 1 1")
+        val a = toIntegerArray("1 1 1")
         Assert.assertEquals(1, turnOffTheLights(1, a))
     }
 
     @Test
     fun sample2() {
-        val a = stringToArray("1 2 3 4 5")
+        val a = toIntegerArray("1 2 3 4 5")
         Assert.assertEquals(5, turnOffTheLights(1, a))
     }
 
     @Test
     fun sample07() {
-        val a = stringToArray("10021 5844 1645")
+        val a = toIntegerArray("10021 5844 1645")
         Assert.assertEquals(1645, turnOffTheLights(9, a))
     }
 

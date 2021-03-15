@@ -2,7 +2,7 @@ package rn.puzzle.array.easy
 
 import org.junit.Assert
 import org.junit.Test
-import rn.tool.StringToArrayConverter.stringTo2dArray
+import rn.tool.StrConverter.to2dIntegerArray
 
 class DynamicArrayTests {
     private fun dynamicArray(n: Int, queries: Array<Array<Int>>): Array<Int> {
@@ -29,7 +29,7 @@ class DynamicArrayTests {
 
     @Test
     fun test1() {
-        val res = dynamicArray(2, stringTo2dArray("1 0 5,1 1 7,1 0 3,2 1 0,2 1 1"))
+        val res = dynamicArray(2, to2dIntegerArray("1 0 5,1 1 7,1 0 3,2 1 0,2 1 1"))
         Assert.assertArrayEquals(arrayOf(7,3), res)
     }
 }

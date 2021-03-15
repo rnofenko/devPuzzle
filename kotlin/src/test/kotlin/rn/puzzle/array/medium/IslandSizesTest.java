@@ -1,7 +1,7 @@
 package rn.puzzle.array.medium;
 
 import org.junit.Test;
-import rn.tool.StringToArrayConverter;
+import rn.tool.StrConverter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,17 +14,17 @@ public class IslandSizesTest {
     @Test
     public void test1() {
         String input = "[[1,0,0,1,0],[1,0,1,0,0],[0,0,1,0,1],[1,0,1,0,1]]";
-        int[][] a = StringToArrayConverter.INSTANCE.stringTo2dIntArray(input);
+        int[][] a = StrConverter.INSTANCE.to2dIntArray(input);
         List<Integer> res = new Solver(a).count();
-        rn.tool.Assert.INSTANCE.assertListEquals(Arrays.asList(1,2,2,4), res);
+        rn.tool.Ass.INSTANCE.assertListEquals(Arrays.asList(1,2,2,4), res);
     }
 
     @Test
     public void test2() {
         String input = "[[1,0,0,1,0],[1,0,1,0,0],[1,0,0,1,0],[0,1,1,0,0]]";
-        int[][] a = StringToArrayConverter.INSTANCE.stringTo2dIntArray(input);
+        int[][] a = StrConverter.INSTANCE.to2dIntArray(input);
         List<Integer> res = new Solver(a).count();
-        rn.tool.Assert.INSTANCE.assertListEquals(Arrays.asList(8), res);
+        rn.tool.Ass.INSTANCE.assertListEquals(Arrays.asList(8), res);
     }
 
     public static void solveFromStd() {

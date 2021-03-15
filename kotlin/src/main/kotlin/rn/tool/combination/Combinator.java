@@ -1,8 +1,6 @@
 package rn.tool.combination;
 
-import rn.tool.ArrayPrinter;
-
-public class Combinator implements ICombinator {
+class Combinator implements ICombinator {
 
     private final int length;
     private final int maxValue;

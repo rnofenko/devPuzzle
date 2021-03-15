@@ -2,30 +2,30 @@ package rn.puzzle.dynamic.medium
 
 import org.junit.Assert
 import org.junit.Test
-import rn.tool.StringToArrayConverter.stringToArray
+import rn.tool.StrConverter.toIntegerArray
 
 class BricksGameTests {
     @Test
     fun sample1() {
-        val res = bricksGame(stringToArray("999 1 1 1 0"))
+        val res = bricksGame(toIntegerArray("999 1 1 1 0"))
         Assert.assertEquals(1001, res)
     }
 
     @Test
     fun sample2() {
-        val res = bricksGame(stringToArray("0 1 1 1 999"))
+        val res = bricksGame(toIntegerArray("0 1 1 1 999"))
         Assert.assertEquals(999, res)
     }
 
     @Test
     fun sample3() {
-        val res = bricksGame(stringToArray("1 2 3 4 5"))
+        val res = bricksGame(toIntegerArray("1 2 3 4 5"))
         Assert.assertEquals(6, res)
     }
 
     @Test
     fun sample4() {
-        val res = bricksGame(stringToArray("1 2 3 4 5 6 7"))
+        val res = bricksGame(toIntegerArray("1 2 3 4 5 6 7"))
         Assert.assertEquals(16, res)
     }
 

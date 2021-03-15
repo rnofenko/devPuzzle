@@ -2,16 +2,16 @@ package rn.puzzle.graph.easy;
 
 import org.junit.Assert;
 import org.junit.Test;
-import rn.tool.StringToArrayConverter;
+import rn.tool.StrConverter;
 
 public class MinesweeperTest {
 
     @Test
     public void test1() {
-        char[][] input = StringToArrayConverter.INSTANCE.stringArrayToDoubleCharArray(
+        char[][] input = StrConverter.INSTANCE.stringArrayToDoubleCharArray(
                 new String[] { "EEEEE", "EEMEE", "EEEEE", "EEEEE" });
         char[][] result = updateBoard(input, new int[]{3, 0});
-        String[] resultS = StringToArrayConverter.INSTANCE.doubleCharArrayToStringArray(result);
+        String[] resultS = StrConverter.INSTANCE.doubleCharArrayToStringArray(result);
         Assert.assertEquals("B1E1B",  resultS[0]);
         Assert.assertEquals("B1M1B",  resultS[1]);
         Assert.assertEquals("B111B",  resultS[2]);

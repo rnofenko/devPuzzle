@@ -4,7 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 import rn.puzzle.dynamic.hard.cherry.ICherryPickSolver;
 import rn.tool.Stopwatch;
-import rn.tool.StringToArrayConverter;
+import rn.tool.StrConverter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CherryPickupTest {
 
@@ -247,7 +250,7 @@ public class CherryPickupTest {
 
     private void test(String gridStr, int expected) {
         Stopwatch w = Stopwatch.Companion.start();
-        int[][] grid = StringToArrayConverter.INSTANCE.stringTo2dIntArray(gridStr);
+        int[][] grid = StrConverter.to2dIntArray(gridStr);
         int res = getSolver().cherryPickup(grid);
         w.show("");
         Assert.assertEquals(expected, res);
@@ -255,13 +258,13 @@ public class CherryPickupTest {
 
     private void performance(String gridStr) {
         Stopwatch w = Stopwatch.Companion.start();
-        int[][] grid = StringToArrayConverter.INSTANCE.stringTo2dIntArray(gridStr);
+        int[][] grid = StrConverter.INSTANCE.to2dIntArray(gridStr);
         getSolver().cherryPickup(grid);
         w.show("total");
     }
 
     private void print(String gridStr) {
-        int[][] grid = StringToArrayConverter.INSTANCE.stringTo2dIntArray(gridStr);
+        int[][] grid = StrConverter.INSTANCE.to2dIntArray(gridStr);
         new rn.puzzle.dynamic.hard.cherry.index.GraphBuilder(grid).print();
     }
 

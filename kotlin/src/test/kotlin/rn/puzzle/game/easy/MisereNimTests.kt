@@ -2,7 +2,7 @@ package rn.puzzle.game.easy
 
 import org.junit.Assert
 import org.junit.Test
-import rn.tool.StringToArrayConverter
+import rn.tool.StrConverter
 
 class MisereNimTests {
     @Test
@@ -21,7 +21,7 @@ class MisereNimTests {
     }
 
     private fun solve(s: String): String {
-        return misereNim(StringToArrayConverter.stringToArray(s))
+        return misereNim(StrConverter.toIntegerArray(s))
     }
 
     private fun misereNim(pile: Array<Int>): String {

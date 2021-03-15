@@ -2,7 +2,7 @@ package rn.standard.string
 
 import org.junit.Assert
 import org.junit.Test
-import rn.tool.Assert.assertListEquals
+import rn.tool.Ass.assertListEquals
 
 class AhoCorasickTests {
     @Test

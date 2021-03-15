@@ -2,7 +2,7 @@ package rn.puzzle.array.medium;
 
 import org.junit.Assert;
 import org.junit.Test;
-import rn.tool.StringToArrayConverter;
+import rn.tool.StrConverter;
 
 public class MinimumSwaps2Test {
 
@@ -68,7 +68,7 @@ public class MinimumSwaps2Test {
     }
 
     private void solve(String inputStr, int expected) {
-        int[] a = StringToArrayConverter.INSTANCE.stringToIntArray(inputStr);
+        int[] a = StrConverter.INSTANCE.toIntArray(inputStr);
         int res = minimumSwaps(a);
         Assert.assertEquals(expected, res);
     }

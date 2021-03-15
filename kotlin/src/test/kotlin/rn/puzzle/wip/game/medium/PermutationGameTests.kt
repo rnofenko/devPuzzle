@@ -3,54 +3,54 @@ package rn.puzzle.wip.game.medium
 import org.junit.Assert
 import org.junit.Test
 import rn.tool.FileHelper
-import rn.tool.StringToArrayConverter.stringToArray
+import rn.tool.StrConverter.toIntegerArray
 import rn.puzzle.game.medium.PermutationGameMaxMinSolver
 
 //https://www.hackerrank.com/challenges/permutation-game/problem
 class PermutationGameTests {
     @Test
     fun sample1() {
-        Assert.assertEquals("Alice", permutationGame(stringToArray("1 3 2")))
+        Assert.assertEquals("Alice", permutationGame(toIntegerArray("1 3 2")))
     }
 
     @Test
     fun sample2() {
-        Assert.assertEquals("Bob", permutationGame(stringToArray("5 3 2 1 4")))
+        Assert.assertEquals("Bob", permutationGame(toIntegerArray("5 3 2 1 4")))
     }
 
     @Test
     fun sample3() {
-        Assert.assertEquals("Alice", permutationGame(stringToArray("3 2 1 4")))
+        Assert.assertEquals("Alice", permutationGame(toIntegerArray("3 2 1 4")))
     }
 
     @Test
     fun sample4() {
-        Assert.assertEquals("Alice", permutationGame(stringToArray("4 3 2 1")))
+        Assert.assertEquals("Alice", permutationGame(toIntegerArray("4 3 2 1")))
     }
 
     @Test
     fun sample1_1() {
-        Assert.assertEquals("Bob", permutationGame(stringToArray("3 2 1 4 5")))
+        Assert.assertEquals("Bob", permutationGame(toIntegerArray("3 2 1 4 5")))
     }
 
     @Test
     fun sample1_2() {
-        Assert.assertEquals("Alice", permutationGame(stringToArray("3 4 5 1 2")))
+        Assert.assertEquals("Alice", permutationGame(toIntegerArray("3 4 5 1 2")))
     }
 
     @Test
     fun sample1_3() {
-        Assert.assertEquals("Alice", permutationGame(stringToArray("4 3 1 5 2")))
+        Assert.assertEquals("Alice", permutationGame(toIntegerArray("4 3 1 5 2")))
     }
 
     @Test
     fun sample1_4() {
-        Assert.assertEquals("Alice", permutationGame(stringToArray("3 2 4 5 1 6")))
+        Assert.assertEquals("Alice", permutationGame(toIntegerArray("3 2 4 5 1 6")))
     }
 
     @Test
     fun sample1_5() {
-        Assert.assertEquals("Alice", permutationGame(stringToArray("6 3 7 5 1 4 2")))
+        Assert.assertEquals("Alice", permutationGame(toIntegerArray("6 3 7 5 1 4 2")))
     }
 
     @Test

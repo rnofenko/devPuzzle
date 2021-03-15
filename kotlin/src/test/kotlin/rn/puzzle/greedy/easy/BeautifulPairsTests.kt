@@ -3,69 +3,69 @@ package rn.puzzle.greedy.easy
 import org.junit.Assert
 import org.junit.Test
 import rn.tool.FileHelper
-import rn.tool.StringToArrayConverter.stringToArray
+import rn.tool.StrConverter.toIntegerArray
 
 class BeautifulPairsTests {
     @Test
     fun sample1() {
-        val a = stringToArray("1 2 3 4")
-        val b = stringToArray("1 2 3 4")
+        val a = toIntegerArray("1 2 3 4")
+        val b = toIntegerArray("1 2 3 4")
         val res = beautifulPairs(a,b)
         Assert.assertEquals(3, res)
     }
 
     @Test
     fun sample3() {
-        val a = stringToArray("1 2 3 4 4")
-        val b = stringToArray("1 2 3 4 4")
+        val a = toIntegerArray("1 2 3 4 4")
+        val b = toIntegerArray("1 2 3 4 4")
         val res = beautifulPairs(a,b)
         Assert.assertEquals(4, res)
     }
 
     @Test
     fun sample4() {
-        val a = stringToArray("1 2 3 4 4")
-        val b = stringToArray("1 2 3 4")
+        val a = toIntegerArray("1 2 3 4 4")
+        val b = toIntegerArray("1 2 3 4")
         val res = beautifulPairs(a,b)
         Assert.assertEquals(4, res)
     }
 
     @Test
     fun sample5() {
-        val a = stringToArray("1 2 3 4")
-        val b = stringToArray("1 2 3 4 4")
+        val a = toIntegerArray("1 2 3 4")
+        val b = toIntegerArray("1 2 3 4 4")
         val res = beautifulPairs(a,b)
         Assert.assertEquals(4, res)
     }
 
     @Test
     fun sample6() {
-        val a = stringToArray("1 2 3 4 5")
-        val b = stringToArray("1 2 3 4 4")
+        val a = toIntegerArray("1 2 3 4 5")
+        val b = toIntegerArray("1 2 3 4 4")
         val res = beautifulPairs(a,b)
         Assert.assertEquals(5, res)
     }
 
     @Test
     fun sample7() {
-        val a = stringToArray("1 2 3 4 4")
-        val b = stringToArray("1 2 3 4 5")
+        val a = toIntegerArray("1 2 3 4 4")
+        val b = toIntegerArray("1 2 3 4 5")
         val res = beautifulPairs(a,b)
         Assert.assertEquals(5, res)
     }
 
     @Test
     fun sample8() {
-        val a = stringToArray("1 2 3 4 5")
-        val b = stringToArray("1 2 3 4 6")
+        val a = toIntegerArray("1 2 3 4 5")
+        val b = toIntegerArray("1 2 3 4 6")
         val res = beautifulPairs(a,b)
         Assert.assertEquals(5, res)
     }
 
     @Test
     fun sample2() {
-        val a = stringToArray("3 5 7 11 5 8")
-        val b = stringToArray("5 7 11 10 5 8")
+        val a = toIntegerArray("3 5 7 11 5 8")
+        val b = toIntegerArray("5 7 11 10 5 8")
         val res = beautifulPairs(a,b)
         Assert.assertEquals(6, res)
     }

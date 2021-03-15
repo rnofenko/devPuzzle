@@ -4,14 +4,14 @@ import org.junit.Assert
 import org.junit.Test
 import rn.tool.FileHelper
 import rn.tool.ArrayPrinter
-import rn.tool.StringToArrayConverter.stringToArray
+import rn.tool.StrConverter.toIntegerArray
 import java.util.*
 
 class FraudulentActivityNotificationsTests {
 
     @Test
     fun sample5() {
-        val res = activityNotifications(stringToArray("9 2 3 2 7"), 1)
+        val res = activityNotifications(toIntegerArray("9 2 3 2 7"), 1)
         Assert.assertEquals(1, res)
     }
 
@@ -105,17 +105,17 @@ class FraudulentActivityNotificationsTests {
 
     @Test
     fun sample1() {
-        Assert.assertEquals(2, activityNotifications(stringToArray("2 3 4 2 3 6 8 4 5"), 5))
+        Assert.assertEquals(2, activityNotifications(toIntegerArray("2 3 4 2 3 6 8 4 5"), 5))
     }
 
     @Test
     fun sample2() {
-        Assert.assertEquals(1, activityNotifications(stringToArray("2 2 2 2 4"), 3))
+        Assert.assertEquals(1, activityNotifications(toIntegerArray("2 2 2 2 4"), 3))
     }
 
     @Test
     fun sample4() {
-        val res = activityNotifications(stringToArray("0 0 5 4 0"), 2)
+        val res = activityNotifications(toIntegerArray("0 0 5 4 0"), 2)
         Assert.assertEquals(1, res)
     }
 

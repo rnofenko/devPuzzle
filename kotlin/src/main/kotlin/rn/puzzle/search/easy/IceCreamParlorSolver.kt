@@ -3,7 +3,7 @@ package rn.puzzle.search.easy
 class IceCreamParlorSolver {
     fun iceCreamParlor(m: Int, arr: Array<Int>): Array<Int> {
         val map = HashMap<Int, Int>()
-        for (i in 0 until arr.size) {
+        for (i in arr.indices) {
             val first = arr[i]
             val second = m - first
             if(map.containsKey(second)) {

@@ -3,27 +3,27 @@ package rn.puzzle.greedy.easy
 import org.junit.Assert
 import org.junit.Test
 import rn.tool.FileHelper
-import rn.tool.StringToArrayConverter.stringToArray
+import rn.tool.StrConverter.toIntegerArray
 
 class LargestPermutationTests {
     @Test
     fun sample1() {
-        val res = largestPermutation(1, stringToArray("4 2 3 5 1"))
-        val expected = stringToArray("5 2 3 4 1")
+        val res = largestPermutation(1, toIntegerArray("4 2 3 5 1"))
+        val expected = toIntegerArray("5 2 3 4 1")
         Assert.assertArrayEquals(expected, res)
     }
 
     @Test
     fun sample2() {
-        val res = largestPermutation(5, stringToArray("1 2 3 4 5"))
-        val expected = stringToArray("5 4 3 2 1")
+        val res = largestPermutation(5, toIntegerArray("1 2 3 4 5"))
+        val expected = toIntegerArray("5 4 3 2 1")
         Assert.assertArrayEquals(expected, res)
     }
 
     @Test
     fun sample3() {
-        val res = largestPermutation(3, stringToArray("8 7 6 5 4 2 3 1"))
-        val expected = stringToArray("8 7 6 5 4 3 2 1")
+        val res = largestPermutation(3, toIntegerArray("8 7 6 5 4 2 3 1"))
+        val expected = toIntegerArray("8 7 6 5 4 3 2 1")
         Assert.assertArrayEquals(expected, res)
     }
 

@@ -2,7 +2,7 @@ package rn.puzzle.constructive.medium;
 
 import org.junit.Assert;
 import org.junit.Test;
-import rn.tool.StringToArrayConverter;
+import rn.tool.StrConverter;
 
 public class ConstructQuadTreeTest {
 
@@ -116,7 +116,7 @@ public class ConstructQuadTreeTest {
     }
 
     private Node test(String gridStr) {
-        int[][] a = StringToArrayConverter.INSTANCE.stringTo2dIntArray(gridStr);
+        int[][] a = StrConverter.INSTANCE.to2dIntArray(gridStr);
         return construct(a);
     }
 }

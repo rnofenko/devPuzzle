@@ -2,7 +2,7 @@ package rn.puzzle.game.easy
 
 import org.junit.Assert
 import org.junit.Test
-import rn.tool.StringToArrayConverter.stringToArray
+import rn.tool.StrConverter.toIntegerArray
 
 class IntroductionToNimGameTests {
     @Test
@@ -81,7 +81,7 @@ class IntroductionToNimGameTests {
     }
 
     private fun solve(s: String): String {
-        return nimSim(stringToArray(s))
+        return nimSim(toIntegerArray(s))
     }
 
     private fun nimSim(pile: Array<Int>): String {

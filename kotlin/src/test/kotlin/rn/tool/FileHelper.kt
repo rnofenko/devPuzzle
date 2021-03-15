@@ -3,6 +3,7 @@ package rn.tool
 import java.io.File
 
 object FileHelper {
+    @JvmStatic
     fun load(path: String): List<String> {
         return File(path).readLines()
     }

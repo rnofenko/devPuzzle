@@ -11,6 +11,11 @@ public class ArraysLeftRotationTest {
     }
 
     @Test
+    public void test4() {
+        solve(new int[] { 1, 2, 3 }, 100001, new int[] { 3, 1, 2 });
+    }
+
+    @Test
     public void test2() {
         solve(new int[] { 1, 2, 3, 4, 5 }, 4, new int[] { 5, 1, 2, 3, 4 });
     }

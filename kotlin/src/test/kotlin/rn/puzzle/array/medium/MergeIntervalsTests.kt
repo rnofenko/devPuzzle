@@ -2,7 +2,7 @@ package rn.puzzle.array.medium
 
 import org.junit.Assert
 import org.junit.Test
-import rn.tool.StringToArrayConverter.stringTo2dIntArray
+import rn.tool.StrConverter.to2dIntArray
 
 class MergeIntervalsTests {
     @Test
@@ -16,8 +16,8 @@ class MergeIntervalsTests {
     }
 
     private fun solve(aStr: String, expectedStr: String) {
-        val a = stringTo2dIntArray(aStr)
-        val expected = stringTo2dIntArray(expectedStr)
+        val a = to2dIntArray(aStr)
+        val expected = to2dIntArray(expectedStr)
         val res = merge(a)
         Assert.assertArrayEquals(expected, res)
     }
