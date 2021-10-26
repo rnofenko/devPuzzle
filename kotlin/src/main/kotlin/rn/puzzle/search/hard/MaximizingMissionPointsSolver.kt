@@ -24,7 +24,7 @@ class MaximizingMissionPointsSolver(private val xDiff: Int, private val yDiff: I
             box.add(city)
         }
 
-        return boxes.map { it.totalMax }.max() ?: 0
+        return boxes.map { it.totalMax }.maxOrNull() ?: 0
     }
 
     private fun findMax(center: City): Long {

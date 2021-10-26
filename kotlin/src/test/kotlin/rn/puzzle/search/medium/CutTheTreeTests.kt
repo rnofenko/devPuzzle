@@ -55,11 +55,11 @@ class CutTheTreeTests {
         }
 
         fun getMinDiff(): Int {
-            return kids.map { it.getMinDiff(sum) }.min() ?: Int.MAX_VALUE
+            return kids.map { it.getMinDiff(sum) }.minOrNull() ?: Int.MAX_VALUE
         }
 
         private fun getMinDiff(total: Int): Int {
-            val min = kids.map { it.getMinDiff(total) }.min() ?: Int.MAX_VALUE
+            val min = kids.map { it.getMinDiff(total) }.minOrNull() ?: Int.MAX_VALUE
             return Math.min(min, Math.abs(total - sum * 2))
         }
 

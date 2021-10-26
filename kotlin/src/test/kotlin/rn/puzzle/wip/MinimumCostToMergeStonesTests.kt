@@ -2,7 +2,7 @@ package rn.puzzle.wip
 
 import org.junit.Assert
 import org.junit.Test
-import rn.puzzle.array.hard.MinimumCostToMergeStonesSolution
+import rn.puzzle.structure.array.hard.MinimumCostToMergeStonesSolution
 
 class MinimumCostToMergeStonesTests {
 

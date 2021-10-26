@@ -3,8 +3,9 @@ package rn.tool
 import kotlin.math.abs
 
 object Ass {
+    @JvmStatic
     fun <T> assertListEquals(expected: List<T>, actual: List<T>) {
-        org.junit.Assert.assertEquals(expected.size, actual.size)
+        org.junit.Assert.assertEquals("Lists have different sizes", expected.size, actual.size)
         for (i in expected.indices) {
             org.junit.Assert.assertEquals(expected[i], actual[i])
         }
@@ -12,9 +13,9 @@ object Ass {
 
     @JvmStatic
     fun <T> assertIntArrayEquals(expected: IntArray, actual: IntArray) {
-        org.junit.Assert.assertEquals(expected.size, actual.size)
+        org.junit.Assert.assertEquals("Arrays size", expected.size, actual.size)
         for (i in expected.indices) {
-            org.junit.Assert.assertEquals(expected[i], actual[i])
+            org.junit.Assert.assertEquals("At index $i", expected[i], actual[i])
         }
     }
 

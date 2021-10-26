@@ -13,7 +13,7 @@ class Stopwatch {
     }
 
     fun show(message: String = ""): Stopwatch {
-        val elapsedTime = Math.round((System.nanoTime() - startTime) / 1_000_000_0.0) / 100.0
+        val elapsedTime = Math.round((System.nanoTime() - startTime) / 1_000_000_0.0) / 1000.0
         println("$message time=$elapsedTime")
         return this
     }

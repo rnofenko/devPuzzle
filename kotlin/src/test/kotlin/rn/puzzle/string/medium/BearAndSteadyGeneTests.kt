@@ -25,7 +25,7 @@ class BearAndSteadyGeneTests {
     private fun calcCounts(gene: IntArray): IntArray {
         val counts = IntArray(4)
         gene.forEach { counts[it]++ }
-        val min = counts.min() ?: 0
+        val min = counts.minOrNull() ?: 0
         return counts.map { it - min }.toIntArray()
     }
 
@@ -44,7 +44,7 @@ class BearAndSteadyGeneTests {
         }
 
         fun isValid(): Boolean {
-            val max = counts.max() ?: 0
+            val max = counts.maxOrNull() ?: 0
             val diffs = counts.sumBy { Math.abs(it - max) }
             return diffs == size
         }

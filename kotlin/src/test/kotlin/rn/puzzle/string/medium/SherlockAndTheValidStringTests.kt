@@ -49,11 +49,11 @@ class SherlockAndTheValidStringTests {
         if(g.count() < 2) {
             return "YES"
         }
-        if((g.values.min() ?: 0) != 1) {
+        if((g.values.minOrNull() ?: 0) != 1) {
             return "NO"
         }
-        val maxLen = g.keys.max() ?: 0
-        val minLen = g.keys.min() ?: 0
+        val maxLen = g.keys.maxOrNull() ?: 0
+        val minLen = g.keys.minOrNull() ?: 0
         val minLenCount = g[minLen] ?: 0
         if(minLen == 1 && minLenCount == 1) {
             return "YES"

@@ -10,16 +10,16 @@ import kotlin.math.min
 object Rand {
     private val r = Random()
 
-    fun newArray(size: Int, maxSize: Int, negative: Boolean): IntArray {
-        return createNewArray(size, maxSize, negative)
+    fun newArray(size: Int, maxValue: Int, negative: Boolean): IntArray {
+        return createNewArray(size, maxValue, negative)
     }
 
     fun newArray(size: Int): IntArray {
         return createNewArray(size, 100, false)
     }
 
-    fun newArray(size: Int, maxSize: Int): IntArray {
-        return createNewArray(size, maxSize, false)
+    fun newArray(size: Int, maxValue: Int): IntArray {
+        return createNewArray(size, maxValue, false)
     }
 
     fun positiveInt(max: Int): Int {
@@ -40,8 +40,8 @@ object Rand {
         return a
     }
 
-    private fun createNewArray(size: Int, maxSize: Int): IntArray {
-        return generateSequence { r.nextInt() % maxSize }.take(size).asIterable().toList().toIntArray()
+    private fun createNewArray(size: Int, maxValue: Int): IntArray {
+        return generateSequence { r.nextInt() % maxValue }.take(size).asIterable().toList().toIntArray()
     }
 
     fun graphEdges(count: Int, startEdgeNo: Int, endEdgeNo: Int, valueMaxSize: Int = 100): Array<IntArray> {
